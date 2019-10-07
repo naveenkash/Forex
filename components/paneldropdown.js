@@ -52,8 +52,9 @@ class paneldropdown extends React.Component {
   };
  
   setCurrency=(currency)=>{
-    this.setState({currentCurr:currency.name,currentFlag:currency.flag});
+    // this.setState({currentCurr:currency.name,currentFlag:currency.flag});
     this.props.removeEl(currency);
+    this.props.selected(currency);
   }
   hideCurr=(hide)=>{
     this.setState({ showDropDown: hide });
@@ -75,7 +76,7 @@ class paneldropdown extends React.Component {
                )
               }
             })()}
-          <div
+          <div title={this.props.currency}
             className="panel_drop_select"
             onMouseEnter={e => this.handleHover(e, "panel_drop_option")}
             onMouseLeave={e => this.handleLeave(e, "panel_drop_option")}
@@ -83,10 +84,10 @@ class paneldropdown extends React.Component {
           >
             
             <div className="panel_flag">
-              <img src={this.state.currentFlag} alt="" />
+              <img src={this.props.flag} alt="" />
             </div>
             <div className="panel_curr_info">
-              <span>{ this.state.currentCurr}</span>
+              <span>{ this.props.currency}</span>
             </div>
             <div className="drop_arrow">
               <i>

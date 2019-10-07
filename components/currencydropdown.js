@@ -25,7 +25,6 @@ export class currencydropdown extends Component {
         return t.name === f.name;
       });
     });
-    console.log(copyArr);
   }
   findCurrency = e => {
     if (e.target.value === "") {

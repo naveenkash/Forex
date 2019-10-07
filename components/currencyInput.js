@@ -62,7 +62,16 @@ export class currencyInput extends Component {
           name: "KWD"
         }
       ],
-      all_currencies2: []
+      fromCurrencyValue:1,
+      toCurrencyValue:0,
+      mainConvertedCurrencyValue:0,
+      all_currencies2: [],
+      selectedFrom: "USD",
+      selectedFromFlag:
+        "https://cdn.pixabay.com/photo/2017/03/14/21/00/american-flag-2144392__340.png",
+      selectedTo: "INR",
+      selectedToFlag:
+        "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgBAMAAACm+uYvAAAAMFBMVEUSiAc4RVs8SF48SV9jbX5jbX9lb4CVnKiWnKiyt8DKzdPLztTq6+7x8vP/mTP///8DX5tcAAAAUUlEQVQoz2N4hwMwDHuJ/zgAksTvRLH9WCWa5py0wCbxS/f//8v7sUh8m////898LBIfz3/x/yOPXSIeqwROo37b4rD8fzEO5+L2IFqQjFgAAKYM7paqvXB1AAAAAElFTkSuQmCC"
     };
   }
   componentDidMount() {
@@ -73,7 +82,24 @@ export class currencyInput extends Component {
         })
       ]
     });
-  
+    fetch(
+      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=INR&apikey=IDJHD0SY07N08B02`
+    )
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        if (data.Note) {
+          alert(
+            "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try agian in few seconds"
+          );
+          return;
+        }
+        this.setState({mainConvertedCurrencyValue:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
+        fromCurrencyValue:1
+        ,toCurrencyValue:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]})
+        this.props.currencyRate(data);
+      });
   }
   handleHover = (e, node) => {
     var input_wrapper = document.getElementsByClassName(node);
@@ -116,12 +142,78 @@ export class currencyInput extends Component {
     var res = this.state.all_currencies.filter(item => {
       return item.name !== currency.name;
     });
-    this.setState({ all_currencies2: res },()=>{
-       console.log(res);
-    });
-   
+    this.setState({ all_currencies2: res });
   };
-
+  selectedFrom = currency => {
+    if (currency.name === this.state.selectedTo) {
+      this.setState(
+        {
+          selectedTo: this.state.all_currencies[0].name,
+          selectedToFlag: this.state.all_currencies[0].flag
+        },
+        () => {}
+      );
+    }
+    this.setState(
+      {
+        selectedFrom: currency.name,
+        selectedFromFlag: currency.flag
+      },
+      () => {
+        fetch(
+          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=IDJHD0SY07N08B02`
+        )
+          .then(res => {
+            return res.json();
+          })
+          .then(data => {
+            if (data.Note) {
+              alert(
+                "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try agian in few seconds"
+              );
+              return;
+            }
+            this.setState({mainConvertedCurrencyValue:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
+            fromCurrencyValue:1
+            ,toCurrencyValue:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]})
+            this.props.currencyRate(data);
+          });
+      }
+    );
+  };
+  selectedTo = currency => {
+    this.setState(
+      { selectedTo: currency.name, selectedToFlag: currency.flag },
+      () => {
+        fetch(
+          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=IDJHD0SY07N08B02`
+        )
+          .then(res => {
+            return res.json();
+          })
+          .then(data => {
+            if (data.Note) {
+              alert(
+                "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try agian in few seconds"
+              );
+              return;
+            }
+            this.setState({mainConvertedCurrencyValue:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
+            fromCurrencyValue:1
+            ,toCurrencyValue:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]})
+            this.props.currencyRate(data);
+          });
+      }
+    );
+  };
+  calculateCurrency=(e)=>{
+    if (isNaN(e.target.value)) {
+      alert("Please enter a number ");
+      return;
+    }
+   var CurrencyCalculated= e.target.value * this.state.mainConvertedCurrencyValue;
+   this.setState({fromCurrencyValue:e.target.value,toCurrencyValue:CurrencyCalculated})
+  }
   render() {
     return (
       <div
@@ -139,9 +231,11 @@ export class currencyInput extends Component {
                 onMouseLeave={e => this.handleLeave(e, "panel_input")}
                 onClick={e => this.handleDown(e, "panel_input")}
                 type="text"
+                value={this.state.fromCurrencyValue}
+                onChange={e=>{this.calculateCurrency(e)}}
               />
               <div className="panel_currency">
-                <span>USD</span>
+                <span>{this.state.selectedFrom}</span>
               </div>
             </div>
           </div>
@@ -155,9 +249,11 @@ export class currencyInput extends Component {
                 onMouseLeave={e => this.handleLeave(e, "panel_input")}
                 onClick={e => this.handleDown(e, "panel_input")}
                 type="text"
+                value={this.state.toCurrencyValue}
+                onChange={()=>{}}
               />
               <div className="panel_currency">
-                <span>INR</span>
+                <span>{this.state.selectedTo}</span>
               </div>
             </div>
           </div>
@@ -167,24 +263,21 @@ export class currencyInput extends Component {
           >
             <div className="panel_select">
               <DropdownHead
+                selected={this.selectedFrom}
                 convert={"From"}
                 all_currencies={this.state.all_currencies}
                 removeEl={this.removeEl}
-                currency={"USD"}
-                flag={
-                  " https://cdn.pixabay.com/photo/2017/03/14/21/00/american-flag-2144392__340.png"
-                }
+                currency={this.state.selectedFrom}
+                flag={this.state.selectedFromFlag}
               />
               <SwapIcon />
-
               <DropdownHead
+                selected={this.selectedTo}
                 convert={"To"}
                 all_currencies={this.state.all_currencies2}
-                currency={"INR"}
+                currency={this.state.selectedTo}
                 removeEl={() => {}}
-                flag={
-                  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgBAMAAACm+uYvAAAAMFBMVEUSiAc4RVs8SF48SV9jbX5jbX9lb4CVnKiWnKiyt8DKzdPLztTq6+7x8vP/mTP///8DX5tcAAAAUUlEQVQoz2N4hwMwDHuJ/zgAksTvRLH9WCWa5py0wCbxS/f//8v7sUh8m////898LBIfz3/x/yOPXSIeqwROo37b4rD8fzEO5+L2IFqQjFgAAKYM7paqvXB1AAAAAElFTkSuQmCC"
-                }
+                flag={this.state.selectedToFlag}
               />
             </div>
           </div>
