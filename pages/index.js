@@ -27,6 +27,9 @@ export class Home extends React.Component {
             to: data["Realtime Currency Exchange Rate"]["3. To_Currency Code"]
           }
         );
+      }).catch((err)=>{
+        alert(err);
+        
       });
   }
   setCurrencyRate = currencyRate => {

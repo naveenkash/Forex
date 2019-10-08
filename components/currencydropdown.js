@@ -63,7 +63,7 @@ export class currencydropdown extends Component {
                   <div>
                     {this.props.currencies.map(currency => (
                       <li
-                        key={currency.name}
+                        key={currency.code}
                         onClick={e => {
                           this.setCurrency(e, currency);
                         }}

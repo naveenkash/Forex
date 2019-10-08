@@ -5,63 +5,7 @@ export class currencyInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      all_currencies: [
-        {
-          flag:
-            "https://cdn.pixabay.com/photo/2015/11/06/13/29/union-jack-1027898__340.jpg",
-          name: "GBP"
-        },
-        {
-          flag:
-            "https://cdn.pixabay.com/photo/2016/10/27/12/55/turkish-flag-1774834__340.png",
-          name: "TRY"
-        },
-        {
-          flag:
-            "https://cdn.pixabay.com/photo/2013/07/13/01/09/europe-155191__340.png",
-          name: "EUR"
-        },
-        {
-          flag:
-            "https://cdn.pixabay.com/photo/2012/04/11/15/43/australia-28586__340.png",
-          name: "AUD"
-        },
-        {
-          flag:
-            "https://cdn.pixabay.com/photo/2017/03/14/21/00/american-flag-2144392__340.png",
-          name: "USD"
-        },
-        {
-          flag:
-            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgBAMAAACm+uYvAAAAMFBMVEUSiAc4RVs8SF48SV9jbX5jbX9lb4CVnKiWnKiyt8DKzdPLztTq6+7x8vP/mTP///8DX5tcAAAAUUlEQVQoz2N4hwMwDHuJ/zgAksTvRLH9WCWa5py0wCbxS/f//8v7sUh8m////898LBIfz3/x/yOPXSIeqwROo37b4rD8fzEO5+L2IFqQjFgAAKYM7paqvXB1AAAAAElFTkSuQmCC",
-          name: "INR"
-        },
-        {
-          flag:
-            "https://cdn.pixabay.com/photo/2012/04/10/23/27/canada-27003__340.png",
-          name: "CAD"
-        },
-        {
-          flag:
-            "https://cdn.pixabay.com/photo/2012/04/26/11/55/flag-42281__340.png",
-          name: "MXN"
-        },
-        {
-          flag:
-            "https://cdn.pixabay.com/photo/2012/04/10/22/59/japan-26803__340.png",
-          name: "JPY"
-        },
-        {
-          flag:
-            "https://cdn.pixabay.com/photo/2013/07/13/14/15/hong-kong-162316__340.png",
-          name: "HKD"
-        },
-        {
-          flag:
-            "https://cdn.pixabay.com/photo/2013/07/13/14/15/kuwait-162335__340.png",
-          name: "KWD"
-        }
-      ],
+      all_currencies:[],
       fromCurrencyValue:1,
       toCurrencyValue:0,
       mainConvertedCurrencyValue:0,
@@ -75,13 +19,50 @@ export class currencyInput extends Component {
     };
   }
   componentDidMount() {
-    this.setState({
-      all_currencies2: [
-        ...this.state.all_currencies.filter(item => {
-          return item.name !== "USD";
+    fetch('https://cors-anywhere.herokuapp.com/http://countryapi.gear.host/v1/Country/getCountries')
+      .then((res)=>{
+        if (!res.ok) {
+          throw Error("AN ERROR OCCURED");
+        }
+        
+        return res.json();
+      })
+      .then((data)=>{
+        var copyCurrencyArray =[];
+        data.Response.map((country)=>{
+          if (country.CurrencyCode==="GBP" && country.NumericCode!==826) {
+            return;
+          }else if(country.CurrencyCode===""||country.CurrencyCode===("(none)")){
+            return
+          }
+          var obj = {name:country.CurrencyCode,flag:country.Flag,code:country.NumericCode}
+           copyCurrencyArray = [...copyCurrencyArray,obj];
         })
-      ]
-    });
+
+        this.setState({all_currencies:copyCurrencyArray},()=>{
+          this.setState({
+            all_currencies2: [
+              ...this.state.all_currencies.filter(item => {
+                return item.name !== "USD";
+              })
+            ]
+          })
+        })
+       console.log(this.state.all_currencies);
+       
+    
+        // this.setState({all_currencies}
+      }).catch((err)=>{
+        alert(err);
+      })
+    // this.setState({
+    //   all_currencies2: [
+    //     ...this.state.all_currencies.filter(item => {
+    //       return item.name !== "USD";
+    //     })
+    //   ]
+    // });
+  
     fetch(
       `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=INR&apikey=IDJHD0SY07N08B02`
     )
@@ -91,7 +72,7 @@ export class currencyInput extends Component {
       .then(data => {
         if (data.Note) {
           alert(
-            "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try agian in few seconds"
+            "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try again in few seconds"
           );
           return;
         }
@@ -99,7 +80,35 @@ export class currencyInput extends Component {
         fromCurrencyValue:1
         ,toCurrencyValue:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]})
         this.props.currencyRate(data);
+      }).catch((err)=>{
+        alert(err);
+        
       });
+    setInterval(() => {
+      fetch(
+      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=IDJHD0SY07N08B02`
+    )
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        if (data.Note) {
+          alert(
+            "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try again in few seconds"
+          );
+          return;
+        }
+        
+        this.setState({mainConvertedCurrencyValue:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
+        fromCurrencyValue:1
+        ,toCurrencyValue:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]})
+        this.props.currencyRate(data);
+      }).catch((err)=>{
+        alert(err);
+        
+      });
+    }, 60000);
+    
   }
   handleHover = (e, node) => {
     var input_wrapper = document.getElementsByClassName(node);
@@ -206,6 +215,17 @@ export class currencyInput extends Component {
       }
     );
   };
+  swapCurrency=(data)=>{
+    this.setState({mainConvertedCurrencyValue:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
+    fromCurrencyValue:1
+    ,toCurrencyValue:data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
+    selectedFrom:this.state.selectedTo,
+    selectedFromFlag:this.state.selectedToFlag,
+    selectedTo:this.state.selectedFrom,
+    selectedToFlag:this.state.selectedFromFlag,
+  })
+    this.props.currencyRate(data);
+  }
   calculateCurrency=(e)=>{
     if (isNaN(e.target.value)) {
       alert("Please enter a number ");
@@ -249,7 +269,7 @@ export class currencyInput extends Component {
                 onMouseLeave={e => this.handleLeave(e, "panel_input")}
                 onClick={e => this.handleDown(e, "panel_input")}
                 type="text"
-                value={this.state.toCurrencyValue}
+                value={Math.floor(this.state.toCurrencyValue*100000)/100000}
                 onChange={()=>{}}
               />
               <div className="panel_currency">
@@ -270,7 +290,7 @@ export class currencyInput extends Component {
                 currency={this.state.selectedFrom}
                 flag={this.state.selectedFromFlag}
               />
-              <SwapIcon />
+              <SwapIcon swapCurrency={this.swapCurrency} from={this.state.selectedFrom} to={this.state.selectedTo}/>
               <DropdownHead
                 selected={this.selectedTo}
                 convert={"To"}
@@ -281,14 +301,13 @@ export class currencyInput extends Component {
               />
             </div>
           </div>
-
-          <div className="currency_input5">
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem sed
-              odit numquam? Et, dicta voluptas! Beatae dicta alias deserunt.
-              Minima.
-            </p>
+          <div className="panel_input_wrapper">
+            <div className="exchange_rate">
+            <h3>  <span>1 {this.state.selectedFrom } ➡ </span><span> {Math.floor(this.state.mainConvertedCurrencyValue*100000)/100000} {this.state.selectedTo}</span></h3>
+            </div>
           </div>
+
+          
         </div>
         <style jsx>{`
           .panel {
@@ -336,6 +355,8 @@ export class currencyInput extends Component {
           }
           .panel_currency span {
             color: #829ca9;
+            font-family: "Poppins",sans-serif;
+            letter-spacing:0.5px;
           }
           .panel_input input {
             width: 100%;
@@ -404,7 +425,18 @@ export class currencyInput extends Component {
             font-family: "Poppins", sans-serif;
             letter-spacing: 0.5px;
           }
+          .exchange_rate{
+            display:flex;
+            align-items:center;
+            justify-content:center;
 
+          }
+          .exchange_rate span{
+            font-weight:700;
+            color:#2e4369;
+            font-size:22px;
+            letter-spacing:0.5px;
+          }
           .activeHover {
             border-color: #829ca9 !important;
           }
