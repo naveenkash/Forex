@@ -3,6 +3,7 @@ import Head from "next/head";
 import fetch from "isomorphic-unfetch";
 import Layout from "../layouts/main";
 import CurrencyInput from "../components/currencyInput";
+import CurrencyChart from "../components/currencyChart";
 // import '../styles/navbar.css'
 export class Home extends React.Component {
   constructor(props) {
@@ -56,6 +57,7 @@ export class Home extends React.Component {
                 </h1>
               </div>
               <CurrencyInput currencyRate={this.setCurrencyRate} />
+              <CurrencyChart from={this.state.from} to={this.state.to}/>
             </div>
           </div>
           <style jsx>

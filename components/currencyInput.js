@@ -35,10 +35,9 @@ export class currencyInput extends Component {
           }else if(country.CurrencyCode===""||country.CurrencyCode===("(none)")){
             return
           }
-          var obj = {name:country.CurrencyCode,flag:country.Flag,code:country.NumericCode}
+          var obj = {name:country.CurrencyCode,flag:country.Flag,code:country.NumericCode,country:country.Name}
            copyCurrencyArray = [...copyCurrencyArray,obj];
         })
-
         this.setState({all_currencies:copyCurrencyArray},()=>{
           this.setState({
             all_currencies2: [
@@ -48,20 +47,9 @@ export class currencyInput extends Component {
             ]
           })
         })
-       console.log(this.state.all_currencies);
-       
-    
-        // this.setState({all_currencies}
       }).catch((err)=>{
         alert(err);
       })
-    // this.setState({
-    //   all_currencies2: [
-    //     ...this.state.all_currencies.filter(item => {
-    //       return item.name !== "USD";
-    //     })
-    //   ]
-    // });
   
     fetch(
       `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=INR&apikey=IDJHD0SY07N08B02`
@@ -316,7 +304,7 @@ export class currencyInput extends Component {
             background: white;
             border-radius: 5px;
             padding: 30px;
-            margin-top: 30px;
+            margin: 30px 0;
           }
           .panel_body {
             width: 100%;

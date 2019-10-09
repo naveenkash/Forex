@@ -67,6 +67,7 @@ export class currencydropdown extends Component {
                         onClick={e => {
                           this.setCurrency(e, currency);
                         }}
+                        title={currency.country}
                       >
                         <div className="currency_item">
                           <div className="currency_flag">
@@ -95,6 +96,7 @@ export class currencydropdown extends Component {
                         onClick={e => {
                           this.setCurrency(e, currency);
                         }}
+                        title={currency.country}
                       >
                         <div className="currency_item">
                           <div className="currency_flag">
