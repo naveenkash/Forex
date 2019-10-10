@@ -11,13 +11,13 @@ export class currencyChart extends Component {
   }
   componentDidMount() {
     fetch(
-      `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${this.props.from}&to_symbol=${this.props.to}&apikey=VOT3RRAJ6BT3YJI6`
+      `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${this.props.from}&to_symbol=${this.props.to}&apikey=${process.env.REACT_APP_API_KEY_2}`
     )
       .then(res => {
         return res.json();
       })
       .then(data => {
-        if (data.Note) {
+        if (data.Note||data["Error Message"]) {
           alert(
             "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try agian in few seconds"
           );
@@ -73,12 +73,13 @@ export class currencyChart extends Component {
         cornerRadius: 2,
         intersect: false,
         callbacks: {
-          label: function(tooltipItem, data) {
-            var label = `1 ${from} ➡ ${data.datasets[tooltipItem.datasetIndex].data} ${to}`;
-
-            return label;
+          title: function(tooltipItem) {
+            return tooltipItem[0].xLabel;
+          },
+          label: function(tooltipItem) {
+              return `1 ${from} ➡  ${Number(tooltipItem.yLabel)} ${to}`;
           }
-        }
+      }
       },
       hover: {
         mode: "index",
@@ -103,10 +104,6 @@ export class currencyChart extends Component {
           {
             display: true,
             ticks: {
-              //    type: "invertedLinear", // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
-              // display: true,
-              // position: "right",
-              // reverse:true,
               fontColor: "#ffffff",
               fontSize: 14
             },
@@ -130,8 +127,15 @@ export class currencyChart extends Component {
       scaleStartValue: 200
     };
     return (
-      <div>
+      <div className="data_chart">
         <Line data={data} width={1100} height={400} options={options} />
+        <style jsx>{`
+        .data_chart{
+          position:relative;
+          width:100%;
+          height:auto;
+        }
+        `}</style>
       </div>
     );
   }

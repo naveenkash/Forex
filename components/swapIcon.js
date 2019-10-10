@@ -1,7 +1,7 @@
 import React from "react";
 function fetchReverseCurrency(props) {
   fetch(
-    `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${props.to}&to_currency=${props.from}&apikey=IDJHD0SY07N08B02`
+    `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${props.to}&to_currency=${props.from}&apikey=${process.env.REACT_APP_API_KEY_1}`
   )
     .then(res => {
       return res.json();
@@ -16,7 +16,6 @@ function fetchReverseCurrency(props) {
       props.swapCurrency(data);
     }).catch((err)=>{
       alert(err);
-      
     });
 }
 function swapIcon(props) {

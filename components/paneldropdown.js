@@ -8,16 +8,11 @@ class paneldropdown extends React.Component {
       currentCurr: this.props.currency,
       currentFlag: this.props.flag,
       convert: this.props.convert,
-      showDropDown: false,
+      // showDropDown: false,
      
     };
   }
- 
 
- twoMethod=(e)=>{
-  this.handleDown(e, "panel_drop_option");
-  this.showDropDown(e);
- }
   handleHover = (e, node) => {
     var input_wrapper = document.getElementsByClassName(node);
     for (let i = 0; i < input_wrapper.length; i++) {
@@ -46,20 +41,21 @@ class paneldropdown extends React.Component {
     e.currentTarget.parentNode.classList.remove("activeHover");
     e.currentTarget.parentNode.classList.remove("normalBorder");
     e.currentTarget.parentNode.classList.add("activeFocus");
+    this.showDropDown();
   };
-  showDropDown = e => {
-    this.setState({ showDropDown: !this.state.showDropDown });
+  showDropDown = () => {
+    
+    this.props.showDropDown(true);
   };
  
   setCurrency=(currency)=>{
-    // this.setState({currentCurr:currency.name,currentFlag:currency.flag});
     this.props.removeEl(currency);
     this.props.selected(currency);
   }
-  hideCurr=(hide)=>{
-    this.setState({ showDropDown: hide });
+  hideCurrency=(e)=>{
+    // e.stopPropagation();
+    this.props.hideDropDown(false);
   }
- 
   render() {
     return (
       <div  className="panel_dropdown">
@@ -68,11 +64,11 @@ class paneldropdown extends React.Component {
         </div>
         <div className="panel_drop_option">
         {(() => {
-              if (!this.state.showDropDown) {
+              if (!this.props.showDrop) {
                 return null;
               } else {
                return(
-                <CurrencyItems  hideCurr={this.hideCurr} dropCurrency={this.setCurrency}currencies={this.props.all_currencies} />
+                <CurrencyItems dropCurrency={this.setCurrency} hideCurrency ={(e)=>{this.hideCurrency(e)}}currencies={this.props.all_currencies} />
                )
               }
             })()}
@@ -80,14 +76,14 @@ class paneldropdown extends React.Component {
             className="panel_drop_select"
             onMouseEnter={e => this.handleHover(e, "panel_drop_option")}
             onMouseLeave={e => this.handleLeave(e, "panel_drop_option")}
-            onClick={e=>{this.twoMethod(e)}}
+            onClick={e=>{this.handleDown(e,"panel_drop_option")}}
           >
             
             <div className="panel_flag">
               <img src={this.props.flag} alt="" />
             </div>
             <div className="panel_curr_info">
-              <span>{ this.props.currency}</span>
+              <span>{this.props.currency}</span>
             </div>
             <div className="drop_arrow">
               <i>

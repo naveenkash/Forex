@@ -14,8 +14,11 @@ export class currencydropdown extends Component {
     this.setState({ currencies: this.props.currencies });
   }
 
-  setCurrency = (e, currency) => {
+  setCurrency = currency => {
+    // e.stopPropagation();
+
     this.props.dropCurrency(currency);
+    this.props.hideCurrency(false);
   };
   UNSAFE_componentWillReceiveProps() {
     var res = [...this.props.currencies];
@@ -38,9 +41,9 @@ export class currencydropdown extends Component {
 
     this.setState({ currencies: newCuurencyArray });
   };
-  hideCurr = () => {
-    this.props.hideCurr(false);
-  };
+  // hideCurr = () => {
+  //   this.props.hideCurr(false);
+  // };
   render() {
     return (
       <div className="currency_dropdown">
@@ -53,7 +56,7 @@ export class currencydropdown extends Component {
             placeholder="Search..."
           />
         </div>
-        <div onClick={this.hideCurr} className="all_currrency">
+        <div className="all_currrency">
           <ul className="currency_list">
             {(() => {
               if (!this.state.showFullList) {
@@ -61,12 +64,10 @@ export class currencydropdown extends Component {
               } else {
                 return (
                   <div>
-                    {this.props.currencies.map(currency => (
+                    {this.props.currencies.map((currency, i) => (
                       <li
-                        key={currency.code}
-                        onClick={e => {
-                          this.setCurrency(e, currency);
-                        }}
+                        key={i}
+                        onClick={() => {this.setCurrency(currency)}}
                         title={currency.country}
                       >
                         <div className="currency_item">
@@ -90,12 +91,10 @@ export class currencydropdown extends Component {
               } else {
                 return (
                   <div>
-                    {this.state.currencies.map(currency => (
+                    {this.state.currencies.map((currency, i) => (
                       <li
-                        key={currency.name}
-                        onClick={e => {
-                          this.setCurrency(e, currency);
-                        }}
+                        key={i}
+                        onClick={()=>{this.setCurrency(currency)}}
                         title={currency.country}
                       >
                         <div className="currency_item">

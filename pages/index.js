@@ -11,6 +11,7 @@ export class Home extends React.Component {
     this.state = {
       from: "USD",
       to: "INR",
+      hideDropDown:false,
     };
   }
   UNSAFE_componentWillMount() {
@@ -40,14 +41,43 @@ export class Home extends React.Component {
     }, () => {
     });
   };
+  hidePanel=(e)=>{
+    // e.persist();
+    // e.stopPropagation();
+    // console.log(e.target);
+    
+    var panel_input = document.getElementsByClassName('panel_input');
+    var panel_drop_option = document.getElementsByClassName('panel_drop_option');
+    for (let i = 0; i < panel_input.length; i++) {
+      const element = panel_input[i];
+      if (element.classList.contains("activeFocus")) {
+        element.classList.remove("activeFocus");
+      }
+    }
+    for (let i = 0; i < panel_drop_option.length; i++) {
+      const element = panel_drop_option[i];
+      if (element.classList.contains("activeFocus")) {
+        element.classList.remove("activeFocus");
+      }
+    }
+    // window.addEventListener('click',(e)=>{
+    //   e.stopPropagation();
+
+      // if (e.currenttarget.classList.contains('panel_drop_select')) {
+      //   return;
+      // }
+      // this.setState({hideDropDown:false})
+    // })
+  }
+  //  hidePanelInput={this.hidePanel}
   render() {
     return (
-      <Layout>
+      <Layout >
         <div>
           <Head>
             <title>Currency Converter</title>
           </Head>
-          <div className="converter">
+          <div className="converter" onClick={this.hidePanel}>
             <div className="container">
               <div className="curr_head">
                 <h1>
@@ -56,7 +86,7 @@ export class Home extends React.Component {
                   <span className="to">{this.state.to}</span>
                 </h1>
               </div>
-              <CurrencyInput currencyRate={this.setCurrencyRate} />
+              <CurrencyInput hideDropFromClickOnWindow={this.state.hideDropDown} currencyRate={this.setCurrencyRate} />
               <CurrencyChart from={this.state.from} to={this.state.to}/>
             </div>
           </div>
@@ -76,6 +106,15 @@ export class Home extends React.Component {
                 color: white;
                 font-family: "Poppins", sans-serif;
                 letter-spacing: 1px;
+              }
+              .activeHover {
+                border-color: #829ca9 !important;
+              }
+              .activeFocus {
+                border-color: #17bfff !important;
+              }
+              .normalBorder {
+                border-color: #d3d5d8;
               }
             `}
           </style>
