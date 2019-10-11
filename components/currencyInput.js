@@ -29,15 +29,12 @@ export class currencyInput extends Component {
         if (!res.ok) {
           throw Error("AN ERROR OCCURED");
         }
-
         return res.json();
       })
       .then(data => {
         var copyCurrencyArray = [];
         data.Response.map(country => {
-          if (country.CurrencyCode === "GBP" && country.NumericCode !== 826) {
-            return;
-          } else if (
+          if (
             country.CurrencyCode === "" ||
             country.CurrencyCode === "(none)"
           ) {
@@ -121,8 +118,6 @@ export class currencyInput extends Component {
     }, 60000);
   }
   UNSAFE_componentWillReceiveProps() {
-    console.log(this.props.hideDropFromClickOnWindow);
-
     this.setState({
       showDrop1: this.props.hideDropFromClickOnWindow,
       showDrop2: this.props.hideDropFromClickOnWindow
@@ -264,19 +259,26 @@ export class currencyInput extends Component {
       toCurrencyValue: CurrencyCalculated
     });
   };
-  showDropDown1 = show => {
+  showDropDown1 =(show,e) => {
+    
+    console.log(show,e);
+    e.stopPropagation();
     this.setState({ showDrop1: show, showDrop2: false });
   };
-  showDropDown2 = show => {
+  showDropDown2 = (show,e) => {
+    console.log(show,e);
+    
+    e.stopPropagation();
     this.setState({ showDrop1: false, showDrop2: show });
   };
   hideDropDown = hide => {
     this.setState({ showDrop1: hide, showDrop2: hide });
   };
-
-  // hideDropDown2=(hide)=>{
-  //   this.setState({hideDrop1:false,hideDrop2:hide})
+  // hideCurrencyDropdwn=()=>{
+    
+  //   this.setState({ showDrop1: false, showDrop2: false });
   // }
+
   render() {
     return (
       <div className="panel">
@@ -324,6 +326,7 @@ export class currencyInput extends Component {
             // onClick={e => this.hideBorderColor(e, "panel_drop_option")}
           >
             <div className="panel_select">
+            {/* <div className="panel_select" onClick={this.hideCurrencyDropdwn}> */}
               <DropdownHead
                 showDrop={this.state.showDrop1}
                 showDropDown={this.showDropDown1}
@@ -358,9 +361,7 @@ export class currencyInput extends Component {
               <h3>
                 <span>1 {this.state.selectedFrom} ➡ </span>
                 <span>
-                  {Math.floor(this.state.mainConvertedCurrencyValue * 100000) /
-                    100000}
-                  {this.state.selectedTo}
+                  {`${Math.floor(this.state.mainConvertedCurrencyValue * 100000) / 100000} ${this.state.selectedTo}`}
                 </span>
               </h3>
             </div>

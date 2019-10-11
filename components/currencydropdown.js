@@ -15,11 +15,10 @@ export class currencydropdown extends Component {
   }
 
   setCurrency = currency => {
-    // e.stopPropagation();
-
     this.props.dropCurrency(currency);
     this.props.hideCurrency(false);
   };
+
   UNSAFE_componentWillReceiveProps() {
     var res = [...this.props.currencies];
     var copyArr = [...this.state.currencies];
@@ -30,6 +29,8 @@ export class currencydropdown extends Component {
     });
   }
   findCurrency = e => {
+    e.stopPropagation();
+    
     if (e.target.value === "") {
       this.setState({ showFullList: true });
     } else {

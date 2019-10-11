@@ -4,6 +4,7 @@ import fetch from "isomorphic-unfetch";
 import Layout from "../layouts/main";
 import CurrencyInput from "../components/currencyInput";
 import CurrencyChart from "../components/currencyChart";
+import CurrencyConversion from "../components/currencyConversion";
 // import '../styles/navbar.css'
 export class Home extends React.Component {
   constructor(props) {
@@ -11,7 +12,8 @@ export class Home extends React.Component {
     this.state = {
       from: "USD",
       to: "INR",
-      hideDropDown:false,
+      hideDropDown: false,
+      currencyRate: []
     };
   }
   UNSAFE_componentWillMount() {
@@ -22,32 +24,39 @@ export class Home extends React.Component {
         return res.json();
       })
       .then(data => {
-        this.setState(
-          {
-            from:
-              data["Realtime Currency Exchange Rate"]["1. From_Currency Code"],
-            to: data["Realtime Currency Exchange Rate"]["3. To_Currency Code"]
-          }
-        );
-      }).catch((err)=>{
+        this.setState({
+          from:
+          data["Realtime Currency Exchange Rate"]["1. From_Currency Code"],
+          to: data["Realtime Currency Exchange Rate"]["3. To_Currency Code"],
+          currencyRate: data
+        });
+      })
+      .catch(err => {
         alert(err);
-        
       });
   }
   setCurrencyRate = currencyRate => {
-    this.setState({
-        from: currencyRate["Realtime Currency Exchange Rate"]["1. From_Currency Code"],
-        to: currencyRate["Realtime Currency Exchange Rate"]["3. To_Currency Code"]
-    }, () => {
-    });
+
+    this.setState(
+      {
+        from:
+          currencyRate["Realtime Currency Exchange Rate"][
+            "1. From_Currency Code"
+          ],
+        to:
+          currencyRate["Realtime Currency Exchange Rate"][
+            "3. To_Currency Code"
+          ],
+        currencyRate: currencyRate
+      },
+      () => {}
+    );
   };
-  hidePanel=(e)=>{
-    // e.persist();
-    // e.stopPropagation();
-    // console.log(e.target);
-    
-    var panel_input = document.getElementsByClassName('panel_input');
-    var panel_drop_option = document.getElementsByClassName('panel_drop_option');
+  hidePanel = () => {
+    var panel_input = document.getElementsByClassName("panel_input");
+    var panel_drop_option = document.getElementsByClassName(
+      "panel_drop_option"
+    );
     for (let i = 0; i < panel_input.length; i++) {
       const element = panel_input[i];
       if (element.classList.contains("activeFocus")) {
@@ -60,19 +69,10 @@ export class Home extends React.Component {
         element.classList.remove("activeFocus");
       }
     }
-    // window.addEventListener('click',(e)=>{
-    //   e.stopPropagation();
-
-      // if (e.currenttarget.classList.contains('panel_drop_select')) {
-      //   return;
-      // }
-      // this.setState({hideDropDown:false})
-    // })
-  }
-  //  hidePanelInput={this.hidePanel}
+  };
   render() {
     return (
-      <Layout >
+      <Layout>
         <div>
           <Head>
             <title>Currency Converter</title>
@@ -82,14 +82,18 @@ export class Home extends React.Component {
               <div className="curr_head">
                 <h1>
                   <span className="from">{this.state.from} </span>
-                  <span className="tomid">to</span>{" "}
-                  <span className="to">{this.state.to}</span>
+                  <span className="tomid">to</span>
+                  <span className="to"> {this.state.to}</span>
                 </h1>
               </div>
-              <CurrencyInput hideDropFromClickOnWindow={this.state.hideDropDown} currencyRate={this.setCurrencyRate} />
-              <CurrencyChart from={this.state.from} to={this.state.to}/>
+              <CurrencyInput
+                hideDropFromClickOnWindow={this.state.hideDropDown}
+                currencyRate={this.setCurrencyRate}
+              />
+              <CurrencyChart from={this.state.from} to={this.state.to} />
             </div>
           </div>
+          <CurrencyConversion conversionData={this.state.currencyRate} />
           <style jsx>
             {`
               .converter {

@@ -41,11 +41,11 @@ class paneldropdown extends React.Component {
     e.currentTarget.parentNode.classList.remove("activeHover");
     e.currentTarget.parentNode.classList.remove("normalBorder");
     e.currentTarget.parentNode.classList.add("activeFocus");
-    this.showDropDown();
+    this.showDropDown(e);
   };
-  showDropDown = () => {
+  showDropDown = (e) => {
     
-    this.props.showDropDown(true);
+    this.props.showDropDown(true,e);
   };
  
   setCurrency=(currency)=>{
