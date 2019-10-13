@@ -1,7 +1,7 @@
 import React from "react";
-function fetchReverseCurrency(props) {
+function fetchReverseCurrency(propsData) {
   fetch(
-    `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${props.to}&to_currency=${props.from}&apikey=${process.env.REACT_APP_API_KEY_1}`
+    `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${propsData.to}&to_currency=${propsData.from}&apikey=${process.env.REACT_APP_API_KEY_1}`
   )
     .then(res => {
       return res.json();
