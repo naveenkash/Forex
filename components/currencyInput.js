@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import DropdownHead from "./paneldropdown";
-// import SwapIcon from "./swapicon";
+import SwapIcon from "./swapicon";
 export class currencyInput extends Component {
   constructor(props) {
     super(props);
@@ -338,11 +338,11 @@ export class currencyInput extends Component {
                 currency={this.state.selectedFrom}
                 flag={this.state.selectedFromFlag}
               />
-              {/* <SwapIcon
+              <SwapIcon
                 swapCurrency={this.swapCurrency}
                 from={this.state.selectedFrom}
                 to={this.state.selectedTo}
-              /> */}
+              />
               <DropdownHead
                 showDrop={this.state.showDrop2}
                 showDropDown={this.showDropDown2}
