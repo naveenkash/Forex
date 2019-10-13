@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "export": "next export",
-    "deploy": "npm run build && npm run export",
+    "deploy": "next build && next export",
     "start": "next start"
   },
   "dependencies": {
