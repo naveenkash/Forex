@@ -105,6 +105,13 @@ const Main = props => (
           stroke-dashoffset: 280;
           transform: rotate(360deg);
         }
+      
+        }
+        @media only screen and (max-width:1150px){
+          .container{
+            width:100%;
+            padding:0 24px;
+          }
     `}</style>
     <Nav />
     {props.children}

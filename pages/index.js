@@ -120,6 +120,11 @@ export class Home extends React.Component {
               .normalBorder {
                 border-color: #d3d5d8;
               }
+              @media only screen and (max-width:991px){
+                .converter{
+                  padding-top:40px;
+                }
+              }
             `}
           </style>
         </div>

@@ -259,15 +259,14 @@ export class currencyInput extends Component {
       toCurrencyValue: CurrencyCalculated
     });
   };
-  showDropDown1 =(show,e) => {
-    
-    console.log(show,e);
+  showDropDown1 = (show, e) => {
+    console.log(show, e);
     e.stopPropagation();
     this.setState({ showDrop1: show, showDrop2: false });
   };
-  showDropDown2 = (show,e) => {
-    console.log(show,e);
-    
+  showDropDown2 = (show, e) => {
+    console.log(show, e);
+
     e.stopPropagation();
     this.setState({ showDrop1: false, showDrop2: show });
   };
@@ -275,7 +274,7 @@ export class currencyInput extends Component {
     this.setState({ showDrop1: hide, showDrop2: hide });
   };
   // hideCurrencyDropdwn=()=>{
-    
+
   //   this.setState({ showDrop1: false, showDrop2: false });
   // }
 
@@ -321,49 +320,49 @@ export class currencyInput extends Component {
               </div>
             </div>
           </div>
-          <div
-            className="panel_input_wrapper"
-            // onClick={e => this.hideBorderColor(e, "panel_drop_option")}
-          >
-            <div className="panel_select">
-            {/* <div className="panel_select" onClick={this.hideCurrencyDropdwn}> */}
-              <DropdownHead
-                showDrop={this.state.showDrop1}
-                showDropDown={this.showDropDown1}
-                hideDropDown={this.hideDropDown}
-                selected={this.selectedFrom}
-                convert={"From"}
-                all_currencies={this.state.all_currencies}
-                removeEl={this.removeEl}
-                currency={this.state.selectedFrom}
-                flag={this.state.selectedFromFlag}
-              />
-              <SwapIcon
-                swapCurrency={this.swapCurrency}
-                from={this.state.selectedFrom}
-                to={this.state.selectedTo}
-              />
-              <DropdownHead
-                showDrop={this.state.showDrop2}
-                showDropDown={this.showDropDown2}
-                hideDropDown={this.hideDropDown}
-                selected={this.selectedTo}
-                convert={"To"}
-                all_currencies={this.state.all_currencies2}
-                currency={this.state.selectedTo}
-                removeEl={() => {}}
-                flag={this.state.selectedToFlag}
-              />
+          <div className="panel_select_wrapper">
+            <div className="panel_input_wrapper panel_select_item_wrapper">
+              <div className="panel_select">
+                <DropdownHead
+                  showDrop={this.state.showDrop1}
+                  showDropDown={this.showDropDown1}
+                  hideDropDown={this.hideDropDown}
+                  selected={this.selectedFrom}
+                  convert={"From"}
+                  all_currencies={this.state.all_currencies}
+                  removeEl={this.removeEl}
+                  currency={this.state.selectedFrom}
+                  flag={this.state.selectedFromFlag}
+                />
+                <SwapIcon
+                  swapCurrency={this.swapCurrency}
+                  from={this.state.selectedFrom}
+                  to={this.state.selectedTo}
+                />
+                <DropdownHead
+                  showDrop={this.state.showDrop2}
+                  showDropDown={this.showDropDown2}
+                  hideDropDown={this.hideDropDown}
+                  selected={this.selectedTo}
+                  convert={"To"}
+                  all_currencies={this.state.all_currencies2}
+                  currency={this.state.selectedTo}
+                  removeEl={() => {}}
+                  flag={this.state.selectedToFlag}
+                />
+              </div>
             </div>
-          </div>
-          <div className="panel_input_wrapper">
-            <div className="exchange_rate">
-              <h3>
-                <span>1 {this.state.selectedFrom} ➡ </span>
-                <span>
-                  {`${Math.floor(this.state.mainConvertedCurrencyValue * 100000) / 100000} ${this.state.selectedTo}`}
-                </span>
-              </h3>
+            <div className="panel_input_wrapper panel_select_item_wrapper">
+              <div className="exchange_rate">
+                <h3>
+                  <span>1 {this.state.selectedFrom} ➡ </span>
+                  <span>
+                    {`${Math.floor(
+                      this.state.mainConvertedCurrencyValue * 100000
+                    ) / 100000} ${this.state.selectedTo}`}
+                  </span>
+                </h3>
+              </div>
             </div>
           </div>
         </div>
@@ -387,7 +386,12 @@ export class currencyInput extends Component {
             width: 50%;
             padding: 0 10px;
           }
-
+          .panel_select_wrapper {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+          }
           .label_convert label {
             color: #919ea4;
             font-size: 15px;
@@ -436,14 +440,7 @@ export class currencyInput extends Component {
             width: 40%;
             cursor: pointer;
           }
-          .panel_drop_option {
-            width: 100%;
-            height: 45px;
-            margin-top: 3px;
-            border: 1px solid #d3d5d8;
-            transition: 0.1s;
-            border-radius: 3px;
-          }
+
           .panel_drop_select {
             height: 45px;
             width: 100%;
@@ -492,6 +489,7 @@ export class currencyInput extends Component {
             font-weight: 700;
             color: #2e4369;
             font-size: 22px;
+            font-family: "Noto Sans", sans-serif;
             letter-spacing: 0.5px;
           }
           .activeHover {
@@ -502,6 +500,39 @@ export class currencyInput extends Component {
           }
           .normalBorder {
             border-color: #d3d5d8;
+          }
+          @media only screen and (max-width: 1100px) {
+            .panel {
+              padding: 30px 20px;
+            }
+          }
+          @media only screen and (max-width: 767px) {
+            .panel {
+              background: none;
+              padding: 0;
+            }
+            .panel_input{
+              margin-bottom:18px;
+            }
+            .panel_select_item_wrapper {
+              width: 100%;
+            }
+            .panel_input input {
+              height: 45px;
+              font-size:16px;
+            }
+            .panel_currency {
+              height: 45px;
+            }
+            .exchange_rate span{
+              color:white;
+              font-size:16px;
+            }
+          }
+          @media only screen and (max-width:575px){
+            .panel_input_wrapper{
+              width:100%;
+            }
           }
         `}</style>
       </div>

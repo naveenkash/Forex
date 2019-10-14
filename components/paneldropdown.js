@@ -120,6 +120,7 @@ class paneldropdown extends React.Component {
             border-radius: 3px;
             position: relative;
           }
+          
           .panel_drop_select {
             height: 45px;
             width: 100%;
@@ -172,6 +173,12 @@ class paneldropdown extends React.Component {
           }
           .normalBorder {
             border-color: #d3d5d8;
+          }
+          @media only screen and (max-width:767px){
+           
+            .panel_drop_option{
+              background:white;
+            }
           }
         `}</style>
       </div>
