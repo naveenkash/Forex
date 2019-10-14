@@ -511,27 +511,27 @@ export class currencyInput extends Component {
               background: none;
               padding: 0;
             }
-            .panel_input{
-              margin-bottom:18px;
+            .panel_input {
+              margin-bottom: 18px;
             }
             .panel_select_item_wrapper {
               width: 100%;
             }
             .panel_input input {
               height: 45px;
-              font-size:16px;
+              font-size: 16px;
             }
             .panel_currency {
               height: 45px;
             }
-            .exchange_rate span{
-              color:white;
-              font-size:16px;
+            .exchange_rate span {
+              color: white;
+              font-size: 16px;
             }
           }
-          @media only screen and (max-width:575px){
-            .panel_input_wrapper{
-              width:100%;
+          @media only screen and (max-width: 575px) {
+            .panel_input_wrapper {
+              width: 100%;
             }
           }
         `}</style>
