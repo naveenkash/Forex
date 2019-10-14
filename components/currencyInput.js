@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import DropdownHead from "./paneldropdown";
-import SwapIcon from "./swapicon";
+import DropdownHead from "./paneldropdown.js";
+import SwapIcon from "./swapicon.js";
 export class currencyInput extends Component {
   constructor(props) {
     super(props);
