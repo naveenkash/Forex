@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-class swapIcon extends Component {
+export class swapicon extends Component {
   constructor(props){
     super(props);
   }
@@ -85,4 +85,4 @@ class swapIcon extends Component {
   }
 }
 
-export default swapIcon;
+export default swapicon;
