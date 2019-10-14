@@ -18,7 +18,7 @@ export class Home extends React.Component {
   }
   UNSAFE_componentWillMount() {
     fetch(
-      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=INR&apikey=IDJHD0SY07N08B02`
+      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=INR&apikey=${process.env.REACT_APP_API_KEY_1}`
     )
       .then(res => {
         return res.json();
@@ -26,7 +26,7 @@ export class Home extends React.Component {
       .then(data => {
         this.setState({
           from:
-          data["Realtime Currency Exchange Rate"]["1. From_Currency Code"],
+            data["Realtime Currency Exchange Rate"]["1. From_Currency Code"],
           to: data["Realtime Currency Exchange Rate"]["3. To_Currency Code"],
           currencyRate: data
         });
@@ -36,7 +36,6 @@ export class Home extends React.Component {
       });
   }
   setCurrencyRate = currencyRate => {
-
     this.setState(
       {
         from:
@@ -120,9 +119,9 @@ export class Home extends React.Component {
               .normalBorder {
                 border-color: #d3d5d8;
               }
-              @media only screen and (max-width:991px){
-                .converter{
-                  padding-top:40px;
+              @media only screen and (max-width: 991px) {
+                .converter {
+                  padding-top: 40px;
                 }
               }
             `}

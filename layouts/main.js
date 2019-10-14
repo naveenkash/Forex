@@ -1,9 +1,12 @@
 import React from "react";
 import Head from "next/head";
 import Nav from "../components/nav";
+
 // import '../styles/navbar.css'
 const Main = props => (
+  
   <div>
+  
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 

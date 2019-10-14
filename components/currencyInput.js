@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import DropdownHead from "./paneldropdown";
-import SwapIcon from "./swapicon";
+import SwapIcon from "./swapcurrency";
 export class currencyInput extends Component {
   constructor(props) {
     super(props);
@@ -64,17 +64,14 @@ export class currencyInput extends Component {
       });
 
     fetch(
-      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=INR&apikey=${process.env.REACT_APP_API_KEY_1}`
+      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=INR&apikey=${process.env.API_KEY_1}`
     )
       .then(res => {
         return res.json();
       })
       .then(data => {
         if (data.Note) {
-          alert(
-            "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try again in few seconds"
-          );
-          return;
+          throw new Error("Exceeded api call limit try again in a moment");
         }
         this.setState({
           mainConvertedCurrencyValue:
@@ -97,10 +94,7 @@ export class currencyInput extends Component {
         })
         .then(data => {
           if (data.Note) {
-            alert(
-              "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try again in few seconds"
-            );
-            return;
+            throw new Error("Exceeded api call limit try again in a moment");
           }
 
           this.setState({
@@ -174,21 +168,14 @@ export class currencyInput extends Component {
       },
       () => {
         fetch(
-          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=IDJHD0SY07N08B02`
+          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=demo`
         )
           .then(res => {
             return res.json();
           })
           .then(data => {
-            console.log(
-              `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=IDJHD0SY07N08B02`
-            );
-
             if (data.Note || data["Error Message"]) {
-              alert(
-                "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try agian in few seconds"
-              );
-              return;
+              throw new Error("Exceeded api call limit try again in a moment");
             }
             console.log(data);
 
@@ -209,17 +196,15 @@ export class currencyInput extends Component {
       { selectedTo: currency.name, selectedToFlag: currency.flag },
       () => {
         fetch(
-          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=IDJHD0SY07N08B02`
+          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=demo`
         )
           .then(res => {
             return res.json();
           })
           .then(data => {
             if (data.Note || data["Error Message"]) {
-              alert(
-                "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try agian in few seconds"
-              );
-              return;
+              // console.log('Exceeded api call limit try again in a moment ');
+              throw new Error("Exceeded api call limit try again in a moment");
             }
             this.setState({
               mainConvertedCurrencyValue:
@@ -273,12 +258,10 @@ export class currencyInput extends Component {
   hideDropDown = hide => {
     this.setState({ showDrop1: hide, showDrop2: hide });
   };
-  // hideCurrencyDropdwn=()=>{
-
-  //   this.setState({ showDrop1: false, showDrop2: false });
-  // }
 
   render() {
+    {    console.log(process.env.REACT_APP_API_KEY_1), console.log(process.env.REACT_APP_API_KEY_2),console.log(process.env.REACT_APP_API_KEY_3)
+    }
     return (
       <div className="panel">
         <div className="panel_body">

@@ -1,21 +1,23 @@
 import React, { Component } from "react";
-export class swapicon extends Component {
+export class swapcurrency extends Component {
   constructor(props){
     super(props);
   }
   fetchReverseCurrency = () => {
     fetch(
-      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.props.to}&to_currency=${this.props.from}&apikey=${process.env.REACT_APP_API_KEY_1}`
+      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.props.to}&to_currency=${this.props.from}&apikey=demo`
     )
       .then(res => {
         return res.json();
       })
       .then(data => {
+        
         if (data.Note) {
-          alert(
-            "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try again in few seconds"
-          );
-          return;
+         throw new Error('Exceeded api call limit try again in a moment')
+
+          // alert(
+          //   "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try again in few seconds"
+          // );
         }
         this.props.swapCurrency(data);
       })
@@ -85,4 +87,4 @@ export class swapicon extends Component {
   }
 }
 
-export default swapicon;
+export default swapcurrency;
