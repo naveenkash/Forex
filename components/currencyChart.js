@@ -130,6 +130,7 @@ export class currencyChart extends Component {
           {
             display: true,
             ticks: {
+              // maxTicksLimit: 20,
               reverse: true,
               fontColor: "#ffffff",
               fontSize: 14
@@ -180,13 +181,13 @@ export class currencyChart extends Component {
           } else if (this.state.show) {
             return (
               // <div className="loading">
-                <h3 className="chart_error">Can't Load Chart! Try Refreshing The Page Again In a Moment</h3>
+              <h3 className="chart_error">
+                Can't Load Chart! Try Refreshing The Page Again In a Moment
+              </h3>
               // </div>
             );
           } else {
-            return (
-              <Line data={data} width={1100} height={400} options={options} />
-            );
+            return <Line data={data} options={options} />;
           }
         })()}
 
@@ -194,12 +195,27 @@ export class currencyChart extends Component {
           .data_chart {
             position: relative;
             width: 100%;
-            height: auto;
+            height: 400px;
           }
         .chart_error{
           color:white;
         }
          
+          }
+          @media only screen and (max-width:667px){
+            .data_chart{
+              height:300px;
+            }
+          }
+          @media only screen and (max-width:500px){
+            .data_chart{
+              height:250px;
+            }
+          }
+          @media only screen and (max-width:400px){
+            .data_chart{
+              height:200px;
+            }
           }
         `}</style>
       </div>

@@ -115,7 +115,7 @@ const Main = props => (
         @media only screen and (max-width:1150px){
           .container{
             width:100%;
-            padding:0 24px;
+            padding:0 15px;
           }
     `}</style>
     <Nav />

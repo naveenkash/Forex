@@ -155,6 +155,13 @@ export class currencyConversion extends Component {
             text-align: right;
             color: #3b4f72;
           }
+          @media only screen and (max-width:667px){
+            .currency_conversion{
+              grid-template-columns:1fr;
+              grid-row-gap:20px;
+              padding:60px 0;
+            }
+          }
         `}</style>
       </div>
     );

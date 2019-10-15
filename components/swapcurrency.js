@@ -5,7 +5,7 @@ export class swapcurrency extends Component {
   }
   fetchReverseCurrency = () => {
     fetch(
-      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.props.to}&to_currency=${this.props.from}&apikey=demo`
+      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.props.to}&to_currency=${this.props.from}&apikey=${process.env.REACT_APP_API_KEY_3}`
     )
       .then(res => {
         return res.json();

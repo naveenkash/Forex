@@ -168,16 +168,16 @@ export class currencyInput extends Component {
       },
       () => {
         fetch(
-          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=demo`
+          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=${process.env.REACT_APP_API_KEY_1}`
         )
           .then(res => {
             return res.json();
           })
           .then(data => {
             if (data.Note || data["Error Message"]) {
-              throw new Error("Exceeded api call limit try again in a moment");
+             throw new Error("Exceeded api call limit try again in a moment");
+              
             }
-            console.log(data);
 
             this.setState({
               mainConvertedCurrencyValue:
@@ -196,7 +196,7 @@ export class currencyInput extends Component {
       { selectedTo: currency.name, selectedToFlag: currency.flag },
       () => {
         fetch(
-          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=demo`
+          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=${process.env.REACT_APP_API_KEY_2}`
         )
           .then(res => {
             return res.json();
@@ -245,7 +245,6 @@ export class currencyInput extends Component {
     });
   };
   showDropDown1 = (show, e) => {
-    console.log(show, e);
     e.stopPropagation();
     this.setState({ showDrop1: show, showDrop2: false });
   };
@@ -260,8 +259,7 @@ export class currencyInput extends Component {
   };
 
   render() {
-    {    console.log(process.env.REACT_APP_API_KEY_1), console.log(process.env.REACT_APP_API_KEY_2),console.log(process.env.REACT_APP_API_KEY_3)
-    }
+   
     return (
       <div className="panel">
         <div className="panel_body">
@@ -515,6 +513,7 @@ export class currencyInput extends Component {
           @media only screen and (max-width: 575px) {
             .panel_input_wrapper {
               width: 100%;
+              padding:0;
             }
           }
         `}</style>
