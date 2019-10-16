@@ -11,7 +11,7 @@ export class currencyChart extends Component {
       show: false
     };
   }
-  componentDidMount() {
+  fetchChartData=()=>{
     fetch(
       `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${this.props.from}&to_symbol=${this.props.to}&apikey=${process.env.REACT_APP_API_KEY_3}`
     )
@@ -21,8 +21,10 @@ export class currencyChart extends Component {
       .then(data => {
         if (data.Note || data["Error Message"]) {
           this.setState({ show: true, loading: false });
-          alert("Chart Can't be Loaded Beacuse Of Api Call Limit");
-          return;
+          data={}
+          // alert("Chart Can't be Loaded Beacuse Of Api Call Limit");
+          throw new Error('Chart Can t be Loaded Beacuse Of Api Call Limit');
+       
         }
         this.setState({ loading: false });
         var tempArrFoData = [];
@@ -77,6 +79,13 @@ export class currencyChart extends Component {
         alert(err);
       });
   }
+  componentDidMount() {
+    this.fetchChartData();
+  }
+  
+  // UNSAFE_componentWillReceiveProps(){
+  //   this.fetchChartData();
+  // }
   render() {
     const { from, to } = this.props;
     var data = {
