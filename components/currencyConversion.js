@@ -23,8 +23,6 @@ export class currencyConversion extends Component {
   }
 
   render() {
-    console.log(this.props.conversionData);
-    
     if (this.props.conversionData <= 0) {
       return (
         <div className="container">
