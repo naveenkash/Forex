@@ -11,20 +11,23 @@ export class currencyChart extends Component {
       show: false
     };
   }
-  fetchChartData=()=>{
+  fetchChartData = (from,to) => {
+    console.log(this.props.from, this.props.to);
+
     fetch(
-      `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${this.props.from}&to_symbol=${this.props.to}&apikey=${process.env.REACT_APP_API_KEY_3}`
+      `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${from}&to_symbol=${to}&apikey=${process.env.REACT_APP_API_KEY_3}`
     )
       .then(res => {
         return res.json();
       })
       .then(data => {
+        console.log(data);
+
         if (data.Note || data["Error Message"]) {
           this.setState({ show: true, loading: false });
-          data={}
+          data = {};
           // alert("Chart Can't be Loaded Beacuse Of Api Call Limit");
-          throw new Error('Chart Can t be Loaded Beacuse Of Api Call Limit');
-       
+          throw new Error("Chart Can t be Loaded Beacuse Of Api Call Limit");
         }
         this.setState({ loading: false });
         var tempArrFoData = [];
@@ -46,7 +49,7 @@ export class currencyChart extends Component {
         ];
         for (var key in dataKey) {
           // console.log(key);
-          
+
           if (dataKey.hasOwnProperty(key)) {
             var splittedKey = key.split("-");
             dates.push([splittedKey[1], splittedKey[2]].join());
@@ -80,11 +83,14 @@ export class currencyChart extends Component {
         this.setState({ show: true, loading: false });
         alert(err);
       });
-  }
+  };
   componentDidMount() {
-    this.fetchChartData();
+    this.fetchChartData(this.props.from,this.props.to);
   }
-  
+
+  UNSAFE_componentWillReceiveProps(newProps) {
+    this.fetchChartData(newProps.from,newProps.to);
+  }
   render() {
     const { from, to } = this.props;
     var data = {
@@ -194,7 +200,14 @@ export class currencyChart extends Component {
               // </div>
             );
           } else {
-            return <Line data={data} options={options} />;
+            return (
+              <Line
+                ref={reference => (this.chartReference = reference)}
+                key={this.props.from}
+                data={data}
+                options={options}
+              />
+            );
           }
         })()}
 

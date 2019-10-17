@@ -16,13 +16,13 @@ export class Home extends React.Component {
       currencyRate: []
     };
   }
-  setDataToState =(data)=>{
+  setDataToState = data => {
     this.setState({
       from: data.quotes[0].base_currency,
       to: data.quotes[0].quote_currency,
       currencyRate: data
-    });
-  }
+    },()=>{});
+  };
   UNSAFE_componentWillMount() {
     fetch(
       `https://www1.oanda.com/rates/api/v2/rates/spot.json?api_key=${process.env.REACT_APP_API_KEY_1}&base=USD&quote=INR`
@@ -31,16 +31,16 @@ export class Home extends React.Component {
         return res.json();
       })
       .then(data => {
-        console.log(data);
-        
-        this.setDataToState(data)
+        this.setDataToState(data);
       })
       .catch(err => {
         alert(err);
       });
   }
   setCurrencyRate = currencyRate => {
-    this.setDataToState(currencyRate)
+    console.log(currencyRate);
+
+    this.setDataToState(currencyRate);
   };
   hidePanel = () => {
     var panel_input = document.getElementsByClassName("panel_input");
@@ -69,7 +69,7 @@ export class Home extends React.Component {
           </Head>
           <div className="converter" onClick={this.hidePanel}>
             <div className="container">
-              <div className="curr_head"> 
+              <div className="curr_head">
                 <h1>
                   <span className="from">{this.state.from} </span>
                   <span className="tomid">to</span>
