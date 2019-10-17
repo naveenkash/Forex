@@ -45,6 +45,8 @@ export class currencyChart extends Component {
           "Dec"
         ];
         for (var key in dataKey) {
+          // console.log(key);
+          
           if (dataKey.hasOwnProperty(key)) {
             var splittedKey = key.split("-");
             dates.push([splittedKey[1], splittedKey[2]].join());
@@ -83,16 +85,12 @@ export class currencyChart extends Component {
     this.fetchChartData();
   }
   
-  // UNSAFE_componentWillReceiveProps(){
-  //   this.fetchChartData();
-  // }
   render() {
     const { from, to } = this.props;
     var data = {
       labels: this.state.labelsYAxis,
       datasets: [
         {
-          //   label: `Historical Rates Of ${this.props.to}`,
           data: this.state.data,
           fill: false,
           borderColor: ["#2ed06e"],

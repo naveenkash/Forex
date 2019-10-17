@@ -5,20 +5,14 @@ export class swapcurrency extends Component {
   }
   fetchReverseCurrency = () => {
     fetch(
-      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.props.to}&to_currency=${this.props.from}&apikey=${process.env.REACT_APP_API_KEY_3}`
+      `https://www1.oanda.com/rates/api/v2/rates/spot.json?api_key=${process.env.REACT_APP_API_KEY_1}&base=${this.props.to}&quote=${this.props.from}`
     )
       .then(res => {
         return res.json();
       })
       .then(data => {
+        console.log(data);
         
-        if (data.Note) {
-         throw new Error('Exceeded api call limit try again in a moment')
-
-          // alert(
-          //   "This is free api so it limit the number of request sent. Sorry for the inconvenience. Try again in few seconds"
-          // );
-        }
         this.props.swapCurrency(data);
       })
       .catch(err => {

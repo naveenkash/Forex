@@ -16,40 +16,31 @@ export class Home extends React.Component {
       currencyRate: []
     };
   }
+  setDataToState =(data)=>{
+    this.setState({
+      from: data.quotes[0].base_currency,
+      to: data.quotes[0].quote_currency,
+      currencyRate: data
+    });
+  }
   UNSAFE_componentWillMount() {
     fetch(
-      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=INR&apikey=${process.env.REACT_APP_API_KEY_1}`
+      `https://www1.oanda.com/rates/api/v2/rates/spot.json?api_key=${process.env.REACT_APP_API_KEY_1}&base=USD&quote=INR`
     )
       .then(res => {
         return res.json();
       })
       .then(data => {
-        this.setState({
-          from:
-            data["Realtime Currency Exchange Rate"]["1. From_Currency Code"],
-          to: data["Realtime Currency Exchange Rate"]["3. To_Currency Code"],
-          currencyRate: data
-        });
+        console.log(data);
+        
+        this.setDataToState(data)
       })
       .catch(err => {
         alert(err);
       });
   }
   setCurrencyRate = currencyRate => {
-    this.setState(
-      {
-        from:
-          currencyRate["Realtime Currency Exchange Rate"][
-            "1. From_Currency Code"
-          ],
-        to:
-          currencyRate["Realtime Currency Exchange Rate"][
-            "3. To_Currency Code"
-          ],
-        currencyRate: currencyRate
-      },
-      () => {}
-    );
+    this.setDataToState(currencyRate)
   };
   hidePanel = () => {
     var panel_input = document.getElementsByClassName("panel_input");
@@ -70,6 +61,8 @@ export class Home extends React.Component {
     }
   };
   render() {
+    console.log(this.state.currencyRate);
+    
     return (
       <Layout>
         <div>
@@ -78,7 +71,7 @@ export class Home extends React.Component {
           </Head>
           <div className="converter" onClick={this.hidePanel}>
             <div className="container">
-              <div className="curr_head">
+              <div className="curr_head"> 
                 <h1>
                   <span className="from">{this.state.from} </span>
                   <span className="tomid">to</span>

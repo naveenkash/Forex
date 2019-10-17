@@ -64,53 +64,41 @@ export class currencyInput extends Component {
       });
 
     fetch(
-      `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=INR&apikey=${process.env.API_KEY_1}`
+      `https://www1.oanda.com/rates/api/v2/rates/spot.json?api_key=${process.env.REACT_APP_API_KEY_1}&base=${this.state.selectedFrom}&quote=${this.state.selectedTo}`
     )
       .then(res => {
         return res.json();
       })
       .then(data => {
-        if (data.Note) {
-          throw new Error("Exceeded api call limit try again in a moment");
-        }
-        this.setState({
-          mainConvertedCurrencyValue:
-            data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
-          fromCurrencyValue: 1,
-          toCurrencyValue:
-            data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
-        });
+        this.setDataToState(data);
         this.props.currencyRate(data);
       })
       .catch(err => {
         alert(err);
       });
-    setInterval(() => {
-      fetch(
-        `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=${process.env.REACT_APP_API_KEY_1}`
-      )
-        .then(res => {
-          return res.json();
-        })
-        .then(data => {
-          if (data.Note) {
-            throw new Error("Exceeded api call limit try again in a moment");
-          }
-
-          this.setState({
-            mainConvertedCurrencyValue:
-              data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
-            fromCurrencyValue: 1,
-            toCurrencyValue:
-              data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
-          });
-          this.props.currencyRate(data);
-        })
-        .catch(err => {
-          alert(err);
-        });
-    }, 60000);
+    // setInterval(() => {
+    //   fetch(
+    //     `https://www1.oanda.com/rates/api/v2/rates/spot.json?api_key=${process.env.REACT_APP_API_KEY_1}&base=${this.state.selectedFrom}&quote=${this.state.selectedTo}`
+    //   )
+    //     .then(res => {
+    //       return res.json();
+    //     })
+    //     .then(data => {
+    //       this.setDataToState(data);
+    //       this.props.currencyRate(data);
+    //     })
+    //     .catch(err => {
+    //       alert(err);
+    //     });
+    // }, 60000);
   }
+  setDataToState = data => {
+    this.setState({
+      mainConvertedCurrencyValue: data.quotes[0].bid,
+      fromCurrencyValue: 1,
+      toCurrencyValue: data.quotes[0].bid
+    });
+  };
   UNSAFE_componentWillReceiveProps() {
     this.setState({
       showDrop1: this.props.hideDropFromClickOnWindow,
@@ -153,13 +141,10 @@ export class currencyInput extends Component {
   };
   selectedFrom = currency => {
     if (currency.name === this.state.selectedTo) {
-      this.setState(
-        {
-          selectedTo: this.state.all_currencies[0].name,
-          selectedToFlag: this.state.all_currencies[0].flag
-        },
-        () => {}
-      );
+      this.setState({
+        selectedTo: this.state.all_currencies[0].name,
+        selectedToFlag: this.state.all_currencies[0].flag
+      });
     }
     this.setState(
       {
@@ -167,27 +152,7 @@ export class currencyInput extends Component {
         selectedFromFlag: currency.flag
       },
       () => {
-        fetch(
-          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=${process.env.REACT_APP_API_KEY_1}`
-        )
-          .then(res => {
-            return res.json();
-          })
-          .then(data => {
-            if (data.Note || data["Error Message"]) {
-             throw new Error("Exceeded api call limit try again in a moment");
-              
-            }
-
-            this.setState({
-              mainConvertedCurrencyValue:
-                data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
-              fromCurrencyValue: 1,
-              toCurrencyValue:
-                data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
-            });
-            this.props.currencyRate(data);
-          });
+        this.fetchDataFromSelecting();
       }
     );
   };
@@ -195,36 +160,25 @@ export class currencyInput extends Component {
     this.setState(
       { selectedTo: currency.name, selectedToFlag: currency.flag },
       () => {
-        fetch(
-          `https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=${this.state.selectedFrom}&to_currency=${this.state.selectedTo}&apikey=${process.env.REACT_APP_API_KEY_2}`
-        )
-          .then(res => {
-            return res.json();
-          })
-          .then(data => {
-            if (data.Note || data["Error Message"]) {
-              // console.log('Exceeded api call limit try again in a moment ');
-              throw new Error("Exceeded api call limit try again in a moment");
-            }
-            this.setState({
-              mainConvertedCurrencyValue:
-                data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
-              fromCurrencyValue: 1,
-              toCurrencyValue:
-                data["Realtime Currency Exchange Rate"]["5. Exchange Rate"]
-            });
-            this.props.currencyRate(data);
-          });
+        this.fetchDataFromSelecting();
       }
     );
   };
+  fetchDataFromSelecting = () => {
+    fetch(
+      `https://www1.oanda.com/rates/api/v2/rates/spot.json?api_key=${process.env.REACT_APP_API_KEY_1}&base=${this.state.selectedFrom}&quote=${this.state.selectedTo}`
+    )
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        this.setDataToState(data);
+        this.props.currencyRate(data);
+      });
+  };
   swapCurrency = data => {
+    this.setDataToState(data);
     this.setState({
-      mainConvertedCurrencyValue:
-        data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
-      fromCurrencyValue: 1,
-      toCurrencyValue:
-        data["Realtime Currency Exchange Rate"]["5. Exchange Rate"],
       selectedFrom: this.state.selectedTo,
       selectedFromFlag: this.state.selectedToFlag,
       selectedTo: this.state.selectedFrom,
@@ -249,8 +203,6 @@ export class currencyInput extends Component {
     this.setState({ showDrop1: show, showDrop2: false });
   };
   showDropDown2 = (show, e) => {
-    console.log(show, e);
-
     e.stopPropagation();
     this.setState({ showDrop1: false, showDrop2: show });
   };
@@ -259,7 +211,6 @@ export class currencyInput extends Component {
   };
 
   render() {
-   
     return (
       <div className="panel">
         <div className="panel_body">
@@ -513,7 +464,7 @@ export class currencyInput extends Component {
           @media only screen and (max-width: 575px) {
             .panel_input_wrapper {
               width: 100%;
-              padding:0;
+              padding: 0;
             }
           }
         `}</style>

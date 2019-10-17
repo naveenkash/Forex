@@ -4,19 +4,37 @@ export class currencyConversion extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      diffAmountInfo:[1,2,5,10,20,50,100,250,500,1000,2000,5000,10000]
+      diffAmountInfo: [
+        1,
+        2,
+        5,
+        10,
+        20,
+        50,
+        100,
+        250,
+        500,
+        1000,
+        2000,
+        5000,
+        10000
+      ]
     };
   }
- 
+
   render() {
-    if (this.props.conversionData.length <= 0) {
+    console.log(this.props.conversionData);
+    
+    if (this.props.conversionData <= 0) {
       return (
-          <div className="container">
-              <div className="currency_conversion_error">
-                  <h3 className="converion_error">Can't Load Conversions! Try Refreshing The Page Again In a Moment</h3>
-              </div>
+        <div className="container">
+          <div className="currency_conversion_error">
+            <h3 className="converion_error">
+              Can't Load Conversions! Try Refreshing The Page Again In a Moment
+            </h3>
           </div>
-        // 
+        </div>
+        //
       );
     }
     return (
@@ -25,88 +43,58 @@ export class currencyConversion extends Component {
           <table>
             <thead>
               <tr>
-                <td>
-                  {
-                    this.props.conversionData[
-                      "Realtime Currency Exchange Rate"
-                    ]["2. From_Currency Name"]
-                  }
-                </td>
+                <td>{this.props.conversionData.quotes[0].base_currency}</td>
                 <td className="table_value" style={{ fontWeight: 700 }}>
-                  {
-                    this.props.conversionData[
-                      "Realtime Currency Exchange Rate"
-                    ]["4. To_Currency Name"]
-                  }
+                  {this.props.conversionData.quotes[0].quote_currency}
                 </td>
               </tr>
             </thead>
             <tbody>
-                {this.state.diffAmountInfo.map((count)=>(
-                    <tr key={count}>
-                    <td className="table_key"> {`${count} ${ 
-                        this.props.conversionData[
-                          "Realtime Currency Exchange Rate"
-                        ]["1. From_Currency Code"]
-                      }`}
-                    </td>
-                    <td className="table_value">
-                      {`${Math.floor(count*this.props.conversionData["Realtime Currency Exchange Rate"]["5. Exchange Rate"]*10000)/10000} ${
-                        this.props.conversionData[
-                          "Realtime Currency Exchange Rate"
-                        ]["3. To_Currency Code"]
-                      } `}
-                    </td>
-                  </tr>
-                ))}
+              {this.state.diffAmountInfo.map(count => (
+                <tr key={count}>
+                  <td className="table_key">
+                    {`${count} ${this.props.conversionData.quotes[0].base_currency}`}
+                  </td>
+                  <td className="table_value">
+                    {`${Math.floor(
+                      count * this.props.conversionData.quotes[0].bid * 10000 ) / 10000} ${
+                      this.props.conversionData.quotes[0].quote_currency
+                    } `}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
 
           <table>
             <thead>
               <tr>
-                <td>
-                  {
-                    this.props.conversionData[
-                      "Realtime Currency Exchange Rate"
-                    ]["4. To_Currency Name"]
-                  }
-                </td>
+                <td>{this.props.conversionData.quotes[0].quote_currency}</td>
                 <td className="table_value" style={{ fontWeight: 700 }}>
-                  {
-                    this.props.conversionData[
-                      "Realtime Currency Exchange Rate"
-                    ]["2. From_Currency Name"]
-                  }
+                  {this.props.conversionData.quotes[0].base_currency}
                 </td>
               </tr>
             </thead>
             <tbody>
-
-                {this.state.diffAmountInfo.map((count)=>(
-                    <tr key={count}>
-                    <td className="table_key"> {`${count} ${ 
-                        this.props.conversionData[
-                          "Realtime Currency Exchange Rate"
-                        ]["3. To_Currency Code"]
-                      }`}
-                    </td>
-                    <td className="table_value">
-                      {`${Math.floor(count/this.props.conversionData["Realtime Currency Exchange Rate"]["5. Exchange Rate"]*10000)/10000} ${
-                        this.props.conversionData[
-                          "Realtime Currency Exchange Rate"
-                        ]["1. From_Currency Code"]
-                      } `}
-                    </td>
-                  </tr>
-                ))}
-              
-             
+              {this.state.diffAmountInfo.map(count => (
+                <tr key={count}>
+                  <td className="table_key">
+                    {`${count} ${this.props.conversionData.quotes[0].quote_currency}`}
+                  </td>
+                  <td className="table_value">
+                    {`${Math.floor(
+                      (count /
+                        this.props.conversionData.quotes[0].bid) *
+                        10000
+                    ) / 10000} ${this.props.conversionData.quotes[0].base_currency} `}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
         <style jsx>{`
-          .converion_error{
+          .converion_error {
             color: #36c8ff;
           }
           .currency_conversion {
@@ -118,7 +106,7 @@ export class currencyConversion extends Component {
             grid-column-gap: 20px;
             grid-template-columns: 1fr 1fr;
           }
-          
+
           table {
             width: 100%;
             height: auto;
@@ -155,11 +143,11 @@ export class currencyConversion extends Component {
             text-align: right;
             color: #3b4f72;
           }
-          @media only screen and (max-width:667px){
-            .currency_conversion{
-              grid-template-columns:1fr;
-              grid-row-gap:20px;
-              padding:60px 0;
+          @media only screen and (max-width: 667px) {
+            .currency_conversion {
+              grid-template-columns: 1fr;
+              grid-row-gap: 20px;
+              padding: 60px 0;
             }
           }
         `}</style>
