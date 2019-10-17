@@ -19,8 +19,6 @@ export class currencyChart extends Component {
         return res.json();
       })
       .then(data => {
-        console.log(data);
-
         if (data.Note || data["Error Message"]) {
           this.setState({ show: true, loading: false });
           data = {};
