@@ -38,8 +38,6 @@ export class Home extends React.Component {
       });
   }
   setCurrencyRate = currencyRate => {
-    console.log(currencyRate);
-
     this.setDataToState(currencyRate);
   };
   hidePanel = () => {

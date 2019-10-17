@@ -12,8 +12,6 @@ export class currencyChart extends Component {
     };
   }
   fetchChartData = (from,to) => {
-    console.log(this.props.from, this.props.to);
-
     fetch(
       `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${from}&to_symbol=${to}&apikey=${process.env.REACT_APP_API_KEY_3}`
     )
