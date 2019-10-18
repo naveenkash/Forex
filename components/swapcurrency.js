@@ -11,8 +11,6 @@ export class swapcurrency extends Component {
         return res.json();
       })
       .then(data => {
-        console.log(data);
-        
         this.props.swapCurrency(data);
       })
       .catch(err => {

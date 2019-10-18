@@ -4,11 +4,9 @@ import Nav from "../components/nav";
 
 // import '../styles/navbar.css'
 const Main = props => (
-  
   <div>
-  
     <Head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
       <link
         href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap"
@@ -46,7 +44,10 @@ const Main = props => (
         width: 1100px;
         margin: 0 auto;
       }
-      
+      .row{
+        display:flex;
+        align-items:center;
+      }
       .currency_conversion_error{
         
         width: 100%;
@@ -117,6 +118,7 @@ const Main = props => (
             width:100%;
             padding:0 15px;
           }
+
     `}</style>
     <Nav />
     {props.children}

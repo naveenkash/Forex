@@ -87,6 +87,11 @@ export class currencyChart extends Component {
   UNSAFE_componentWillReceiveProps(newProps) {
     this.fetchChartData(newProps.from,newProps.to);
   }
+  // componentDidUpdate(previousProps){
+  //   console.log(previousProps);
+  //   // this.fetchChartData(previousProps.from,previousProps.to);
+    
+  // }
   render() {
     const { from, to } = this.props;
     var data = {

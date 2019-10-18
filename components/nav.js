@@ -6,12 +6,19 @@ const Nav = () => (
   <div className="navbar">
     <div className="container">
       <nav>
-        <div className="logo">
-          <h1>
-            <Link href="/">
-              <a>Currency Converter</a>
-            </Link>
-          </h1>
+        <div className="nav_item">
+          <ul>
+            <li>
+              <Link href="/">
+                <a>Currency Converter</a>
+              </Link>
+            </li>
+            <li>
+              <Link href="/crypto">
+                <a>Crypto</a>
+              </Link>
+            </li>
+          </ul>
         </div>
       </nav>
     </div>
@@ -20,24 +27,37 @@ const Nav = () => (
         .navbar {
           width: 100%;
           height: auto;
-          padding: 10px 0;
           background: #2e4369;
         }
-        .logo{
-          width:auto;
+        .nav_item {
+          width: auto;
         }
-        nav{
-          padding-left:15px;
+        nav {
+          padding-left: 15px;
         }
-        .logo h1 a{
-          color:white;
-          text-decoration:none;
-          font-weight:lighter;
-          transition:0.2s;
-          font-size:0.9em;
+        .nav_item ul {
+          padding: 0;
+          margin: 0;
+          list-style: none;
+          display:flex;
+          align-items:center;
         }
-        .logo h1 a:hover{
-          color:#00B9FF;
+        .nav_item ul li {
+          font-size: 24px;
+          margin-right:12px;
+          padding:10px 0;
+          font-family:'Poppins', sans-serif ;     
+        }
+        .nav_item ul li a {
+          color: white;
+          text-decoration: none;
+          font-weight: lighter;
+          transition: 0.2s;
+          font-size: 0.9em;
+          padding:10px 0;
+        }
+        .nav_item ul li a:hover {
+          color: #00b9ff;
         }
       `}
     </style>
