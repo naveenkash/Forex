@@ -53,18 +53,21 @@ export class crypto_live_head extends Component {
                   <p className={this.state.dynamics[i] ? "green" : "red"}>
                     {this.props.crypto_head_data.DISPLAY[coin].USD.PRICE}
                   </p>
-                  {/* <span>{`(${this.props.crypto_head_data.DISPLAY[coin].USD.CHANGEPCTHOUR}%)`}</span> */}
                 </div>
               </div>
             );
           })}
         </div>
+                  <p className="development">In Development</p>
         <style>{`
         .crypto_live_head{
             width:100%;
             height:auto;
             margin:30px 0;
-
+        }
+        .development{
+          margin-top:50px;
+          text-align:center;
         }
         .crypto_head_wrapper{
             display:flex;
