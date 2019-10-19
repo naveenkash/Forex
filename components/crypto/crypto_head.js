@@ -31,28 +31,8 @@ export class crypto_live_head extends Component {
   //   }
   //   this.setState({ dynamics });
   // }
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.updateStyle(nextProps);
-  }
-  updateStyle = i => {
-    console.log(i,nextProps);
+  
 
-    if (nextProps.rate_updated[i] === true) {
-      return {
-        color: "green"
-      };
-    }
-    if (nextProps.rate_updated[i] === null) {
-      return {
-        color: "black"
-      };
-    }
-    if (nextProps.rate_updated[i] === false) {
-      return {
-        color: "red"
-      };
-    }
-  };
   render() {
     return (
       <div className="crypto_live_head">
@@ -72,7 +52,7 @@ export class crypto_live_head extends Component {
                 </div>
 
                 <div className="crypto_rate">
-                  <p style={this.updateStyle(i)}>
+                  <p className={this.state.dynamics[i] ? "green" : "red"} >
                     {this.props.crypto_head_data.DISPLAY[coin].USD.PRICE}
                   </p>
                 </div>
