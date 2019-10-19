@@ -23,7 +23,7 @@ export class Home extends React.Component {
       currencyRate: data
     },()=>{});
   };
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     fetch(
       `https://www1.oanda.com/rates/api/v2/rates/spot.json?api_key=${process.env.REACT_APP_API_KEY_1}&base=USD&quote=INR`
     )

@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import update_array from "../../redux/action/crypto_head_rate_update";
+import { connect } from "react-redux";
 
 export class crypto_live_head extends Component {
   constructor(props) {
@@ -7,30 +9,50 @@ export class crypto_live_head extends Component {
       dynamics: []
     };
   }
-  componentDidMount() {
-    console.log(this.props.crypto_head_data);
-    console.log(this.props.crypto_head_coins);
-  }
+
+  // UNSAFE_componentWillReceiveProps(nextProps) {
+  //   // this.props.update_array([]);
+  //   let dynamics = [true, true, true, true];
+  //   for (let i = 0; i < this.props.crypto_head_coins.length; i++) {
+  //     var coin = this.props.crypto_head_coins[i];
+  //     if (
+  //       nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE >
+  //       this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
+  //     ) {
+  //       dynamics[i] = true;
+  //     } else if (
+  //       nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE ===
+  //       this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
+  //     ) {
+  //       dynamics[i] = true;
+  //     } else {
+  //       dynamics[i] = false;
+  //     }
+  //   }
+  //   this.setState({ dynamics });
+  // }
   UNSAFE_componentWillReceiveProps(nextProps) {
-    let dynamics = [true, true, true, true];
-    for (let i = 0; i < this.props.crypto_head_coins.length; i++) {
-      var coin = this.props.crypto_head_coins[i];
-      if (
-        nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE >
-        this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
-      ) {
-        dynamics[i] = true;
-      } else if (
-        nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE ===
-        this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
-      ) {
-        dynamics[i] = true;
-      } else {
-        dynamics[i] = false;
-      }
-    }
-    this.setState({ dynamics });
+    this.updateStyle(nextProps);
   }
+  updateStyle = i => {
+    console.log(i,nextProps);
+
+    if (nextProps.rate_updated[i] === true) {
+      return {
+        color: "green"
+      };
+    }
+    if (nextProps.rate_updated[i] === null) {
+      return {
+        color: "black"
+      };
+    }
+    if (nextProps.rate_updated[i] === false) {
+      return {
+        color: "red"
+      };
+    }
+  };
   render() {
     return (
       <div className="crypto_live_head">
@@ -50,7 +72,7 @@ export class crypto_live_head extends Component {
                 </div>
 
                 <div className="crypto_rate">
-                  <p className={this.state.dynamics[i] ? "green" : "red"}>
+                  <p style={this.updateStyle(i)}>
                     {this.props.crypto_head_data.DISPLAY[coin].USD.PRICE}
                   </p>
                 </div>
@@ -58,7 +80,7 @@ export class crypto_live_head extends Component {
             );
           })}
         </div>
-                  <p className="development">In Development</p>
+        <p className="development">In Development</p>
         <style>{`
         .crypto_live_head{
             width:100%;
@@ -113,5 +135,5 @@ export class crypto_live_head extends Component {
     );
   }
 }
-
+// export default connect()(crypto_live_head);className={this.props.rate_updated[i] ? "green" : "red"}
 export default crypto_live_head;

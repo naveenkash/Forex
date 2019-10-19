@@ -17,9 +17,14 @@
     "chart.js": "^2.8.0",
     "isomorphic-unfetch": "^3.0.0",
     "next": "9.0.7",
+    "next-redux-wrapper": "^4.0.1",
     "react": "16.10.2",
     "react-chartjs-2": "^2.8.0",
-    "react-dom": "16.10.2"
+    "react-dom": "16.10.2",
+    "react-redux": "^7.1.1",
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "dotenv": "^8.1.0"
