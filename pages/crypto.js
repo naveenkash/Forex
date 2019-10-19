@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import CryptoHead from "../components/crypto/crypto_head";
 import Head from "next/head";
 import Layout from "../layouts/main";
-import {update_rate_array} from '../redux/action/crypto_head_rate_update'
-import { connect } from "react-redux";
+// import {update_rate_array} from '../redux/action/crypto_head_rate_update'
+// import { connect } from "react-redux";
 
 export  class crypto extends Component {
   constructor(props) {
@@ -11,7 +11,6 @@ export  class crypto extends Component {
     this.state = {
       crypto_head_data: {},
       crypto_head_coins: [],
-      rate_updated: []
     };
   }
   componentDidMount() {
@@ -25,8 +24,6 @@ export  class crypto extends Component {
     });
     // setInterval(() => {
     //   this.fetchCryptoData().then(data => {
-    //     console.log(data);
-
     //     var Keys = Object.keys(data.DISPLAY);
     //     this.setState({
     //       crypto_head_data: data,
@@ -34,42 +31,20 @@ export  class crypto extends Component {
     //     });
     //   });
     // }, 1300);
-    setInterval(() => {
-      this.fetchCryptoData().then(data => {
-        console.log(data);
-        var Keys = Object.keys(data.DISPLAY);
-        this.setState(
-          {
-            crypto_head_data: data,
-            crypto_head_coins: Keys
-          },
-          () => {
-            //   // this.props.update_array([]);
-            let rate_updated = [true, true, true, true];
-            for (let i = 0; i < Keys.length; i++) {
-              var coin = Keys[i];
-              if (
-                data.DISPLAY[coin].USD.PRICE >
-                this.state.crypto_head_data.DISPLAY[coin].USD.PRICE
-              ) {
-                rate_updated[i] = true;
-              } else if (
-                data.DISPLAY[coin].USD.PRICE ===
-                this.state.crypto_head_data.DISPLAY[coin].USD.PRICE
-              ) {
-                rate_updated[i] = null;
-              } else {
-                rate_updated[i] = false;
-              }
-            }
 
-            this.props.firstAction(rate_updated);
-            // this.props.store.dispatch(update_rate_array(rate_updated))
-            this.setState({ rate_updated });
-          }
-        );
-      });
-    }, 1300);
+
+    // setInterval(() => {
+    //   this.fetchCryptoData().then(data => {
+    //     console.log(data);
+    //     var Keys = Object.keys(data.DISPLAY);
+    //     this.setState(
+    //       {
+    //         crypto_head_data: data,
+    //         crypto_head_coins: Keys
+    //       },
+    //     );
+    //   });
+    // }, 10000);
     // }
   }
   
@@ -99,7 +74,6 @@ export  class crypto extends Component {
                 <CryptoHead
                   crypto_head_data={this.state.crypto_head_data}
                   crypto_head_coins={this.state.crypto_head_coins}
-                  rate_updated={this.state.rate_updated}
                 />
               </div>
             </div>
@@ -109,11 +83,14 @@ export  class crypto extends Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => ({
-  update_rate_array: string => dispatch(update_rate_array(string))
-});
-export default connect(
-  null,
-  mapDispatchToProps
-)(crypto);
-// export default crypto;
+// const mapDispatchToProps = dispatch => ({
+//   update_rate_array: string => dispatch(update_rate_array(string))
+// });
+// const mapDispatchToProps = state => {
+//   return { previousArray: state.crypto_head_update.head_update_array };
+// };
+// export default connect(
+//   null,
+//   mapDispatchToProps
+// )(crypto);
+export default crypto;

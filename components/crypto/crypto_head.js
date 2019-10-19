@@ -1,36 +1,37 @@
 import React, { Component } from "react";
-import update_array from "../../redux/action/crypto_head_rate_update";
+import {update_rate_array} from "../../redux/action/crypto_head_rate_update";
 import { connect } from "react-redux";
 
 export class crypto_live_head extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dynamics: []
+      rate_updated: []
     };
   }
 
-  // UNSAFE_componentWillReceiveProps(nextProps) {
-  //   // this.props.update_array([]);
-  //   let dynamics = [true, true, true, true];
-  //   for (let i = 0; i < this.props.crypto_head_coins.length; i++) {
-  //     var coin = this.props.crypto_head_coins[i];
-  //     if (
-  //       nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE >
-  //       this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
-  //     ) {
-  //       dynamics[i] = true;
-  //     } else if (
-  //       nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE ===
-  //       this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
-  //     ) {
-  //       dynamics[i] = true;
-  //     } else {
-  //       dynamics[i] = false;
-  //     }
-  //   }
-  //   this.setState({ dynamics });
-  // }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    let rate_updated = this.props.previousArray;
+    for (let i = 0; i < this.props.crypto_head_coins.length; i++) {
+      var coin = this.props.crypto_head_coins[i];
+      if (
+        nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE >
+        this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
+      ) {
+        rate_updated[i] = true;
+      } else if (
+        nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE ===
+        this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
+      ) {
+        rate_updated[i] = true;
+      } else {
+        rate_updated[i] = false;
+      }
+    }
+
+    this.props.update_rate_array(rate_updated);
+    this.setState({ rate_updated });
+  }
   
 
   render() {
@@ -52,7 +53,7 @@ export class crypto_live_head extends Component {
                 </div>
 
                 <div className="crypto_rate">
-                  <p className={this.state.dynamics[i] ? "green" : "red"} >
+                  <p className={this.state.rate_updated[i] ? "green" : "red"} >
                     {this.props.crypto_head_data.DISPLAY[coin].USD.PRICE}
                   </p>
                 </div>
@@ -116,4 +117,14 @@ export class crypto_live_head extends Component {
   }
 }
 // export default connect()(crypto_live_head);className={this.props.rate_updated[i] ? "green" : "red"}
-export default crypto_live_head;
+const mapDispatchToProps = dispatch => ({
+  update_rate_array: Array => dispatch(update_rate_array(Array))
+});
+const mapStateToProps = state => ({
+  previousArray: state.crypto_head_update 
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(crypto_live_head);
+// export default crypto_live_head;
