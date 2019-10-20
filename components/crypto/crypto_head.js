@@ -82,7 +82,7 @@ export class crypto_live_head extends Component {
         .crypto_live_head{
             width:100%;
             height:auto;
-            margin:30px 0;
+            margin:45px 0;
         }
         .development{
           margin-top:50px;
@@ -147,7 +147,6 @@ export class crypto_live_head extends Component {
     );
   }
 }
-// export default connect()(crypto_live_head);className={this.props.rate_updated[i] ? "green" : "red"}
 const mapDispatchToProps = dispatch => ({
   update_rate_array: Array => dispatch(update_rate_array(Array))
 });

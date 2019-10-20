@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CryptoHead from "../components/crypto/crypto_head";
+import CryptoNews from "../components/crypto/crypto_news";
 import Head from "next/head";
 import Layout from "../layouts/main";
 // import {update_rate_array} from '../redux/action/crypto_head_rate_update'
@@ -33,18 +34,18 @@ export  class crypto extends Component {
     // }, 1300);
 
 
-    setInterval(() => {
-      this.fetchCryptoData().then(data => {
-        console.log(data);
-        var Keys = Object.keys(data.DISPLAY);
-        this.setState(
-          {
-            crypto_head_data: data,
-            crypto_head_coins: Keys
-          },
-        );
-      });
-    }, 10000);
+    // setInterval(() => {
+    //   this.fetchCryptoData().then(data => {
+    //     console.log(data);
+    //     var Keys = Object.keys(data.DISPLAY);
+    //     this.setState(
+    //       {
+    //         crypto_head_data: data,
+    //         crypto_head_coins: Keys
+    //       },
+    //     );
+    //   });
+    // }, 10000);
 
     }
   
@@ -76,6 +77,7 @@ export  class crypto extends Component {
                   crypto_head_data={this.state.crypto_head_data}
                   crypto_head_coins={this.state.crypto_head_coins}
                 />
+                <CryptoNews/>
               </div>
             </div>
           </div>

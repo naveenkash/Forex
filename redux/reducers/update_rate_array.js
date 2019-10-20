@@ -1,5 +1,5 @@
 // const initialState = [];
-const initialState = [true,true,true,true];
+const initialState = [null,null,null,null];
 
 export default (state = initialState, action) => {
   switch (action.type) {
