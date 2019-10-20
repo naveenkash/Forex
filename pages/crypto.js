@@ -31,7 +31,7 @@ export  class crypto extends Component {
           crypto_head_coins: Keys
         });
       });
-    }, 1300);
+    }, 10000);
 
 
     // setInterval(() => {
