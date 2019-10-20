@@ -44,8 +44,8 @@ export class crypto_news extends Component {
                 <li key={news.id}>
                     <div className="news_article">
                         {/* <div className="news_article_info"> */}
-                          <h3 title={news.body.slice(0,100)+' . . .'}> <a target="_blank" href={news.url}>{news.title}</a> </h3>  
-                          <p>{news.source_info.name} , {news.source_info.lang}</p>
+                         <h3 title={news.body.slice(0,100)+' . . .'}> <a target="_blank" href={news.url}>{news.title}</a> </h3>  
+                        <div className="row"> <img src={news.source_info.img} alt=""/> <p>{news.source_info.name} , {news.source_info.lang}</p></div> 
                         {/* </div> */}
                     </div>
                 </li>
@@ -70,7 +70,7 @@ export class crypto_news extends Component {
             font-size:26px;
         }
         .news_wrapper{
-            // padding:25px 30px;
+            padding:10px 0px;
             box-shadow: 0 3px 20px 0 rgba(0,77,165,0.07);
         }
         .news_wrapper ul{
@@ -84,17 +84,24 @@ export class crypto_news extends Component {
             transition:0.3s;
             // border-top:1px solid #000000f2;
         }
+          .news_wrapper ul li:not(:first-child){
+            border-top:1px solid #0000000d;
+        }
         .news_wrapper ul li:hover{
             background:#36c8ff0d;
         }
-        .news_wrapper ul li:not(:first-child){
-
-            border-top:1px solid #0000000d;
+        .news_article img{
+            width:20px;
+            height:20px;
+            object-fit:cover;
+            margin-right:8px;
+            border-radius:100%;
         }
-        
+      
         .news_article h3{
-            font-size:17px;
-            margin-bottom:5px;
+            font-size:16px;
+            margin-bottom:10px;
+            line-height:20px;
         }
         .news_article h3 a{
             text-decoration:none;
