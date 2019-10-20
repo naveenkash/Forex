@@ -94,6 +94,7 @@ export class currencyConversion extends Component {
         <style jsx>{`
           .converion_error {
             color: #36c8ff;
+            text-align:center;
           }
           .currency_conversion {
             width: 100%;

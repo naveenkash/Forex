@@ -1,35 +1,55 @@
 import React, { Component } from "react";
 import CryptoHead from "../components/crypto/crypto_head";
+import CryptoNews from "../components/crypto/crypto_news";
 import Head from "next/head";
 import Layout from "../layouts/main";
-export class crypto extends Component {
+// import {update_rate_array} from '../redux/action/crypto_head_rate_update'
+// import { connect } from "react-redux";
+
+export  class crypto extends Component {
   constructor(props) {
     super(props);
     this.state = {
       crypto_head_data: {},
-      Crypto_Head_Coins: []
+      crypto_head_coins: [],
     };
   }
   componentDidMount() {
+    
     this.fetchCryptoData().then(data => {
-      console.log(data);
       var Keys = Object.keys(data.DISPLAY);
       this.setState({
         crypto_head_data: data,
-        Crypto_Head_Coins: Keys
+        crypto_head_coins: Keys
       });
     });
-    setInterval(() => {
-      this.fetchCryptoData().then(data => {
-        console.log(data);
-        var Keys = Object.keys(data.DISPLAY);
-        this.setState({
-          crypto_head_data: data,
-          Crypto_Head_Coins: Keys
-        });
-      });
-    }, 1300);
-  }
+    // setInterval(() => {
+    //   this.fetchCryptoData().then(data => {
+    //     var Keys = Object.keys(data.DISPLAY);
+    //     this.setState({
+    //       crypto_head_data: data,
+    //       crypto_head_coins: Keys
+    //     });
+    //   });
+    // }, 1300);
+
+
+    // setInterval(() => {
+    //   this.fetchCryptoData().then(data => {
+    //     console.log(data);
+    //     var Keys = Object.keys(data.DISPLAY);
+    //     this.setState(
+    //       {
+    //         crypto_head_data: data,
+    //         crypto_head_coins: Keys
+    //       },
+    //     );
+    //   });
+    // }, 10000);
+
+    }
+  
+  
   fetchCryptoData = () => {
     return new Promise((resolve, reject) => {
       fetch(
@@ -55,15 +75,27 @@ export class crypto extends Component {
               <div className="crypto_wrapper">
                 <CryptoHead
                   crypto_head_data={this.state.crypto_head_data}
-                  crypto_head_coins={this.state.Crypto_Head_Coins}
+                  crypto_head_coins={this.state.crypto_head_coins}
                 />
               </div>
             </div>
+            
+            <CryptoNews/>
           </div>
         </div>
+        <p className="development">In Development</p>
       </Layout>
     );
   }
 }
-
+// const mapDispatchToProps = dispatch => ({
+//   update_rate_array: string => dispatch(update_rate_array(string))
+// });
+// const mapDispatchToProps = state => {
+//   return { previousArray: state.crypto_head_update.head_update_array };
+// };
+// export default connect(
+//   null,
+//   mapDispatchToProps
+// )(crypto);
 export default crypto;

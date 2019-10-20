@@ -219,6 +219,7 @@ export class currencyChart extends Component {
             height: 400px;
           }
         .chart_error{
+          text-align:center;
           color:white;
         }
          

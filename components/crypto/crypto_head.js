@@ -1,42 +1,48 @@
 import React, { Component } from "react";
-
+import { update_rate_array } from "../../redux/action/crypto_head_rate_update";
+import { connect } from "react-redux";
 export class crypto_live_head extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dynamics: []
+      rate_updated: []
     };
   }
-  componentDidMount() {
-    console.log(this.props.crypto_head_data);
-    console.log(this.props.crypto_head_coins);
-  }
+
   UNSAFE_componentWillReceiveProps(nextProps) {
-    let dynamics = [true, true, true, true];
-    for (let i = 0; i < this.props.crypto_head_coins.length; i++) {
-      var coin = this.props.crypto_head_coins[i];
-      if (
-        nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE >
-        this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
-      ) {
-        dynamics[i] = true;
-      } else if (
-        nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE ===
-        this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
-      ) {
-        dynamics[i] = true;
-      } else {
-        dynamics[i] = false;
-      }
+    if (this.props.crypto_head_data === nextProps.crypto_head_data) {
+      return;
     }
-    this.setState({ dynamics });
+    if (this.props.crypto_head_data !== nextProps.crypto_head_data) {
+      let rate_updated = [...this.props.previousArray];
+      for (let i = 0; i < this.props.crypto_head_coins.length; i++) {
+        var coin = this.props.crypto_head_coins[i];
+        if (
+          nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE >
+          this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
+        ) {
+          rate_updated[i] = true;
+        } else if (
+          nextProps.crypto_head_data.DISPLAY[coin].USD.PRICE ===
+          this.props.crypto_head_data.DISPLAY[coin].USD.PRICE
+        ) {
+          rate_updated[i] = null;
+        } else {
+          rate_updated[i] = false;
+        }
+      }
+      this.props.update_rate_array(rate_updated);
+      this.setState({ rate_updated });
+    }
   }
+
   render() {
     return (
       <div className="crypto_live_head">
         <div className="crypto_head_wrapper">
           {this.props.crypto_head_coins.map((coin, i) => {
             return (
+              
               <div key={coin} className="crypto_head">
                 <div className="crypto_rate_head row">
                   <img
@@ -50,25 +56,35 @@ export class crypto_live_head extends Component {
                 </div>
 
                 <div className="crypto_rate">
-                  <p className={this.state.dynamics[i] ? "green" : "red"}>
+                  <p
+                    className={
+                      this.state.rate_updated[i] === true
+                        ? "green"
+                        : this.state.rate_updated[i] === null
+                        ? ""
+                        : this.state.rate_updated[i] === false
+                        ? "red"
+                        : "green"
+                    }
+                  >
                     {this.props.crypto_head_data.DISPLAY[coin].USD.PRICE}
                   </p>
                 </div>
+                <span className="crypto_head_vol">VOL : {this.props.crypto_head_data.DISPLAY[coin].USD.VOLUME24HOUR}</span>
               </div>
+              
+
             );
           })}
         </div>
-                  <p className="development">In Development</p>
+       
         <style>{`
         .crypto_live_head{
             width:100%;
             height:auto;
-            margin:30px 0;
+            margin:45px 0;
         }
-        .development{
-          margin-top:50px;
-          text-align:center;
-        }
+       
         .crypto_head_wrapper{
             display:flex;
             align-items:center;
@@ -77,11 +93,14 @@ export class crypto_live_head extends Component {
             justify-content:center;
         }
         .crypto_head{
-            width:20%;
+            width:25%;
             height:auto;
             padding:20px;
             box-shadow: 0 3px 20px 0 rgba(0,77,165,0.07);
             margin:0 15px;
+            position:relative;
+            background:white;
+            z-index:100;
         }
        
         .crypto_rate_head span{
@@ -96,22 +115,43 @@ export class crypto_live_head extends Component {
           margin-top:10px;
         }
         .crypto_rate p{
-          font-size:16px;
+          font-size:14px;
+          color:#36c8ff;
         }
         .crypto_rate span{
           font-size:12px;
           margin-left:6px;
         }
+        .crypto_head_vol{
+          position:absolute;
+          top:-10px;
+          right:0;
+          background:white;
+          padding:8px;
+          font-size:10px;
+          box-shadow: 0 3px 20px 0 rgba(0,77,165,0.07);
+          z-index:-10;
+         
+        }
         .green{
-          color:green;
+          color:#00bf33 !important;
         }
         .red{
-          color:red;
+          color:red !important;
         }
         `}</style>
       </div>
     );
   }
 }
-
-export default crypto_live_head;
+const mapDispatchToProps = dispatch => ({
+  update_rate_array: Array => dispatch(update_rate_array(Array))
+});
+const mapStateToProps = state => ({
+  previousArray: state.crypto_head_update
+});
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(crypto_live_head);
+// export default crypto_live_head;

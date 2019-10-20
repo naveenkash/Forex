@@ -2,22 +2,36 @@ import React from "react";
 import Head from "next/head";
 import Nav from "../components/nav";
 
+import { Provider } from "react-redux";
+import App, { Container } from "next/app";
+import withRedux from "next-redux-wrapper";
+import { initStore } from "../redux";
 // import '../styles/navbar.css'
-const Main = props => (
-  <div>
-    <Head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-      <link
-        href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap"
-        rel="stylesheet"
-      ></link>
-      <link
-        href="https://fonts.googleapis.com/css?family=Poppins&display=swap"
-        rel="stylesheet"
-      ></link>
-    </Head>
-    <style jsx global>{`
+export default class Main extends React.Component {
+ 
+  render() {
+    return (
+      <div>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+
+          <link
+            href="https://fonts.googleapis.com/css?family=Noto+Sans&display=swap"
+            rel="stylesheet"
+          ></link>
+          <link
+            href="https://fonts.googleapis.com/css?family=Poppins&display=swap"
+            rel="stylesheet"
+          ></link>
+        </Head>
+
+        <Nav />
+        {this.props.children}
+        <style jsx global>{`
       body {
         font-family: "Noto Sans", sans-serif;
       }
@@ -36,13 +50,16 @@ const Main = props => (
       }
       h3{
         
-        text-align:center;
         font-weight:lighter;
         font-family:'Poppins', sans-serif ;       
         }
       .container {
         width: 1100px;
         margin: 0 auto;
+      }
+      .development{
+        margin:50px 0;
+        text-align:center;
       }
       .row{
         display:flex;
@@ -120,9 +137,7 @@ const Main = props => (
           }
 
     `}</style>
-    <Nav />
-    {props.children}
-  </div>
-);
-
-export default Main;
+      </div>
+    );
+  }
+}
