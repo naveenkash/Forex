@@ -9,7 +9,6 @@ export class crypto_news extends Component {
   }
   componentDidMount() {
     this.fetchCryptoNews().then(data => {
-      console.log(data.Data);
       this.setState({newsData:data.Data})
     });
   }
