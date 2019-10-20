@@ -33,20 +33,21 @@ export  class crypto extends Component {
     // }, 1300);
 
 
-    // setInterval(() => {
-    //   this.fetchCryptoData().then(data => {
-    //     console.log(data);
-    //     var Keys = Object.keys(data.DISPLAY);
-    //     this.setState(
-    //       {
-    //         crypto_head_data: data,
-    //         crypto_head_coins: Keys
-    //       },
-    //     );
-    //   });
-    // }, 10000);
-    // }
-  }
+    setInterval(() => {
+      this.fetchCryptoData().then(data => {
+        console.log(data);
+        var Keys = Object.keys(data.DISPLAY);
+        this.setState(
+          {
+            crypto_head_data: data,
+            crypto_head_coins: Keys
+          },
+        );
+      });
+    }, 10000);
+
+    }
+  
   
   fetchCryptoData = () => {
     return new Promise((resolve, reject) => {
