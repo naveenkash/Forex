@@ -50,13 +50,16 @@ export default class Main extends React.Component {
       }
       h3{
         
-        text-align:center;
         font-weight:lighter;
         font-family:'Poppins', sans-serif ;       
         }
       .container {
         width: 1100px;
         margin: 0 auto;
+      }
+      .development{
+        margin:50px 0;
+        text-align:center;
       }
       .row{
         display:flex;

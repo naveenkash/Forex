@@ -77,11 +77,13 @@ export  class crypto extends Component {
                   crypto_head_data={this.state.crypto_head_data}
                   crypto_head_coins={this.state.crypto_head_coins}
                 />
-                <CryptoNews/>
               </div>
             </div>
+            
+            <CryptoNews/>
           </div>
         </div>
+        <p className="development">In Development</p>
       </Layout>
     );
   }

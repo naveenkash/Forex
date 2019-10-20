@@ -77,17 +77,14 @@ export class crypto_live_head extends Component {
             );
           })}
         </div>
-        <p className="development">In Development</p>
+       
         <style>{`
         .crypto_live_head{
             width:100%;
             height:auto;
             margin:45px 0;
         }
-        .development{
-          margin-top:50px;
-          text-align:center;
-        }
+       
         .crypto_head_wrapper{
             display:flex;
             align-items:center;
