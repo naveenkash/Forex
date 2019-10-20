@@ -23,15 +23,15 @@ export  class crypto extends Component {
         crypto_head_coins: Keys
       });
     });
-    // setInterval(() => {
-    //   this.fetchCryptoData().then(data => {
-    //     var Keys = Object.keys(data.DISPLAY);
-    //     this.setState({
-    //       crypto_head_data: data,
-    //       crypto_head_coins: Keys
-    //     });
-    //   });
-    // }, 1300);
+    setInterval(() => {
+      this.fetchCryptoData().then(data => {
+        var Keys = Object.keys(data.DISPLAY);
+        this.setState({
+          crypto_head_data: data,
+          crypto_head_coins: Keys
+        });
+      });
+    }, 10000);
 
 
     // setInterval(() => {

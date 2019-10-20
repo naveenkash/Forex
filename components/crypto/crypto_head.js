@@ -130,7 +130,7 @@ export class crypto_live_head extends Component {
           padding:8px;
           font-size:10px;
           box-shadow: 0 3px 20px 0 rgba(0,77,165,0.07);
-          z-index:-10;
+          z-index:10;
          
         }
         .green{
