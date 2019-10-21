@@ -61,6 +61,14 @@ export default class Main extends React.Component {
         margin:50px 0;
         text-align:center;
       }
+      .title_head{
+        margin-bottom:25px;
+    }
+    .title_head h1{
+        // color:#36c8ff;
+        font-weight:lighter;
+        font-size:26px;
+    }
       .row{
         display:flex;
         align-items:center;
