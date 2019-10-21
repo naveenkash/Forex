@@ -27,17 +27,17 @@ export class crypto_list_rates extends Component {
       }
       this.setState({ cryptoList: tempArr, keys });
     });
-    // setInterval(() => {
-    //   this.fetchCryptoList().then(data => {
-    //     var keys = Object.keys(data.DISPLAY);
-    //     var tempArr = [];
-    //     for (let i = 0; i < keys.length; i++) {
-    //       const element = data.DISPLAY[keys[i]];
-    //       tempArr.push({ [keys[i]]: element });
-    //     }
-    //     this.setState({ cryptoList: tempArr, keys });
-    //   });
-    // }, 10000);
+    setInterval(() => {
+      this.fetchCryptoList().then(data => {
+        var keys = Object.keys(data.DISPLAY);
+        var tempArr = [];
+        for (let i = 0; i < keys.length; i++) {
+          const element = data.DISPLAY[keys[i]];
+          tempArr.push({ [keys[i]]: element });
+        }
+        this.setState({ cryptoList: tempArr, keys });
+      });
+    }, 10000);
   }
   fetchCryptoList = () => {
     return new Promise((resolve, reject) => {
@@ -52,6 +52,7 @@ export class crypto_list_rates extends Component {
         });
     });
   };
+
   render() {
     return (
       <>
@@ -101,7 +102,8 @@ export class crypto_list_rates extends Component {
               }
               .coin_head span{
                   font-size:14px;
-                  font-weight:bold;
+                //   font-weight:bold;
+                  color:#007CFF;
               }
               `}
           </style>
