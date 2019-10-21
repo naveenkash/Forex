@@ -35,6 +35,12 @@ export class crypto_live_head extends Component {
       this.setState({ rate_updated });
     }
   }
+  GetClass=(i)=>{
+    if (!document.querySelectorAll('.crypto_rate p')[i]) {
+      return 'green';
+    }
+    return document.querySelectorAll('.crypto_rate p')[i].className
+  }
 
   render() {
     return (
@@ -61,11 +67,11 @@ export class crypto_live_head extends Component {
                       this.state.rate_updated[i] === true
                         ? "green"
                         : this.state.rate_updated[i] === null
-                        ? ""
+                        ?  this.GetClass(i)
                         : this.state.rate_updated[i] === false
                         ? "red"
                         : "green"
-                    }
+                    } 
                   >
                     {this.props.crypto_head_data.DISPLAY[coin].USD.PRICE}
                   </p>
@@ -100,7 +106,6 @@ export class crypto_live_head extends Component {
             margin:0 15px;
             position:relative;
             background:white;
-            z-index:100;
         }
        
         .crypto_rate_head span{
@@ -116,21 +121,22 @@ export class crypto_live_head extends Component {
         }
         .crypto_rate p{
           font-size:14px;
-          color:#36c8ff;
+          // color:#36c8ff;
         }
+        
         .crypto_rate span{
           font-size:12px;
           margin-left:6px;
         }
         .crypto_head_vol{
           position:absolute;
-          top:-10px;
+          top:0px;
           right:0;
           background:white;
           padding:8px;
           font-size:10px;
-          box-shadow: 0 3px 20px 0 rgba(0,77,165,0.07);
-          z-index:10;
+          // box-shadow: 0 3px 20px 0 rgba(0,77,165,0.07);
+          // z-index:-1;
          
         }
         .green{
