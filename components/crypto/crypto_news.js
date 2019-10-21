@@ -14,13 +14,9 @@ export class crypto_news extends Component {
     this.fetchCryptoNews().then(data => {
       var dataLength = [];
       var dataDivideByNewsPostShown = data.Data.length / 10;
-      console.log(dataDivideByNewsPostShown);
-      
-      for (let i = 1; i < dataDivideByNewsPostShown+1; i++) {
+      for (let i = 1; i < dataDivideByNewsPostShown + 1; i++) {
         dataLength.push(i);
       }
-      console.log(dataLength);
-      
       this.setState({ newsData: data.Data, newsDataLength: dataLength });
     });
   }
@@ -36,15 +32,24 @@ export class crypto_news extends Component {
           return reject(err);
         });
     });
-  }
-  showPage=(pageNumber)=>{
-    var lastPageNumber=10*pageNumber;
-    this.setState({sliceStart:lastPageNumber-10,sliceEnd:lastPageNumber})
-  }
+  };
+  showPage = (e, pageNumber) => {
+    var getAllPageLis = document.querySelectorAll(".news_pagination ul li");
+    for (let i = 0; i < getAllPageLis.length; i++) {
+      const pageLi = getAllPageLis[i];
+      pageLi.style.background = "none";
+    }
+    e.currentTarget.style.background = "#0000000d";
+    var lastPageNumber = 10 * pageNumber; //10 is post shown per page
+    this.setState({
+      sliceStart: lastPageNumber - 10,
+      sliceEnd: lastPageNumber
+    });
+  };
   render() {
     return (
       <>
-        <div className="news_head">
+        <div className="title_head">
           <div className="container">
             <h1>Latest News</h1>
           </div>
@@ -77,13 +82,16 @@ export class crypto_news extends Component {
             </div>
             <div className="news_pagination">
               <ul className="row">
-                {
-                  this.state.newsDataLength.map((pageNumber)=>(
-                  
-                     <li onClick={()=>{this.showPage(pageNumber)}} key={pageNumber}>{pageNumber}</li>
-                 
-                  ))
-                }
+                {this.state.newsDataLength.map(pageNumber => (
+                  <li
+                    onClick={e => {
+                      this.showPage(e, pageNumber);
+                    }}
+                    key={pageNumber}
+                  >
+                    {pageNumber}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -94,14 +102,7 @@ export class crypto_news extends Component {
             width:100%;
             background:white;
         }
-        .news_head{
-            margin-bottom:25px;
-        }
-        .news_head h1{
-            // color:#36c8ff;
-            font-weight:lighter;
-            font-size:26px;
-        }
+       
         .news_wrapper{
             padding:10px 0px;
             box-shadow: 0 3px 20px 0 rgba(0,77,165,0.07);
@@ -122,7 +123,7 @@ export class crypto_news extends Component {
             border-top:1px solid #0000000d;
         }
         .news_wrapper ul li:hover{
-            background:#36c8ff0d;
+            background:#ECF3FD;
         }
         .news_article img{
             width:18px;
