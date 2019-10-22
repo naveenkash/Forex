@@ -64,11 +64,9 @@ export class Home extends React.Component {
     }
   };
   setConversionCurrency = currencyName => {
-    console.table(currencyName);
     this.setState({ conversionFrom: currencyName });
   };
   setConversionCurrency2 = currencyName => {
-    console.table(currencyName);
     this.setState({ conversionTo: currencyName });
   };
   render() {
