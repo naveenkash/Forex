@@ -42,7 +42,7 @@ export class crypto_list_rates extends Component {
   fetchCryptoList = () => {
     return new Promise((resolve, reject) => {
       fetch(
-        `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,LTC,XRP,EOS,OKB,TRX,LINK,BCH,BNB&tsyms=USD&api_key=${process.env.CRYPTO_API_KEY}`
+        `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,LTC,XRP,EOS,OKB,TRX,LINK,XMR,BCH&tsyms=USD&api_key=${process.env.CRYPTO_API_KEY}`
       )
         .then(response => {
           return resolve(response.json());
