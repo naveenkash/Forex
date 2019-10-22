@@ -13,15 +13,20 @@ export class Home extends React.Component {
       from: "USD",
       to: "INR",
       hideDropDown: false,
-      currencyRate: []
+      currencyRate: [],
+      conversionFrom: "US Dollar",
+      conversionTo: "Indian Rupee"
     };
   }
   setDataToState = data => {
-    this.setState({
-      from: data.quotes[0].base_currency,
-      to: data.quotes[0].quote_currency,
-      currencyRate: data
-    },()=>{});
+    this.setState(
+      {
+        from: data.quotes[0].base_currency,
+        to: data.quotes[0].quote_currency,
+        currencyRate: data
+      },
+      () => {}
+    );
   };
   componentDidMount() {
     fetch(
@@ -58,6 +63,14 @@ export class Home extends React.Component {
       }
     }
   };
+  setConversionCurrency = currencyName => {
+    console.table(currencyName);
+    this.setState({ conversionFrom: currencyName });
+  };
+  setConversionCurrency2 = currencyName => {
+    console.table(currencyName);
+    this.setState({ conversionTo: currencyName });
+  };
   render() {
     return (
       <Layout>
@@ -75,13 +88,15 @@ export class Home extends React.Component {
                 </h1>
               </div>
               <CurrencyInput
+                ConversionCurr={this.setConversionCurrency}
+                ConversionCurrTo={this.setConversionCurrency2}
                 hideDropFromClickOnWindow={this.state.hideDropDown}
                 currencyRate={this.setCurrencyRate}
               />
               <CurrencyChart from={this.state.from} to={this.state.to} />
             </div>
           </div>
-          <CurrencyConversion conversionData={this.state.currencyRate} />
+          <CurrencyConversion conversionFrom={this.state.conversionFrom} conversionTo={this.state.conversionTo}conversionData={this.state.currencyRate} />
           <style jsx>
             {`
               .converter {

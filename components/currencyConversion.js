@@ -41,9 +41,9 @@ export class currencyConversion extends Component {
           <table>
             <thead>
               <tr>
-                <td>{this.props.conversionData.quotes[0].base_currency}</td>
+                <td>{this.props.conversionFrom}</td>
                 <td className="table_value" style={{ fontWeight: 700 }}>
-                  {this.props.conversionData.quotes[0].quote_currency}
+                  {this.props.conversionTo}
                 </td>
               </tr>
             </thead>
@@ -63,13 +63,12 @@ export class currencyConversion extends Component {
               ))}
             </tbody>
           </table>
-
           <table>
             <thead>
               <tr>
-                <td>{this.props.conversionData.quotes[0].quote_currency}</td>
+                <td>{this.props.conversionTo}</td>
                 <td className="table_value" style={{ fontWeight: 700 }}>
-                  {this.props.conversionData.quotes[0].base_currency}
+                  {this.props.conversionFrom}
                 </td>
               </tr>
             </thead>

@@ -37,6 +37,7 @@ export class currencydropdown extends Component {
       this.setState({ showFullList: false });
     }
     var newCuurencyArray = [...this.props.currencies].filter(item => {
+      
       return item.name.indexOf(e.target.value.toUpperCase()) !== -1;
     });
 

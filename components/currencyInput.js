@@ -18,13 +18,13 @@ export class currencyInput extends Component {
         "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAgBAMAAACm+uYvAAAAMFBMVEUSiAc4RVs8SF48SV9jbX5jbX9lb4CVnKiWnKiyt8DKzdPLztTq6+7x8vP/mTP///8DX5tcAAAAUUlEQVQoz2N4hwMwDHuJ/zgAksTvRLH9WCWa5py0wCbxS/f//8v7sUh8m////898LBIfz3/x/yOPXSIeqwROo37b4rD8fzEO5+L2IFqQjFgAAKYM7paqvXB1AAAAAElFTkSuQmCC",
       showDrop1: false,
       showDrop2: false,
-      hideDrop: false
+      hideDrop: false,
+      cunversionFrom:"US Dollar",
+      cunversionTo:"Indian Rupee"
     };
   }
   componentDidMount() {
-    fetch(
-      "https://cors-anywhere.herokuapp.com/http://countryapi.gear.host/v1/Country/getCountries"
-    )
+    fetch("https://restcountries.eu/rest/v2/all")
       .then(res => {
         if (!res.ok) {
           throw Error("AN ERROR OCCURED");
@@ -33,30 +33,31 @@ export class currencyInput extends Component {
       })
       .then(data => {
         var copyCurrencyArray = [];
-        data.Response.map(country => {
+        data.map((currencyData, i) => {
           if (
-            country.CurrencyCode === "" ||
-            country.CurrencyCode === "(none)"
+            currencyData.currencies[0].code === null ||
+            currencyData.currencies[0].name === null
           ) {
             return;
           }
 
           var obj = {
-            name: country.CurrencyCode,
-            flag: country.Flag,
-            code: country.NumericCode,
-            country: country.Name
+            name: currencyData.currencies[0].code,
+            flag: currencyData.flag,
+            code: currencyData.area,
+            country: currencyData.name,
+            currency_full_name: currencyData.currencies[0].name
           };
+          // console.log(obj);
+
           copyCurrencyArray = [...copyCurrencyArray, obj];
         });
-        this.setState({ all_currencies: copyCurrencyArray }, () => {
-          this.setState({
-            all_currencies2: [
-              ...this.state.all_currencies.filter(item => {
-                return item.name !== "USD";
-              })
-            ]
-          });
+        var currency2 = [...copyCurrencyArray].filter(item => {
+          return item.name !== "USD";
+        });
+        this.setState({
+          all_currencies: copyCurrencyArray,
+          all_currencies2: currency2
         });
       })
       .catch(err => {
@@ -76,21 +77,6 @@ export class currencyInput extends Component {
       .catch(err => {
         alert(err);
       });
-    // setInterval(() => {
-    //   fetch(
-    //     `https://www1.oanda.com/rates/api/v2/rates/spot.json?api_key=${process.env.REACT_APP_API_KEY_1}&base=${this.state.selectedFrom}&quote=${this.state.selectedTo}`
-    //   )
-    //     .then(res => {
-    //       return res.json();
-    //     })
-    //     .then(data => {
-    //       this.setDataToState(data);
-    //       this.props.currencyRate(data);
-    //     })
-    //     .catch(err => {
-    //       alert(err);
-    //     });
-    // }, 60000);
   }
   setDataToState = data => {
     this.setState({
@@ -118,7 +104,6 @@ export class currencyInput extends Component {
   };
   handleLeave = (e, node) => {
     e.currentTarget.parentNode.classList.remove("activeHover");
-    // e.currentTarget.parentNode.classList.remove("activeFocus");
     e.currentTarget.parentNode.classList.add("normalBorder");
   };
   handleDown = (e, node) => {
@@ -128,7 +113,6 @@ export class currencyInput extends Component {
       const element = input_wrapper[i];
       element.classList.remove("activeFocus");
     }
-
     e.currentTarget.parentNode.classList.remove("activeHover");
     e.currentTarget.parentNode.classList.remove("normalBorder");
     e.currentTarget.parentNode.classList.add("activeFocus");
@@ -149,18 +133,21 @@ export class currencyInput extends Component {
     this.setState(
       {
         selectedFrom: currency.name,
-        selectedFromFlag: currency.flag
+        selectedFromFlag: currency.flag,
+        cunversionFrom:currency.currency_full_name
       },
       () => {
         this.fetchDataFromSelecting();
+        this.props.ConversionCurr(currency.currency_full_name);
       }
     );
   };
   selectedTo = currency => {
     this.setState(
-      { selectedTo: currency.name, selectedToFlag: currency.flag },
+      { selectedTo: currency.name, selectedToFlag: currency.flag ,cunversionTo:currency.currency_full_name},
       () => {
         this.fetchDataFromSelecting();
+        this.props.ConversionCurrTo(currency.currency_full_name);
       }
     );
   };
@@ -178,13 +165,21 @@ export class currencyInput extends Component {
   };
   swapCurrency = data => {
     this.setDataToState(data);
-    this.setState({
-      selectedFrom: this.state.selectedTo,
-      selectedFromFlag: this.state.selectedToFlag,
-      selectedTo: this.state.selectedFrom,
-      selectedToFlag: this.state.selectedFromFlag
-    });
-    this.props.currencyRate(data);
+    this.setState(
+      {
+        selectedFrom: this.state.selectedTo,
+        selectedFromFlag: this.state.selectedToFlag,
+        selectedTo: this.state.selectedFrom,
+        selectedToFlag: this.state.selectedFromFlag
+      },
+      () => {
+        this.props.currencyRate(data);
+        this.props.ConversionCurr(this.state.cunversionTo);
+        this.props.ConversionCurrTo(this.state.cunversionFrom);
+      }
+    );
+
+    // this.props.ConversionCurr(currency)
   };
   calculateCurrency = e => {
     if (isNaN(e.target.value)) {
