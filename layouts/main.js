@@ -79,7 +79,12 @@ export default class Main extends React.Component {
         margin: 0 auto;
         padding:60px 0;
       }
-      
+      .green{
+        color:#00bf33 !important;
+      }
+      .red{
+        color:red !important;
+      }
      
       .loading {
         width: 100%;

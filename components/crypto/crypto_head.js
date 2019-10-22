@@ -139,12 +139,7 @@ export class crypto_live_head extends Component {
           // z-index:-1;
          
         }
-        .green{
-          color:#00bf33 !important;
-        }
-        .red{
-          color:red !important;
-        }
+        
         `}</style>
       </div>
     );
