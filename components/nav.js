@@ -10,7 +10,7 @@ const Nav = () => (
           <ul>
             <li>
               <Link href="/">
-                <a>Currency Converter</a>
+                <a>Currency converter</a>
               </Link>
             </li>
             <li>
@@ -46,14 +46,15 @@ const Nav = () => (
           font-size: 24px;
           margin-right:12px;
           padding:10px 0;
-          font-family:'Poppins', sans-serif ;     
+          // font-family:'Poppins', sans-serif ;   
+          font-family: 'Montserrat', sans-serif;  
         }
         .nav_item ul li a {
           color: white;
           text-decoration: none;
-          font-weight: lighter;
+          // font-weight: bolder;
           transition: 0.2s;
-          font-size: 0.9em;
+          font-size: 19px;
           padding:10px 0;
         }
         .nav_item ul li a:hover {

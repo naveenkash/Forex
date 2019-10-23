@@ -59,9 +59,10 @@ export class crypto_live_head extends Component {
                     {coin} -{" "}
                     {Object.keys(this.props.crypto_head_data.DISPLAY[coin])}
                   </span>
+                  
                 </div>
 
-                <div className="crypto_rate">
+                <div className="crypto_rate row">
                   <p
                     className={
                       this.state.rate_updated[i] === true
@@ -74,7 +75,9 @@ export class crypto_live_head extends Component {
                     } 
                   >
                     {this.props.crypto_head_data.DISPLAY[coin].USD.PRICE}
+                   
                   </p>
+                  <span className="head_pct_chg">({this.props.crypto_head_data.DISPLAY[coin].USD.CHANGEPCT24HOUR}%)</span>
                 </div>
                 <span className="crypto_head_vol">VOL : {this.props.crypto_head_data.DISPLAY[coin].USD.VOLUME24HOUR}</span>
               </div>
@@ -127,6 +130,9 @@ export class crypto_live_head extends Component {
         .crypto_rate span{
           font-size:12px;
           margin-left:6px;
+        }
+        .head_pct_chg {
+          color:grey;
         }
         .crypto_head_vol{
           position:absolute;
