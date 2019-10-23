@@ -91,7 +91,7 @@ export class crypto_news extends Component {
           <div className="container">
             {(() => {
               if (this.state.errorLoading) {
-                return <p>Error Loading...</p>;
+                return <p className="loadingError">Error Loading...</p>
               } else {return(
                 <>
                 <div className="news_wrapper">

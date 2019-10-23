@@ -74,7 +74,7 @@ export class crypto_list_rates extends Component {
           <div className="container">
             {(() => {
               if (this.state.errorLoading) {
-                return <p>Error Loading...</p>;
+                return <p className="loadingError">Error Loading...</p>;
               } else {
                 return (
                   <div className="crypto_list_wrapper">

@@ -48,7 +48,7 @@ export class crypto_live_head extends Component {
         <div className="crypto_head_wrapper">
           {(()=>{
             if (this.props.errorLoading) {
-              return <p>Error Loading...</p>
+              return <p className="loadingError">Error Loading...</p>
             }else{
               return(
                 <>
@@ -95,7 +95,7 @@ export class crypto_live_head extends Component {
                 </>
               )
             }
-          })}
+          })()}
           
         </div>
        

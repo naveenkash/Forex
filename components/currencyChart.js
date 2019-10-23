@@ -11,7 +11,7 @@ export class currencyChart extends Component {
       show: false
     };
   }
-  fetchChartData = (from,to) => {
+  fetchChartData = (from, to) => {
     fetch(
       `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${from}&to_symbol=${to}&apikey=${process.env.REACT_APP_API_KEY_3}`
     )
@@ -25,7 +25,6 @@ export class currencyChart extends Component {
           // alert("Chart Can't be Loaded Beacuse Of Api Call Limit");
           throw new Error("Chart Can t be Loaded Beacuse Of Api Call Limit");
         }
-        this.setState({ loading: false });
         var tempArrFoData = [];
         var dataKey = data["Time Series FX (Daily)"];
         var dates = [];
@@ -58,28 +57,26 @@ export class currencyChart extends Component {
           const element = dates[i];
           var dMS = element.split(",");
           console.log(dMS);
-          
+
           if (dMS[0] < 10) {
             onlyNum = dMS[0].replace(0, "");
             if (dMS[1] < 10) {
               dMS[1] = dMS[1].replace(0, "");
-              
             }
-            convertedDate.push(
-              [`${months[onlyNum - 1]} ${dMS[1]}`].join()
-            );
+            convertedDate.push([`${months[onlyNum - 1]} ${dMS[1]}`].join());
           } else if (dMS[0] >= 10) {
             onlyNum = dMS[0];
             if (dMS[1] < 10) {
               dMS[1] = dMS[1].replace(0, "");
-              
             }
             convertedDate.push([`${months[onlyNum - 1]} ${dMS[1]}`].join());
           }
         }
         this.setState({
           labelsYAxis: convertedDate,
-          data: tempArrFoData
+          data: tempArrFoData,
+          loading: false,
+          show: false
         });
       })
       .catch(err => {
@@ -88,16 +85,16 @@ export class currencyChart extends Component {
       });
   };
   componentDidMount() {
-    this.fetchChartData(this.props.from,this.props.to);
+    this.fetchChartData(this.props.from, this.props.to);
   }
 
   UNSAFE_componentWillReceiveProps(newProps) {
-    this.fetchChartData(newProps.from,newProps.to);
+    this.fetchChartData(newProps.from, newProps.to);
   }
   // componentDidUpdate(previousProps){
   //   console.log(previousProps);
   //   // this.fetchChartData(previousProps.from,previousProps.to);
-    
+
   // }
   render() {
     const { from, to } = this.props;
@@ -189,65 +186,70 @@ export class currencyChart extends Component {
       scaleStartValue: 200
     };
     return (
-      <div className="data_chart">
+      <>
         {(() => {
-          if (this.state.loading) {
+          if (this.state.show) {
             return (
-              <div className="loading">
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="45" />
-                </svg>
-              </div>
-            );
-          } else if (this.state.show) {
-            return (
-              // <div className="loading">
-              <h3 className="chart_error">
+              <p className="loadingError chart_error row">
                 Can't Load Chart! Try Refreshing The Page Again In a Moment
-              </h3>
-              // </div>
+              </p>
             );
           } else {
             return (
-              <Line
-                ref={reference => (this.chartReference = reference)}
-                key={this.props.from}
-                data={data}
-                options={options}
-              />
+              <div className="data_chart">
+                {(() => {
+                  if (this.state.loading) {
+                    return (
+                      <div className="loading">
+                        <svg
+                          viewBox="0 0 100 100"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle cx="50" cy="50" r="45" />
+                        </svg>
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <Line
+                        ref={reference => (this.chartReference = reference)}
+                        key={this.props.from}
+                        data={data}
+                        options={options}
+                      />
+                    );
+                  }
+                })()}
+
+                <style jsx>{`
+                    .data_chart {
+                      position: relative;
+                      width: 100%;
+                      height: 400px;
+                    }
+                  
+                    }
+                    @media only screen and (max-width:667px){
+                      .data_chart{
+                        height:300px;
+                      }
+                    }
+                    @media only screen and (max-width:500px){
+                      .data_chart{
+                        height:250px;
+                      }
+                    }
+                    @media only screen and (max-width:400px){
+                      .data_chart{
+                        height:200px;
+                      }
+                    }
+                  `}</style>
+              </div>
             );
           }
         })()}
-
-        <style jsx>{`
-          .data_chart {
-            position: relative;
-            width: 100%;
-            height: 400px;
-          }
-        .chart_error{
-          text-align:center;
-          color:white;
-        }
-         
-          }
-          @media only screen and (max-width:667px){
-            .data_chart{
-              height:300px;
-            }
-          }
-          @media only screen and (max-width:500px){
-            .data_chart{
-              height:250px;
-            }
-          }
-          @media only screen and (max-width:400px){
-            .data_chart{
-              height:200px;
-            }
-          }
-        `}</style>
-      </div>
+      </>
     );
   }
 }
