@@ -27,6 +27,7 @@ export default class Main extends React.Component {
             href="https://fonts.googleapis.com/css?family=Poppins&display=swap"
             rel="stylesheet"
           ></link>
+          <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"></link>
         </Head>
 
         <Nav />

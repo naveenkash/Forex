@@ -46,6 +46,40 @@ export class crypto_news extends Component {
       sliceEnd: lastPageNumber
     });
   };
+   timeDifference=(current, previous) =>{
+
+    var msPerMinute = 60 * 1000;
+    var msPerHour = msPerMinute * 60;
+    var msPerDay = msPerHour * 24;
+    var msPerMonth = msPerDay * 30;
+    var msPerYear = msPerDay * 365;
+
+    var elapsed = current - previous;
+
+    if (elapsed < msPerMinute) {
+         return Math.round(elapsed/1000) + ' second ago';   
+    }
+
+    else if (elapsed < msPerHour) {
+         return Math.round(elapsed/msPerMinute) + ' minute ago';   
+    }
+
+    else if (elapsed < msPerDay ) {
+         return Math.round(elapsed/msPerHour ) + ' hour ago';   
+    }
+
+    // else if (elapsed < msPerMonth) {
+    //     return 'approximately ' + Math.round(elapsed/msPerDay) + ' day ago';   
+    // }
+
+    // else if (elapsed < msPerYear) {
+    //     return 'approximately ' + Math.round(elapsed/msPerMonth) + ' month ago';   
+    // }
+
+    else {
+        return 'approximately ' + Math.round(elapsed/msPerYear ) + ' year ago';   
+    }
+}
   render() {
     return (
       <>
@@ -61,10 +95,10 @@ export class crypto_news extends Component {
                 {this.state.newsData
                   .slice(this.state.sliceStart, this.state.sliceEnd)
                   .map(news => (
-                    <li key={news.id}>
+                    <li key={news.id}>                     
                       <div className="news_article">
                         <h3 title={news.body.slice(0, 100) + " . . ."}>
-                          {" "}
+                        
                           <a target="_blank" href={news.url}>
                             {news.title}
                           </a>
@@ -72,7 +106,7 @@ export class crypto_news extends Component {
                         <div className="row">
                           <img src={news.source_info.img} alt="" />
                           <p>
-                            {news.source_info.name} , {news.source_info.lang}
+                            {news.source_info.name} , {news.source_info.lang} , {this.timeDifference( Date.now(),news.published_on*1000)}
                           </p>
                         </div>
                       </div>

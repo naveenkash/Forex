@@ -52,26 +52,33 @@ export class currencyChart extends Component {
             tempArrFoData.push(dataKey[key][["4. close"]]);
           }
         }
-        var convertedDtae = [];
+        var convertedDate = [];
         var onlyNum = 0;
         for (let i = 0; i < dates.length; i++) {
           const element = dates[i];
           var dMS = element.split(",");
+          console.log(dMS);
+          
           if (dMS[0] < 10) {
             onlyNum = dMS[0].replace(0, "");
-            convertedDtae.push(
-              [`${months[onlyNum - 1]} ${dMS[1].replace(0, "")}`].join()
+            if (dMS[1] < 10) {
+              dMS[1] = dMS[1].replace(0, "");
+              
+            }
+            convertedDate.push(
+              [`${months[onlyNum - 1]} ${dMS[1]}`].join()
             );
           } else if (dMS[0] >= 10) {
             onlyNum = dMS[0];
             if (dMS[1] < 10) {
               dMS[1] = dMS[1].replace(0, "");
+              
             }
-            convertedDtae.push([`${months[onlyNum - 1]} ${dMS[1]}`].join());
+            convertedDate.push([`${months[onlyNum - 1]} ${dMS[1]}`].join());
           }
         }
         this.setState({
-          labelsYAxis: convertedDtae,
+          labelsYAxis: convertedDate,
           data: tempArrFoData
         });
       })
