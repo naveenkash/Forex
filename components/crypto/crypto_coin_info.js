@@ -97,6 +97,20 @@ export class crypto_coin_info extends Component {
         } else {
           rate_updated[i][4] = false;
         }
+          // checking if volume  24hr updated
+        if (
+          nextProps.cryptoList[i][coin].USD.VOLUME24HOURTO >
+          this.props.cryptoList[i][coin].USD.VOLUME24HOURTO
+        ) {
+          rate_updated[i][5] = true;
+        } else if (
+          nextProps.cryptoList[i][coin].USD.VOLUME24HOURTO ===
+          this.props.cryptoList[i][coin].USD.VOLUME24HOURTO
+        ) {
+          rate_updated[i][5] = null;
+        } else {
+          rate_updated[i][5] = false;
+        }
       }
       //   this.props.update_rate_array(rate_updated);
       this.setState({ rate_updated });
@@ -131,6 +145,12 @@ export class crypto_coin_info extends Component {
       return "green";
     }
     return document.querySelectorAll(".pct_change span")[i].className;
+  };
+  getVol24HourClass = i => {
+    if (!document.querySelectorAll(".vol_24_hour span")[i]) {
+      return "green";
+    }
+    return document.querySelectorAll(".vol_24_hour span")[i].className;
   };
   render() {
     return (
@@ -236,7 +256,23 @@ export class crypto_coin_info extends Component {
                 </span>
               </div>
             </div>
-
+            <div className="vol_24 coin_detail">
+              <div className="vol_24_hour">
+                <span
+                  className={
+                    this.state.rate_updated[i][5] === true
+                      ? "green"
+                      : this.state.rate_updated[i][5] === null
+                      ? this.getPctChangeClass(i)
+                      : this.state.rate_updated[i][5] === false
+                      ? "red"
+                      : "green"
+                  }
+                >
+                  {coin[this.props.keys[i]].USD.VOLUME24HOURTO}
+                </span>
+              </div>
+            </div>
             <style>{`
             .crypto_coin_info{
                 width:100%;

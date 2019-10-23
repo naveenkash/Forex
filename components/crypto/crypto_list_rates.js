@@ -13,7 +13,7 @@ export class crypto_list_rates extends Component {
         "Top Tier Vol",
         "Market Cap",
         "Chg.24H",
-        "7d Chart"
+        "Vol 24H"
       ]
     };
   }
@@ -37,7 +37,7 @@ export class crypto_list_rates extends Component {
         }
         this.setState({ cryptoList: tempArr, keys });
       });
-    }, 10000);
+    }, 6000);
   }
   fetchCryptoList = () => {
     return new Promise((resolve, reject) => {
