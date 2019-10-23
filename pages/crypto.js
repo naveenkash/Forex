@@ -21,9 +21,12 @@ export  class crypto extends Component {
       var Keys = Object.keys(data.DISPLAY);
       this.setState({
         crypto_head_data: data,
-        crypto_head_coins: Keys
+        crypto_head_coins: Keys,
+        errorLoading:false
       });
-    });
+    }).catch(()=>{
+      this.setState({ errorLoading:true})
+    })
     setInterval(() => {
       this.fetchCryptoData().then(data => {
         var Keys = Object.keys(data.DISPLAY);
@@ -31,7 +34,9 @@ export  class crypto extends Component {
           crypto_head_data: data,
           crypto_head_coins: Keys
         });
-      });
+      }).catch(()=>{
+        this.setState({ errorLoading:true})
+      })
     }, 10000);
 
     }
@@ -63,6 +68,7 @@ export  class crypto extends Component {
                 <CryptoHead
                   crypto_head_data={this.state.crypto_head_data}
                   crypto_head_coins={this.state.crypto_head_coins}
+                  errorLoading={this.state.errorLoading}
                 />
               </div>
             </div>

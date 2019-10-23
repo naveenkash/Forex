@@ -23,77 +23,83 @@ export class currencyConversion extends Component {
   }
 
   render() {
-    if (this.props.conversionData <= 0) {
-      return (
-        <div className="container">
-          <div className="currency_conversion_error">
-            <h3 className="converion_error">
-              Can't Load Conversions! Try Refreshing The Page Again In a Moment
-            </h3>
-          </div>
-        </div>
-        //
-      );
-    }
     return (
       <div className="container">
-        <div className="currency_conversion">
-          <table>
-            <thead>
-              <tr>
-                <td>{this.props.conversionFrom}</td>
-                <td className="table_value" style={{ fontWeight: 700 }}>
-                  {this.props.conversionTo}
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.diffAmountInfo.map(count => (
-                <tr key={count}>
-                  <td className="table_key">
-                    {`${count} ${this.props.conversionData.quotes[0].base_currency}`}
-                  </td>
-                  <td className="table_value">
-                    {`${Math.floor(
-                      count * this.props.conversionData.quotes[0].bid * 10000 ) / 10000} ${
-                      this.props.conversionData.quotes[0].quote_currency
-                    } `}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <table>
-            <thead>
-              <tr>
-                <td>{this.props.conversionTo}</td>
-                <td className="table_value" style={{ fontWeight: 700 }}>
-                  {this.props.conversionFrom}
-                </td>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.diffAmountInfo.map(count => (
-                <tr key={count}>
-                  <td className="table_key">
-                    {`${count} ${this.props.conversionData.quotes[0].quote_currency}`}
-                  </td>
-                  <td className="table_value">
-                    {`${Math.floor(
-                      (count /
-                        this.props.conversionData.quotes[0].bid) *
-                        10000
-                    ) / 10000} ${this.props.conversionData.quotes[0].base_currency} `}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        {(() => {
+          if (this.props.conversionData <= 0) {
+            return (
+                  <p className="converion_error row">
+                    Error Loading Conversions
+                  </p>
+            );
+          } else {
+            return (
+              <div className="currency_conversion">
+                <table>
+                  <thead>
+                    <tr>
+                      <td>{this.props.conversionFrom}</td>
+                      <td className="table_value" style={{ fontWeight: 700 }}>
+                        {this.props.conversionTo}
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.diffAmountInfo.map(count => (
+                      <tr key={count}>
+                        <td className="table_key">
+                          {`${count} ${this.props.conversionData.quotes[0].base_currency}`}
+                        </td>
+                        <td className="table_value">
+                          {`${Math.floor(
+                            count *
+                              this.props.conversionData.quotes[0].bid *
+                              10000
+                          ) / 10000} ${
+                            this.props.conversionData.quotes[0].quote_currency
+                          } `}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <table>
+                  <thead>
+                    <tr>
+                      <td>{this.props.conversionTo}</td>
+                      <td className="table_value" style={{ fontWeight: 700 }}>
+                        {this.props.conversionFrom}
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {this.state.diffAmountInfo.map(count => (
+                      <tr key={count}>
+                        <td className="table_key">
+                          {`${count} ${this.props.conversionData.quotes[0].quote_currency}`}
+                        </td>
+                        <td className="table_value">
+                          {`${Math.floor(
+                            (count / this.props.conversionData.quotes[0].bid) *
+                              10000
+                          ) / 10000} ${
+                            this.props.conversionData.quotes[0].base_currency
+                          } `}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            );
+          }
+        })()}
+
         <style jsx>{`
           .converion_error {
-            color: #36c8ff;
-            text-align:center;
+            height:70px;
+            justify-content:center;
+
           }
           .currency_conversion {
             width: 100%;

@@ -14,29 +14,38 @@ export class crypto_list_rates extends Component {
         "Market Cap",
         "Chg.24H",
         "Vol 24H"
-      ]
+      ],
+      errorLoading: false
     };
   }
   componentDidMount() {
-    this.fetchCryptoList().then(data => {
-      var keys = Object.keys(data.DISPLAY);
-      var tempArr = [];
-      for (let i = 0; i < keys.length; i++) {
-        const element = data.DISPLAY[keys[i]];
-        tempArr.push({ [keys[i]]: element });
-      }
-      this.setState({ cryptoList: tempArr, keys });
-    });
-    setInterval(() => {
-      this.fetchCryptoList().then(data => {
+    this.fetchCryptoList()
+      .then(data => {
         var keys = Object.keys(data.DISPLAY);
         var tempArr = [];
         for (let i = 0; i < keys.length; i++) {
           const element = data.DISPLAY[keys[i]];
           tempArr.push({ [keys[i]]: element });
         }
-        this.setState({ cryptoList: tempArr, keys });
+        this.setState({ cryptoList: tempArr, keys, errorLoading:false });
+      })
+      .catch(err => {
+        this.setState({ errorLoading:true });
       });
+    setInterval(() => {
+      this.fetchCryptoList()
+        .then(data => {
+          var keys = Object.keys(data.DISPLAY);
+          var tempArr = [];
+          for (let i = 0; i < keys.length; i++) {
+            const element = data.DISPLAY[keys[i]];
+            tempArr.push({ [keys[i]]: element });
+          }
+          this.setState({ cryptoList: tempArr, keys, errorLoading:false });
+        })
+        .catch(err => {
+          this.setState({ errorLoading:true });
+        });
     }, 6000);
   }
   fetchCryptoList = () => {
@@ -63,19 +72,27 @@ export class crypto_list_rates extends Component {
         </div>
         <div className="crypto_list">
           <div className="container">
-            <div className="crypto_list_wrapper">
-              <div className="coin_head_wrapper row">
-                {this.state.coinHeads.map(head => (
-                  <div key={head} className="coin_head">
-                    <span>{head}</span>
+            {(() => {
+              if (this.state.errorLoading) {
+                return <p className="loadingError">Error Loading...</p>;
+              } else {
+                return (
+                  <div className="crypto_list_wrapper">
+                    <div className="coin_head_wrapper row">
+                      {this.state.coinHeads.map(head => (
+                        <div key={head} className="coin_head">
+                          <span>{head}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <CryptoCoin
+                      cryptoList={this.state.cryptoList}
+                      keys={this.state.keys}
+                    />
                   </div>
-                ))}
-              </div>
-              <CryptoCoin
-                cryptoList={this.state.cryptoList}
-                keys={this.state.keys}
-              />
-            </div>
+                );
+              }
+            })()}
           </div>
           <style>
             {`

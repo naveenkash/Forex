@@ -46,45 +46,57 @@ export class crypto_live_head extends Component {
     return (
       <div className="crypto_live_head">
         <div className="crypto_head_wrapper">
-          {this.props.crypto_head_coins.map((coin, i) => {
-            return (
-              
-              <div key={coin} className="crypto_head">
-                <div className="crypto_rate_head row">
-                  <img
-                    src={`https://www.cryptocompare.com${this.props.crypto_head_data.DISPLAY[coin].USD.IMAGEURL}`}
-                    alt=""
-                  />{" "}
-                  <span>
-                    {coin} -{" "}
-                    {Object.keys(this.props.crypto_head_data.DISPLAY[coin])}
-                  </span>
-                  
-                </div>
-
-                <div className="crypto_rate row">
-                  <p
-                    className={
-                      this.state.rate_updated[i] === true
-                        ? "green"
-                        : this.state.rate_updated[i] === null
-                        ?  this.GetClass(i)
-                        : this.state.rate_updated[i] === false
-                        ? "red"
-                        : "green"
-                    } 
-                  >
-                    {this.props.crypto_head_data.DISPLAY[coin].USD.PRICE}
-                   
-                  </p>
-                  <span className="head_pct_chg">({this.props.crypto_head_data.DISPLAY[coin].USD.CHANGEPCT24HOUR}%)</span>
-                </div>
-                <span className="crypto_head_vol">VOL : {this.props.crypto_head_data.DISPLAY[coin].USD.VOLUME24HOUR}</span>
-              </div>
-              
-
-            );
-          })}
+          {(()=>{
+            if (this.props.errorLoading) {
+              return <p className="loadingError">Error Loading...</p>
+            }else{
+              return(
+                <>
+                {this.props.crypto_head_coins.map((coin, i) => {
+                  return (
+                    
+                    <div key={coin} className="crypto_head">
+                      <div className="crypto_rate_head row">
+                        <img
+                          src={`https://www.cryptocompare.com${this.props.crypto_head_data.DISPLAY[coin].USD.IMAGEURL}`}
+                          alt=""
+                        />{" "}
+                        <span>
+                          {coin} -{" "}
+                          {Object.keys(this.props.crypto_head_data.DISPLAY[coin])}
+                        </span>
+                        
+                      </div>
+      
+                      <div className="crypto_rate row">
+                        <p
+                          className={
+                            this.state.rate_updated[i] === true
+                              ? "green"
+                              : this.state.rate_updated[i] === null
+                              ?  this.GetClass(i)
+                              : this.state.rate_updated[i] === false
+                              ? "red"
+                              : "green"
+                          } 
+                        >
+                          {this.props.crypto_head_data.DISPLAY[coin].USD.PRICE}
+                         
+                        </p>
+                        <span className="head_pct_chg">({this.props.crypto_head_data.DISPLAY[coin].USD.CHANGEPCT24HOUR}%)</span>
+                      </div>
+                      <span className="crypto_head_vol">VOL : {this.props.crypto_head_data.DISPLAY[coin].USD.VOLUME24HOUR}</span>
+                    </div>
+                    
+      
+                  );
+                 
+                })} 
+                </>
+              )
+            }
+          })()}
+          
         </div>
        
         <style>{`
