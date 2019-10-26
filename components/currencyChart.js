@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
-
+import Head from "next/head";
 export class currencyChart extends Component {
   constructor(props) {
     super(props);
@@ -56,8 +56,6 @@ export class currencyChart extends Component {
         for (let i = 0; i < dates.length; i++) {
           const element = dates[i];
           var dMS = element.split(",");
-          console.log(dMS);
-
           if (dMS[0] < 10) {
             onlyNum = dMS[0].replace(0, "");
             if (dMS[1] < 10) {
@@ -187,6 +185,9 @@ export class currencyChart extends Component {
     };
     return (
       <>
+        <Head>
+          <link rel="stylesheet" href="../static/styles/chartStyle/chart.css" />
+        </Head>
         {(() => {
           if (this.state.show) {
             return (
@@ -220,31 +221,6 @@ export class currencyChart extends Component {
                     );
                   }
                 })()}
-
-                <style jsx>{`
-                    .data_chart {
-                      position: relative;
-                      width: 100%;
-                      height: 400px;
-                    }
-                  
-                    }
-                    @media only screen and (max-width:667px){
-                      .data_chart{
-                        height:300px;
-                      }
-                    }
-                    @media only screen and (max-width:500px){
-                      .data_chart{
-                        height:250px;
-                      }
-                    }
-                    @media only screen and (max-width:400px){
-                      .data_chart{
-                        height:200px;
-                      }
-                    }
-                  `}</style>
               </div>
             );
           }

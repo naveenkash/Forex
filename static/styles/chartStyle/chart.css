@@ -1,0 +1,22 @@
+.data_chart {
+    position: relative;
+    width: 100%;
+    height: 400px;
+  }
+
+  
+  @media only screen and (max-width:667px){
+    .data_chart{
+      height:300px;
+    }
+  }
+  @media only screen and (max-width:500px){
+    .data_chart{
+      height:250px;
+    }
+  }
+  @media only screen and (max-width:400px){
+    .data_chart{
+      height:200px;
+    }
+  }

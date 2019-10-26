@@ -1,0 +1,26 @@
+.crypto_list {
+    margin-bottom: 45px;
+}
+
+.coin_head_wrapper {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 3px 20px 0 rgba(0, 77, 165, 0.07);
+}
+
+.crypto_list_wrapper {
+    width: 100%;
+    height: auto;
+    box-shadow: 0 3px 20px 0 rgba(0, 77, 165, 0.07);
+}
+
+.coin_head {
+    width: 14%;
+    height: auto;
+    padding: 15px;
+}
+
+.coin_head span {
+    font-size: 14px; 
+    color: #007CFF;
+}

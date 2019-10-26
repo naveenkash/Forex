@@ -77,7 +77,6 @@ export  class crypto extends Component {
             
           </div>
         </div>
-        <p className="development">In Development</p>
       </Layout>
     );
   }

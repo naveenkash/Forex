@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CryptoCoin from "./crypto_coin_info";
+import Head from "next/head";
 export class crypto_list_rates extends Component {
   constructor(props) {
     super(props);
@@ -65,6 +66,12 @@ export class crypto_list_rates extends Component {
   render() {
     return (
       <>
+       <Head>
+          <link
+            rel="stylesheet"
+            href="../static\styles\cryptoListRates\cryptoListRates.css"
+          />
+        </Head>
         <div className="title_head">
           <div className="container">
             <h1>Rates</h1>
@@ -94,36 +101,6 @@ export class crypto_list_rates extends Component {
               }
             })()}
           </div>
-          <style>
-            {`
-              .crypto_list{
-                  margin-bottom:45px;
-              }
-              .coin_head_wrapper{
-                  width:100%;
-                  height:auto;
-                  
-                // border-top:1px solid #ebebeb;
-                box-shadow: 0 3px 20px 0 rgba(0,77,165,0.07);
-              }
-              .crypto_list_wrapper{
-                  
-                width:100%;
-                height:auto;
-            box-shadow: 0 3px 20px 0 rgba(0,77,165,0.07);
-              }
-              .coin_head{
-                  width:14%;
-                  height:auto;
-                  padding:15px;
-              }
-              .coin_head span{
-                  font-size:14px;
-                //   font-weight:bold;
-                  color:#007CFF;
-              }
-              `}
-          </style>
         </div>
       </>
     );
