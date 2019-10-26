@@ -1,26 +1,39 @@
 .crypto_live_head{
     width:100%;
     height:auto;
-    margin:45px 0;
+    margin:25px 0;
 }
 
 .crypto_head_wrapper{
-    display:flex;
-    align-items:center;
+    /* display:flex;
+    align-items:center; */
     width:100%;
     height:auto;
-    justify-content:center;
+    /* justify-content:center; */
 }
 .crypto_head{
     width:25%;
     height:auto;
     padding:20px;
     box-shadow: 0 3px 20px 0 rgba(0,77,165,0.07);
-    margin:0 15px;
+    /* margin:0 15px; */
     position:relative;
     background:white;
 }
-
+/* .slick-list{
+  overflow: unset !important;
+} */
+.slick-slide{
+  height: auto !important;
+}
+.slick-track{
+  display: flex !important;
+  align-items: center;
+  height: 150px;
+}
+.slick-slide div:not(.crypto_head){
+  padding: 0 15px;
+}
 .crypto_rate_head span{
   font-size:14px;
 }
@@ -52,7 +65,7 @@
   font-size:10px;
  
 }
-@media only screen and (max-width:901px){
+/* @media only screen and (max-width:901px){
   .crypto_head_wrapper{
     flex-wrap: wrap;
     justify-content:space-around;
@@ -65,4 +78,4 @@
     padding: 15px;
 
   }
-}
+} */

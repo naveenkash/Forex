@@ -37,6 +37,7 @@ export default class Main extends React.Component {
         <style jsx global>{`
       body {
         font-family: "Noto Sans", sans-serif;
+        overflow-x:hidden;
       }
       * {
         margin: 0;
