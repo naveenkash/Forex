@@ -4,6 +4,7 @@
     background: white;
     transition: 0.3s;
     border-top: 1px solid #ebebeb;
+    padding-left: 15px;
 }
 
 .crypto_coin_info:hover {
@@ -11,7 +12,7 @@
 }
 
 .coin_detail {
-    padding: 15px;
+    padding: 15px 0 ;
     width: 14.2%;
 }
 

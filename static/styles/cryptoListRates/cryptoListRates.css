@@ -6,6 +6,8 @@
     width: 100%;
     height: auto;
     box-shadow: 0 3px 20px 0 rgba(0, 77, 165, 0.07);
+    
+    padding-left: 15px;
 }
 
 .crypto_list_wrapper {

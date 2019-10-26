@@ -19,6 +19,7 @@
     /* margin:0 15px; */
     position:relative;
     background:white;
+    outline: none;
 }
 /* .slick-list{
   overflow: unset !important;
@@ -32,7 +33,10 @@
   height: 150px;
 }
 .slick-slide div:not(.crypto_head){
-  padding: 0 15px;
+  padding: 0 10px;
+}
+.crypto_rate_head{
+  padding: 0 !important;
 }
 .crypto_rate_head span{
   font-size:14px;
@@ -44,6 +48,7 @@
 }
 .crypto_rate{
   margin-top:10px;
+  padding: 0 !important;
 }
 .crypto_rate p{
   font-size:14px;
@@ -65,17 +70,10 @@
   font-size:10px;
  
 }
-/* @media only screen and (max-width:901px){
-  .crypto_head_wrapper{
-    flex-wrap: wrap;
-    justify-content:space-around;
-    flex-direction: row;
-  }
+@media only screen and (max-width:901px){
+ 
   .crypto_head{
-    width: 48%;
-    margin: 0;
-    margin-bottom: 13px;
     padding: 15px;
 
   }
-} */
+}
