@@ -75,6 +75,7 @@ export class Home extends React.Component {
         <div>
           <Head>
             <title>Currency Converter</title>
+            <link rel="stylesheet" href="../static/styles/index/index.css" />
           </Head>
           <div className="converter" onClick={this.hidePanel}>
             <div className="container">
@@ -94,40 +95,11 @@ export class Home extends React.Component {
               <CurrencyChart from={this.state.from} to={this.state.to} />
             </div>
           </div>
-          <CurrencyConversion conversionFrom={this.state.conversionFrom} conversionTo={this.state.conversionTo}conversionData={this.state.currencyRate} />
-          <style jsx>
-            {`
-              .converter {
-                background: #37517e;
-                width: 100%;
-                height: auto;
-                padding: 60px 0 20px;
-              }
-              .curr_head {
-                width: auto;
-              }
-              .curr_head h1 {
-                font-size: 2.6em;
-                color: white;
-                font-family: "Poppins", sans-serif;
-                letter-spacing: 1px;
-              }
-              .activeHover {
-                border-color: #829ca9 !important;
-              }
-              .activeFocus {
-                border-color: #17bfff !important;
-              }
-              .normalBorder {
-                border-color: #d3d5d8;
-              }
-              @media only screen and (max-width: 991px) {
-                .converter {
-                  padding-top: 40px;
-                }
-              }
-            `}
-          </style>
+          <CurrencyConversion
+            conversionFrom={this.state.conversionFrom}
+            conversionTo={this.state.conversionTo}
+            conversionData={this.state.currencyRate}
+          />
         </div>
       </Layout>
     );

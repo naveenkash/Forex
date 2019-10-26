@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import DropdownHead from "./paneldropdown";
 import SwapIcon from "./swapcurrency";
+
+import Head from "next/head";
 export class currencyInput extends Component {
   constructor(props) {
     super(props);
@@ -207,7 +209,12 @@ export class currencyInput extends Component {
 
   render() {
     return (
+      <>
+       <Head>
+          <link rel="stylesheet" href="../static\styles\currencyInput\currencyInput.css" />
+        </Head>
       <div className="panel">
+       
         <div className="panel_body">
           <div className="panel_input_wrapper">
             <div className="label_convert">
@@ -293,178 +300,9 @@ export class currencyInput extends Component {
             </div>
           </div>
         </div>
-        <style jsx>{`
-          .panel {
-            max-width: 100%;
-            height: auto;
-            background: white;
-            border-radius: 5px;
-            padding: 30px;
-            margin: 30px 0 60px;
-          }
-          .panel_body {
-            width: 100%;
-            height: auto;
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-          }
-          .panel_input_wrapper {
-            width: 50%;
-            padding: 0 10px;
-          }
-          .panel_select_wrapper {
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-          }
-          .label_convert label {
-            color: #919ea4;
-            font-size: 15px;
-            transition: 0.1s;
-          }
-          .panel_input {
-            position: relative;
-            margin-bottom: 24px;
-            margin-top: 3px;
-            transition: 0.1s;
-            border-radius: 3px;
-            border: 1px solid #d3d5d8;
-          }
-          .panel_currency {
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 72px;
-            padding: 13px 16px 11px;
-            display: flex;
-            align-items: center;
-            background: white;
-          }
-          .panel_currency span {
-            color: #829ca9;
-            font-family: "Poppins", sans-serif;
-            letter-spacing: 0.5px;
-          }
-          .panel_input input {
-            width: 100%;
-            padding: 13px 16px 11px;
-            height: 72px;
-            outline: none;
-            border: none;
-            font-size: 22px;
-            border-radius: 3px;
-            color: #384c70;
-          }
-          .panel_select {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-          }
-          .panel_dropdown {
-            width: 40%;
-            cursor: pointer;
-          }
-
-          .panel_drop_select {
-            height: 45px;
-            width: 100%;
-            position: relative;
-            display: flex;
-            align-items: center;
-            padding: 15px;
-          }
-          .drop_arrow {
-            width: 18px;
-            height: 18px;
-            position: absolute;
-            right: 10px;
-            bottom: 13px;
-          }
-          .drop_arrow i {
-            width: 100%;
-            height: 100%;
-            color: rgb(54, 200, 255);
-          }
-          .panel_drop_select i svg {
-            width: 100%;
-            height: 100%;
-          }
-          .panel_flag {
-            margin-right: 5px;
-            width: 24px;
-            height: 16px;
-            background-size: 100%;
-            background-repeat: no repeat;
-          }
-          .panel_flag img {
-            width: 100%;
-            height: 100%;
-          }
-          .panel_curr_info span {
-            font-family: "Poppins", sans-serif;
-            letter-spacing: 0.5px;
-          }
-          .exchange_rate {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          .exchange_rate span {
-            font-weight: 700;
-            color: #2e4369;
-            font-size: 22px;
-            font-family: "Noto Sans", sans-serif;
-            letter-spacing: 0.5px;
-          }
-          .activeHover {
-            border-color: #829ca9 !important;
-          }
-          .activeFocus {
-            border-color: #17bfff !important;
-          }
-          .normalBorder {
-            border-color: #d3d5d8;
-          }
-          @media only screen and (max-width: 1100px) {
-            .panel {
-              padding: 30px 20px;
-            }
-          }
-          @media only screen and (max-width: 767px) {
-            .panel {
-              background: none;
-              padding: 0;
-            }
-            .panel_input {
-              margin-bottom: 18px;
-            }
-            .panel_select_item_wrapper {
-              width: 100%;
-            }
-            .panel_input input {
-              height: 45px;
-              font-size: 16px;
-            }
-            .panel_currency {
-              height: 45px;
-            }
-            .exchange_rate span {
-              color: white;
-              font-size: 16px;
-            }
-          }
-          @media only screen and (max-width: 575px) {
-            .panel_input_wrapper {
-              width: 100%;
-              padding: 0;
-            }
-          }
-        `}</style>
       </div>
-    );
+   
+   </> );
   }
 }
 

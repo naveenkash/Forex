@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import Head from "next/head";
 export class crypto_coin_info extends Component {
   constructor(props) {
     super(props);
@@ -14,10 +15,13 @@ export class crypto_coin_info extends Component {
     if (this.props.cryptoList !== nextProps.cryptoList) {
       if (this.props.cryptoList.length <= 0) {//checking if crypto list array is empty 
         var arr = [];
-        for (let i = 0; i < nextProps.keys.length; i++) {
+        for (let i = 0; i < nextProps.keys.length; i++) {// running this for loop beacuase at first the rate updated array is empty and it won't render the component when 
+        // the next call is sent and data is received then rate updated array is filled and rendered but it take time between every request and the page will be blank between first render and
+        // when data is received on in another call by doing this it will render the component without rate updated data just the data it received on first call
           arr.splice(i, 0, []);
           this.setState({ rate_updated: arr });
         }
+        
         return;
       }
       let rate_updated = [];
@@ -97,7 +101,7 @@ export class crypto_coin_info extends Component {
         } else {
           rate_updated[i][4] = false;
         }
-          // checking if volume  24hr updated
+        // checking if volume  24hr updated
         if (
           nextProps.cryptoList[i][coin].USD.VOLUME24HOURTO >
           this.props.cryptoList[i][coin].USD.VOLUME24HOURTO
@@ -153,160 +157,147 @@ export class crypto_coin_info extends Component {
     return document.querySelectorAll(".vol_24_hour span")[i].className;
   };
   render() {
+    
     return (
       <>
-        {this.props.cryptoList.map((coin, i) => (
-          <div
-            key={coin[this.props.keys[i]].USD.LASTTRADEID}
-            className="crypto_coin_info row"
-          >
-            <div className="coin_detail row">
-              <div className="coin_image">
-                <img
-                  src={`https://www.cryptocompare.com${coin[this.props.keys[i]].USD.IMAGEURL}`}
-                  alt=""
-                />
-              </div>
-              <div className="coin_name">
-                <span>{[this.props.keys[i]]}</span>
-              </div>
-            </div>
-            <div className="coin_detail">
-              <div className="coin_price">
-                <span
-                  className={
-                    this.state.rate_updated[i][0] === true
-                      ? "green"
-                      : this.state.rate_updated[i][0] === null
-                      ? this.getPriceClass(i)
-                      : this.state.rate_updated[i][0] === false
-                      ? "red"
-                      : "green"
-                  }
-                >
-                  {coin[this.props.keys[i]].USD.PRICE}
-                </span>
-              </div>
-            </div>
-            <div className="total_vol_24 coin_detail">
-              <div className="coin_total_vol">
-                <span
-                  className={
-                    this.state.rate_updated[i][1] === true
-                      ? "green"
-                      : this.state.rate_updated[i][1] === null
-                      ? this.getTotalVolClass(i)
-                      : this.state.rate_updated[i][1] === false
-                      ? "red"
-                      : "green"
-                  }
-                >
-                  {coin[this.props.keys[i]].USD.TOTALVOLUME24HTO}
-                </span>
-              </div>
-            </div>
-            <div className="total_toptier_24 coin_detail">
-              <div className="coin_total_toptier">
-                <span
-                  className={
-                    this.state.rate_updated[i][2] === true
-                      ? "green"
-                      : this.state.rate_updated[i][2] === null
-                      ? this.getTotalTopTierClass(i)
-                      : this.state.rate_updated[i][2] === false
-                      ? "red"
-                      : "green"
-                  }
-                >
-                  {coin[this.props.keys[i]].USD.TOTALTOPTIERVOLUME24HTO}
-                </span>
-              </div>
-            </div>
-            <div className="market_cap coin_detail">
-              <div className="m_cap">
-                <span
-                  className={
-                    this.state.rate_updated[i][3] === true
-                      ? "green"
-                      : this.state.rate_updated[i][3] === null
-                      ? this.getMarketCapClass(i)
-                      : this.state.rate_updated[i][3] === false
-                      ? "red"
-                      : "green"
-                  }
-                >
-                  {coin[this.props.keys[i]].USD.MKTCAP}
-                </span>
-              </div>
-            </div>
-            <div className="change_pct coin_detail">
-              <div className="pct_change">
-                <span
-                  className={
-                    this.state.rate_updated[i][4] === true
-                      ? "green"
-                      : this.state.rate_updated[i][4] === null
-                      ? this.getPctChangeClass(i)
-                      : this.state.rate_updated[i][4] === false
-                      ? "red"
-                      : "green"
-                  }
-                >
-                  {coin[this.props.keys[i]].USD.CHANGEPCT24HOUR}%
-                </span>
-              </div>
-            </div>
-            <div className="vol_24 coin_detail">
-              <div className="vol_24_hour">
-                <span
-                  className={
-                    this.state.rate_updated[i][5] === true
-                      ? "green"
-                      : this.state.rate_updated[i][5] === null
-                      ? this.getPctChangeClass(i)
-                      : this.state.rate_updated[i][5] === false
-                      ? "red"
-                      : "green"
-                  }
-                >
-                  {coin[this.props.keys[i]].USD.VOLUME24HOURTO}
-                </span>
-              </div>
-            </div>
-            <style>{`
-            .crypto_coin_info{
-                width:100%;
-                height:auto;
-                background:white;
-                transition:0.3s;
-                border-top:1px solid #ebebeb;
+        <Head>
+          <link
+            rel="stylesheet"
+            href="../static\styles\cryptoCoinInfo\cryptoCoinInfo.css"
+          />
+        </Head>
+        {(()=>{
+          if (this.state.rate_updated.length>0) {
+            return(
+              <>
+              {this.props.cryptoList.map((coin, i) => (
+                  <div
+                    key={coin[this.props.keys[i]].USD.LASTTRADEID}
+                    className="crypto_coin_info row"
+                  >
+                    <div className="coin_detail row">
+                      <div className="coin_image">
+                        <img
+                          src={`https://www.cryptocompare.com${coin[this.props.keys[i]].USD.IMAGEURL}`}
+                          alt=""
+                        />
+                      </div>
+                      <div className="coin_name">
+                        <span>{[this.props.keys[i]]}</span>
+                      </div>
+                    </div>
+                    <div className="coin_detail">
+                      <div className="coin_price">
+                        <span
+                          className={
+                            this.state.rate_updated[i][0] === true
+                              ? "green"
+                              : this.state.rate_updated[i][0] === null
+                              ? this.getPriceClass(i)
+                              : this.state.rate_updated[i][0] === false
+                              ? "red"
+                              : "green"
+                          }
+                        >
+                          {coin[this.props.keys[i]].USD.PRICE}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="total_vol_24 coin_detail">
+                      <div className="coin_total_vol">
+                        <span
+                          className={
+                            this.state.rate_updated[i][1] === true
+                              ? "green"
+                              : this.state.rate_updated[i][1] === null
+                              ? this.getTotalVolClass(i)
+                              : this.state.rate_updated[i][1] === false
+                              ? "red"
+                              : "green"
+                          }
+                        >
+                          {coin[this.props.keys[i]].USD.TOTALVOLUME24HTO}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="total_toptier_24 coin_detail">
+                      <div className="coin_total_toptier">
+                        <span
+                          className={
+                            this.state.rate_updated[i][2] === true
+                              ? "green"
+                              : this.state.rate_updated[i][2] === null
+                              ? this.getTotalTopTierClass(i)
+                              : this.state.rate_updated[i][2] === false
+                              ? "red"
+                              : "green"
+                          }
+                        >
+                          {coin[this.props.keys[i]].USD.TOTALTOPTIERVOLUME24HTO}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="market_cap coin_detail">
+                      <div className="m_cap">
+                        <span
+                          className={
+                            this.state.rate_updated[i][3] === true
+                              ? "green"
+                              : this.state.rate_updated[i][3] === null
+                              ? this.getMarketCapClass(i)
+                              : this.state.rate_updated[i][3] === false
+                              ? "red"
+                              : "green"
+                          }
+                        >
+                          {coin[this.props.keys[i]].USD.MKTCAP}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="change_pct coin_detail">
+                      <div className="pct_change">
+                        <span
+                          className={
+                            this.state.rate_updated[i][4] === true
+                              ? "green"
+                              : this.state.rate_updated[i][4] === null
+                              ? this.getPctChangeClass(i)
+                              : this.state.rate_updated[i][4] === false
+                              ? "red"
+                              : "green"
+                          }
+                        >
+                          {coin[this.props.keys[i]].USD.CHANGEPCT24HOUR}%
+                        </span>
+                      </div>
+                    </div>
+                    {/* <div className="vol_tf"> */}
+                    <div className="vol_tf coin_detail">
+                      <div className="vol_24_hour">
+                        <span
+                          className={
+                            this.state.rate_updated[i][5] === true
+                              ? "green"
+                              : this.state.rate_updated[i][5] === null
+                              ? this.getPctChangeClass(i)
+                              : this.state.rate_updated[i][5] === false
+                              ? "red"
+                              : "green"
+                          }
+                        >
+                          {coin[this.props.keys[i]].USD.VOLUME24HOURTO}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                </>
+            )
+          }
+        })()}
                 
-            }
-            .crypto_coin_info:hover{
-                background:#ECF3FD;
-            }
-            .coin_detail{
-                padding:15px;
-                width:14.2%;
-            }
-               .coin_image {
-                    width:25px;
-                    height:25px;
-                    margin-right:8px;
-                        }
-                        .coin_image img{
-                            width:100%;
-                            height:100%;
-                            object-fit:cover;
 
-                        }
-                        .coin_detail span{
-                            font-size:15px;
-                        }
-                    `}</style>
-          </div>
-        ))}
-      </>
+                </>
     );
   }
 }

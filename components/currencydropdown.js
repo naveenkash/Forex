@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import Head from "next/head";
 export class currencydropdown extends Component {
   constructor(props) {
     super(props);
@@ -48,7 +49,12 @@ export class currencydropdown extends Component {
   // };
   render() {
     return (
+      <>
+      {/* <Head>
+          <link rel="stylesheet" href="../static/styles/conversion/conversion.css" />
+        </Head> */}
       <div className="currency_dropdown">
+
         <div className="currency_search">
           <input
             type="text"
@@ -179,6 +185,7 @@ export class currencydropdown extends Component {
           }
         `}</style>
       </div>
+      </>
     );
   }
 }
