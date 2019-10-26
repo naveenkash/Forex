@@ -77,6 +77,13 @@ export  class crypto extends Component {
             
           </div>
         </div>
+        <style>
+          {`
+          .crypto_wrapper{
+            overflow:hidden;
+          }
+          `}
+        </style>
       </Layout>
     );
   }
