@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Head from "next/head";
 export class currencydropdown extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +18,7 @@ export class currencydropdown extends Component {
     this.props.dropCurrency(currency);
     this.props.hideCurrency(false);
   };
-  
+
   findCurrency = (e) => {
     e.stopPropagation();
     if (e.target.value === "") {
@@ -34,6 +35,12 @@ export class currencydropdown extends Component {
   render() {
     return (
       <>
+        <Head>
+          <link
+            rel="stylesheet"
+            href="../static/styles/currencyDropdown/currencyDropdown.css"
+          />
+        </Head>
         <div className="currency_dropdown">
           <div className="currency_search">
             <input
@@ -93,69 +100,6 @@ export class currencydropdown extends Component {
               )}
             </ul>
           </div>
-
-          <style jsx>{`
-            .currency_dropdown {
-              width: 100%;
-              height: 350px;
-              background: white;
-              box-shadow: 0 20px 66px 0 rgba(34, 48, 73, 0.2);
-              position: absolute;
-              top: 0;
-              left: 0;
-              z-index: 1;
-              padding: 8px;
-              overflow-y: scroll;
-            }
-            .currency_search {
-              width: 100%;
-              height: 45px;
-              margin-bottom: 15px;
-            }
-            .currency_search input {
-              width: 100%;
-              height: 100%;
-              padding: 14px;
-              font-size: 16px;
-              color: #384c70;
-              outline: none;
-              border: 1px solid #17bfff;
-              border-radius: 4px;
-            }
-            .all_currrency {
-              display: flex;
-              align-items: center;
-              flex-direction: column;
-            }
-            .all_currrency ul {
-              padding: 0;
-              margin: 0;
-              list-style: none;
-              width: 100%;
-            }
-            .currency_item {
-              width: 100%;
-              height: 45px;
-              display: flex;
-              align-items: center;
-              padding: 12px;
-            }
-            .currency_flag {
-              width: 26px;
-              height: 17px;
-              margin-right: 5px;
-            }
-            .currency_flag img {
-              width: 100%;
-              height: 100%;
-            }
-            .currency_item:hover {
-              background: #f2f5f7;
-            }
-            .currency_active {
-              background: #2e4369;
-            }
-          `}</style>
         </div>
       </>
     );
