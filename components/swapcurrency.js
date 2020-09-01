@@ -1,29 +1,26 @@
 import React, { Component } from "react";
 export class swapcurrency extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
   }
   fetchReverseCurrency = () => {
     fetch(
       `https://www1.oanda.com/rates/api/v2/rates/spot.json?api_key=${process.env.REACT_APP_API_KEY_1}&base=${this.props.to}&quote=${this.props.from}`
     )
-      .then(res => {
+      .then((res) => {
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         this.props.swapCurrency(data);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   };
-  render() {    
+  render() {
     return (
       <div className="panel_swap">
-        <div
-          className="panel_swap_icon"
-          onClick={this.fetchReverseCurrency}
-        >
+        <div className="panel_swap_icon" onClick={this.fetchReverseCurrency}>
           <i>
             <svg
               aria-hidden="true"

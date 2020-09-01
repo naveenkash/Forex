@@ -1,79 +1,68 @@
-.crypto_live_head{
-    width:100%;
-    height:auto;
-    margin:25px 0;
+.crypto_live_head {
+  width: 100%;
+  height: auto;
+  margin: 25px 0;
 }
 
-.crypto_head_wrapper{
-    /* display:flex;
-    align-items:center; */
-    width:100%;
-    height:auto;
-    /* justify-content:center; */
+.crypto_head_wrapper {
+  width: 100%;
+  height: auto;
 }
-.crypto_head{
-    width:25%;
-    height:auto;
-    padding:20px;
-    box-shadow: 0 3px 20px 0 rgba(0,77,165,0.07);
-    /* margin:0 15px; */
-    position:relative;
-    background:white;
-    outline: none;
+.crypto_head {
+  width: 25%;
+  height: auto;
+  padding: 20px;
+  box-shadow: 0 3px 20px 0 rgba(0, 77, 165, 0.07);
+  position: relative;
+  background: white;
+  outline: none;
 }
-/* .slick-list{
-  overflow: unset !important;
-} */
-.slick-slide{
+.slick-slide {
   height: auto !important;
 }
-.slick-track{
+.slick-track {
   display: flex !important;
   align-items: center;
   height: 150px;
 }
-.slick-slide div:not(.crypto_head){
+.slick-slide div:not(.crypto_head) {
   padding: 0 10px;
 }
-.crypto_rate_head{
+.crypto_rate_head {
   padding: 0 !important;
 }
-.crypto_rate_head span{
-  font-size:14px;
+.crypto_rate_head span {
+  font-size: 14px;
 }
-.crypto_rate_head img{
-  width:20px;
-  height:20px;
-  margin-right:8px;
+.crypto_rate_head img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
 }
-.crypto_rate{
-  margin-top:10px;
+.crypto_rate {
+  margin-top: 10px;
   padding: 0 !important;
 }
-.crypto_rate p{
-  font-size:14px;
+.crypto_rate p {
+  font-size: 14px;
 }
 
-.crypto_rate span{
-  font-size:12px;
-  margin-left:6px;
+.crypto_rate span {
+  font-size: 12px;
+  margin-left: 6px;
 }
 .head_pct_chg {
-  color:grey;
+  color: grey;
 }
-.crypto_head_vol{
-  position:absolute;
-  top:0px;
-  right:0;
-  /* background:white; */
-  padding:8px;
-  font-size:10px;
- 
+.crypto_head_vol {
+  position: absolute;
+  top: 0px;
+  right: 0;
+  padding: 8px;
+  font-size: 10px;
 }
-@media only screen and (max-width:901px){
- 
-  .crypto_head{
+@media only screen and (max-width: 901px) {
+  .crypto_head {
     padding: 15px;
-
   }
 }

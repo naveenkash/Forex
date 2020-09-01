@@ -5,7 +5,6 @@ import Layout from "../layouts/main";
 import CurrencyInput from "../components/currencyInput";
 import CurrencyChart from "../components/currencyChart";
 import CurrencyConversion from "../components/currencyConversion";
-// import '../styles/navbar.css'
 export class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -15,34 +14,31 @@ export class Home extends React.Component {
       hideDropDown: false,
       currencyRate: [],
       conversionFrom: "US Dollar",
-      conversionTo: "Indian Rupee"
+      conversionTo: "Indian Rupee",
     };
   }
-  setDataToState = data => {
-    this.setState(
-      {
-        from: data.quotes[0].base_currency,
-        to: data.quotes[0].quote_currency,
-        currencyRate: data
-      },
-      () => {}
-    );
+  setDataToState = (data) => {
+    this.setState({
+      from: data.quotes[0].base_currency,
+      to: data.quotes[0].quote_currency,
+      currencyRate: data,
+    });
   };
   componentDidMount() {
     fetch(
       `https://www1.oanda.com/rates/api/v2/rates/spot.json?api_key=${process.env.REACT_APP_API_KEY_1}&base=USD&quote=INR`
     )
-      .then(res => {
+      .then((res) => {
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         this.setDataToState(data);
       })
-      .catch(err => {
+      .catch((err) => {
         alert(err);
       });
   }
-  setCurrencyRate = currencyRate => {
+  setCurrencyRate = (currencyRate) => {
     this.setDataToState(currencyRate);
   };
   hidePanel = () => {
@@ -63,10 +59,10 @@ export class Home extends React.Component {
       }
     }
   };
-  setConversionCurrency = currencyName => {
+  setConversionCurrency = (currencyName) => {
     this.setState({ conversionFrom: currencyName });
   };
-  setConversionCurrency2 = currencyName => {
+  setConversionCurrency2 = (currencyName) => {
     this.setState({ conversionTo: currencyName });
   };
   render() {
@@ -75,7 +71,6 @@ export class Home extends React.Component {
         <div>
           <Head>
             <title>Currency Converter</title>
-            <link rel="stylesheet" href="../static/styles/index/index.css" />
           </Head>
           <div className="converter" onClick={this.hidePanel}>
             <div className="container">
@@ -105,11 +100,4 @@ export class Home extends React.Component {
     );
   }
 }
-// Home.getInitialProps = async () => {
-//   const res = await fetch(
-//     "https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=INR&apikey=IDJHD0SY07N08B02"
-//   );
-//   const data = await res.json();
-//   return { data };
-// };
 export default Home;

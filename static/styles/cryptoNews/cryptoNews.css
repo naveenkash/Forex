@@ -1,82 +1,81 @@
 .news {
- 
-    height: auto;
-    width: 100%;
-    background: white;
+  height: auto;
+  width: 100%;
+  background: white;
 }
 
 .news_wrapper {
-    padding: 10px 0px;
-    box-shadow: 0 3px 20px 0 rgba(0, 77, 165, 0.07);
+  padding: 10px 0px;
+  box-shadow: 0 3px 20px 0 rgba(0, 77, 165, 0.07);
 }
 
 .news_wrapper ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .news_wrapper ul li {
-    padding: 12px 30px; 
-    transition: 0.3s; 
+  padding: 12px 30px;
+  transition: 0.3s;
 }
 
 .news_wrapper ul li:not(:first-child) {
-    border-top: 1px solid #0000000d;
+  border-top: 1px solid #0000000d;
 }
 
 .news_wrapper ul li:hover {
-    background: #ECF3FD;
+  background: #ecf3fd;
 }
 
 .news_article img {
-    width: 18px;
-    height: 18px;
-    object-fit: cover;
-    margin-right: 8px;
-    border-radius: 100%;
+  width: 18px;
+  height: 18px;
+  object-fit: cover;
+  margin-right: 8px;
+  border-radius: 100%;
 }
 
 .news_article h3 {
-    font-size: 16px;
-    margin-bottom: 10px;
-    line-height: 20px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  line-height: 20px;
 }
 
 .news_article h3 a {
-    text-decoration: none;
-    color: black;
-    transition: 0.1;
+  text-decoration: none;
+  color: black;
+  transition: 0.1;
 }
 
 .news_article h3 a:hover {
-    color: #36c8ff;
-    text-decoration: underline;
+  color: #36c8ff;
+  text-decoration: underline;
 }
 
 .news_article p {
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .news_pagination {
-    width: 100%;
-    height: auto;
-    padding: 20px 0;
+  width: 100%;
+  height: auto;
+  padding: 20px 0;
 }
 
 .news_pagination ul {
-    justify-content: center;
-    padding: 0;
-    list-style: none;
-    margin: 0;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+  margin: 0;
 }
 
 .news_pagination ul li {
-    padding: 5px 10px;
-    cursor: pointer;
-    margin: 0 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0 5px;
 }
 
 .news_pagination ul li:hover {
-    background: #0000000d; 
+  background: #0000000d;
 }

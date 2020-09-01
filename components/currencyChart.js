@@ -8,21 +8,20 @@ export class currencyChart extends Component {
       labelsYAxis: [],
       data: [],
       loading: true,
-      show: false
+      show: false,
     };
   }
   fetchChartData = (from, to) => {
     fetch(
       `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${from}&to_symbol=${to}&apikey=${process.env.REACT_APP_API_KEY_3}`
     )
-      .then(res => {
+      .then((res) => {
         return res.json();
       })
-      .then(data => {
+      .then((data) => {
         if (data.Note || data["Error Message"]) {
           this.setState({ show: true, loading: false });
           data = {};
-          // alert("Chart Can't be Loaded Beacuse Of Api Call Limit");
           throw new Error("Chart Can t be Loaded Beacuse Of Api Call Limit");
         }
         var tempArrFoData = [];
@@ -40,11 +39,9 @@ export class currencyChart extends Component {
           "Sep",
           "Oct",
           "Nov",
-          "Dec"
+          "Dec",
         ];
         for (var key in dataKey) {
-          // console.log(key);
-
           if (dataKey.hasOwnProperty(key)) {
             var splittedKey = key.split("-");
             dates.push([splittedKey[1], splittedKey[2]].join());
@@ -74,10 +71,10 @@ export class currencyChart extends Component {
           labelsYAxis: convertedDate,
           data: tempArrFoData,
           loading: false,
-          show: false
+          show: false,
         });
       })
-      .catch(err => {
+      .catch((err) => {
         this.setState({ show: true, loading: false });
         alert(err);
       });
@@ -89,11 +86,7 @@ export class currencyChart extends Component {
   UNSAFE_componentWillReceiveProps(newProps) {
     this.fetchChartData(newProps.from, newProps.to);
   }
-  // componentDidUpdate(previousProps){
-  //   console.log(previousProps);
-  //   // this.fetchChartData(previousProps.from,previousProps.to);
 
-  // }
   render() {
     const { from, to } = this.props;
     var data = {
@@ -103,9 +96,9 @@ export class currencyChart extends Component {
           data: this.state.data,
           fill: false,
           borderColor: ["#2ed06e"],
-          borderWidth: 3
-        }
-      ]
+          borderWidth: 3,
+        },
+      ],
     };
     var options = {
       responsive: true,
@@ -114,8 +107,8 @@ export class currencyChart extends Component {
         display: false,
         labels: {
           // This more specific font property overrides the global property
-          fontColor: "white"
-        }
+          fontColor: "white",
+        },
       },
       tooltips: {
         backgroundColor: "white",
@@ -129,102 +122,86 @@ export class currencyChart extends Component {
         cornerRadius: 2,
         intersect: false,
         callbacks: {
-          title: function(tooltipItem) {
+          title: function (tooltipItem) {
             return tooltipItem[0].xLabel;
           },
-          label: function(tooltipItem) {
+          label: function (tooltipItem) {
             return `1 ${from} ➡  ${Number(tooltipItem.yLabel)} ${to}`;
-          }
-        }
+          },
+        },
       },
       hover: {
         mode: "index",
-        intersect: false
+        intersect: false,
       },
       scales: {
         xAxes: [
           {
             display: true,
             ticks: {
-              // maxTicksLimit: 20,
               reverse: true,
               fontColor: "#ffffff",
-              fontSize: 14
+              fontSize: 14,
             },
             gridLines: {
               display: false,
-              drawBorder: false
-            }
-          }
+              drawBorder: false,
+            },
+          },
         ],
         yAxes: [
           {
             display: true,
             ticks: {
               fontColor: "#ffffff",
-              fontSize: 14
+              fontSize: 14,
             },
             gridLines: {
               display: true,
               drawBorder: true,
               color: "#6e7880",
-              lineWidth: 0.5
-            }
-          }
-        ]
+              lineWidth: 0.5,
+            },
+          },
+        ],
       },
       elements: {
         point: {
-          radius: 0
-        }
+          radius: 0,
+        },
       },
       scaleOverride: true,
       scaleSteps: 100,
       scaleStepWidth: 200,
-      scaleStartValue: 200
+      scaleStartValue: 200,
     };
     return (
       <>
         <Head>
           <link rel="stylesheet" href="../static/styles/chartStyle/chart.css" />
         </Head>
-        {(() => {
-          if (this.state.show) {
-            return (
-              <p className="loadingError chart_error row">
-                Can't Load Chart! Try Refreshing The Page Again In a Moment
-              </p>
-            );
-          } else {
-            return (
-              <div className="data_chart">
-                {(() => {
-                  if (this.state.loading) {
-                    return (
-                      <div className="loading">
-                        <svg
-                          viewBox="0 0 100 100"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <circle cx="50" cy="50" r="45" />
-                        </svg>
-                      </div>
-                    );
-                  } else {
-                    return (
-                      <Line
-                        ref={reference => (this.chartReference = reference)}
-                        key={this.props.from}
-                        data={data}
-                        options={options}
-                      />
-                    );
-                  }
-                })()}
+        {this.state.show ? (
+          <p className="loadingError chart_error row">
+            Can't Load Chart! Try Refreshing The Page Again In a Moment
+          </p>
+        ) : (
+          <div className="data_chart">
+            {this.state.loading ? (
+              <div className="loading">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="50" cy="50" r="45" />
+                </svg>
               </div>
-            );
-          }
-        })()}
+            ) : (
+              <Line
+                ref={(reference) => (this.chartReference = reference)}
+                key={this.props.from}
+                data={data}
+                options={options}
+              />
+            )}
+          </div>
+        )}
       </>
     );
   }

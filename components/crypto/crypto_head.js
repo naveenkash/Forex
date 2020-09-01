@@ -1,17 +1,11 @@
 import React, { Component } from "react";
-import { update_rate_array } from "../../redux/action/crypto_head_rate_update";
-import { connect } from "react-redux";
-
 import Slider from "react-slick";
-
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
 import Head from "next/head";
-export class crypto_live_head extends Component {
+export class CryptoLiveHead extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rate_updated: []
+      rate_updated: [],
     };
   }
 
@@ -20,7 +14,7 @@ export class crypto_live_head extends Component {
       return;
     }
     if (this.props.crypto_head_data !== nextProps.crypto_head_data) {
-      let rate_updated = [...this.props.previousArray];
+      let rate_updated = [];
       for (let i = 0; i < this.props.crypto_head_coins.length; i++) {
         var coin = this.props.crypto_head_coins[i];
         if (
@@ -37,11 +31,10 @@ export class crypto_live_head extends Component {
           rate_updated[i] = false;
         }
       }
-      this.props.update_rate_array(rate_updated);
       this.setState({ rate_updated });
     }
   }
-  GetClass = i => {
+  GetClass = (i) => {
     if (!document.querySelectorAll(".crypto_rate p")[i]) {
       return "green";
     }
@@ -62,8 +55,8 @@ export class crypto_live_head extends Component {
             slidesToShow: 2,
             slidesToScroll: 2,
             infinite: true,
-            dots: true
-          }
+            dots: true,
+          },
         },
         {
           breakpoint: 667,
@@ -71,10 +64,10 @@ export class crypto_live_head extends Component {
             slidesToShow: 1,
             slidesToScroll: 1,
             infinite: true,
-            dots: true
-          }
-        }
-      ]
+            dots: true,
+          },
+        },
+      ],
     };
     return (
       <div className="crypto_live_head">
@@ -86,7 +79,7 @@ export class crypto_live_head extends Component {
           <link
             rel="stylesheet"
             type="text/css"
-            charset="UTF-8"
+            charSet="UTF-8"
             href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
           />
           <link
@@ -165,14 +158,4 @@ export class crypto_live_head extends Component {
     );
   }
 }
-const mapDispatchToProps = dispatch => ({
-  update_rate_array: Array => dispatch(update_rate_array(Array))
-});
-const mapStateToProps = state => ({
-  previousArray: state.crypto_head_update
-});
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(crypto_live_head);
-// export default crypto_live_head;
+export default CryptoLiveHead;

@@ -1,30 +1,19 @@
-import { Provider } from 'react-redux';
-import App from 'next/app';
-import withRedux from 'next-redux-wrapper';
-import { initStore } from '../redux';
+import App from "next/app";
+import "../static/styles/index/index.css";
 
-export default withRedux(initStore, { debug: false })(
-  class MyApp extends App {
-    static async getInitialProps({ Component, ctx }) {
-        ctx.store.dispatch({ type: 'UPDATE_RATE_ARRAY', payload: 'foo' });
-      return {
-        pageProps: {
-          ...(Component.getInitialProps
-            ? await Component.getInitialProps(ctx)
-            : {})
-        }
-      };
-    }
-
-    render() {
-      const { Component, pageProps, store } = this.props;
-      return (
-        // <Container>
-          <Provider store={store}>
-            <Component {...pageProps} />
-          </Provider>
-        // </Container>
-      );
-    }
+export default class MyApp extends App {
+  static async getInitialProps({ Component, ctx }) {
+    return {
+      pageProps: {
+        ...(Component.getInitialProps
+          ? await Component.getInitialProps(ctx)
+          : {}),
+      },
+    };
   }
-);
+
+  render() {
+    const { Component, pageProps } = this.props;
+    return <Component {...pageProps} />;
+  }
+}

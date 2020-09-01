@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-
 import Head from "next/head";
-export class crypto_coin_info extends Component {
+export class CryptoCoinInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rate_updated: []
+      rate_updated: [],
     };
   }
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -13,15 +12,17 @@ export class crypto_coin_info extends Component {
       return;
     }
     if (this.props.cryptoList !== nextProps.cryptoList) {
-      if (this.props.cryptoList.length <= 0) {//checking if crypto list array is empty 
+      if (this.props.cryptoList.length <= 0) {
+        //checking if crypto list array is empty
         var arr = [];
-        for (let i = 0; i < nextProps.keys.length; i++) {// running this for loop beacuase at first the rate updated array is empty and it won't render the component when 
-        // the next call is sent and data is received then rate updated array is filled and rendered but it take time between every request and the page will be blank between first render and
-        // when data is received on in another call by doing this it will render the component without rate updated data just the data it received on first call
+        for (let i = 0; i < nextProps.keys.length; i++) {
+          // running this for loop beacuase at first the rate updated array is empty and it won't render the component when
+          // the next call is sent and data is received then rate updated array is filled and rendered but it take time between every request and the page will be blank between first render and
+          // when data is received on in another call by doing this it will render the component without rate updated data just the data it received on first call
           arr.splice(i, 0, []);
           this.setState({ rate_updated: arr });
         }
-        
+
         return;
       }
       let rate_updated = [];
@@ -120,44 +121,43 @@ export class crypto_coin_info extends Component {
       this.setState({ rate_updated });
     }
   }
-  getPriceClass = i => {
+  getPriceClass = (i) => {
     if (!document.querySelectorAll(".coin_price span")[i]) {
       return "green";
     }
     return document.querySelectorAll(".coin_price span")[i].className;
   };
-  getTotalVolClass = i => {
+  getTotalVolClass = (i) => {
     if (!document.querySelectorAll(".coin_total_vol span")[i]) {
       return "green";
     }
     return document.querySelectorAll(".coin_total_vol span")[i].className;
   };
-  getTotalTopTierClass = i => {
+  getTotalTopTierClass = (i) => {
     if (!document.querySelectorAll(".coin_total_toptier span")[i]) {
       return "green";
     }
     return document.querySelectorAll(".coin_total_toptier span")[i].className;
   };
-  getMarketCapClass = i => {
+  getMarketCapClass = (i) => {
     if (!document.querySelectorAll(".m_cap span")[i]) {
       return "green";
     }
     return document.querySelectorAll(".m_cap span")[i].className;
   };
-  getPctChangeClass = i => {
+  getPctChangeClass = (i) => {
     if (!document.querySelectorAll(".pct_change span")[i]) {
       return "green";
     }
     return document.querySelectorAll(".pct_change span")[i].className;
   };
-  getVol24HourClass = i => {
+  getVol24HourClass = (i) => {
     if (!document.querySelectorAll(".vol_24_hour span")[i]) {
       return "green";
     }
     return document.querySelectorAll(".vol_24_hour span")[i].className;
   };
   render() {
-    
     return (
       <>
         <Head>
@@ -166,11 +166,11 @@ export class crypto_coin_info extends Component {
             href="../static\styles\cryptoCoinInfo\cryptoCoinInfo.css"
           />
         </Head>
-        {(()=>{
-          if (this.state.rate_updated.length>0) {
-            return(
+        {(() => {
+          if (this.state.rate_updated.length > 0) {
+            return (
               <>
-              {this.props.cryptoList.map((coin, i) => (
+                {this.props.cryptoList.map((coin, i) => (
                   <div
                     key={coin[this.props.keys[i]].USD.LASTTRADEID}
                     className="crypto_coin_info row"
@@ -178,7 +178,9 @@ export class crypto_coin_info extends Component {
                     <div className="coin_detail row">
                       <div className="coin_image">
                         <img
-                          src={`https://www.cryptocompare.com${coin[this.props.keys[i]].USD.IMAGEURL}`}
+                          src={`https://www.cryptocompare.com${
+                            coin[this.props.keys[i]].USD.IMAGEURL
+                          }`}
                           alt=""
                         />
                       </div>
@@ -271,7 +273,6 @@ export class crypto_coin_info extends Component {
                         </span>
                       </div>
                     </div>
-                    {/* <div className="vol_tf"> */}
                     <div className="vol_tf coin_detail">
                       <div className="vol_24_hour">
                         <span
@@ -291,15 +292,13 @@ export class crypto_coin_info extends Component {
                     </div>
                   </div>
                 ))}
-                </>
-            )
+              </>
+            );
           }
         })()}
-                
-
-                </>
+      </>
     );
   }
 }
 
-export default crypto_coin_info;
+export default CryptoCoinInfo;
