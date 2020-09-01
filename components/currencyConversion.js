@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Head from "next/head";
 export class currencyConversion extends Component {
   constructor(props) {
     super(props);
@@ -25,12 +24,6 @@ export class currencyConversion extends Component {
   render() {
     return (
       <div className="container">
-        <Head>
-          <link
-            rel="stylesheet"
-            href="../static/styles/conversion/conversion.css"
-          />
-        </Head>
         {this.props.conversionData <= 0 ? (
           <p className="converion_error row">Error Loading Conversions</p>
         ) : (

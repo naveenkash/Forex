@@ -160,12 +160,6 @@ export class CryptoCoinInfo extends Component {
   render() {
     return (
       <>
-        <Head>
-          <link
-            rel="stylesheet"
-            href="../static\styles\cryptoCoinInfo\cryptoCoinInfo.css"
-          />
-        </Head>
         {(() => {
           if (this.state.rate_updated.length > 0) {
             return (

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Head from "next/head";
 export class currencydropdown extends Component {
   constructor(props) {
     super(props);
@@ -34,74 +33,66 @@ export class currencydropdown extends Component {
   };
   render() {
     return (
-      <>
-        <Head>
-          <link
-            rel="stylesheet"
-            href="../static/styles/currencyDropdown/currencyDropdown.css"
+      <div className="currency_dropdown">
+        <div className="currency_search">
+          <input
+            type="text"
+            onChange={(e) => {
+              this.findCurrency(e);
+            }}
+            placeholder="Search..."
           />
-        </Head>
-        <div className="currency_dropdown">
-          <div className="currency_search">
-            <input
-              type="text"
-              onChange={(e) => {
-                this.findCurrency(e);
-              }}
-              placeholder="Search..."
-            />
-          </div>
-          <div className="all_currrency">
-            <ul className="currency_list">
-              {!this.state.showFullList ? null : (
-                <div>
-                  {this.props.currencies.map((currency, i) => (
-                    <li
-                      key={i}
-                      onClick={() => {
-                        this.setCurrency(currency);
-                      }}
-                      title={currency.country}
-                    >
-                      <div className="currency_item">
-                        <div className="currency_flag">
-                          <img src={currency.flag} alt="" />
-                        </div>
-                        <div className="currency_name">
-                          <span>{currency.name}</span>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </div>
-              )}
-
-              {this.state.showFullList ? null : (
-                <div>
-                  {this.state.currencies.map((currency, i) => (
-                    <li
-                      key={i}
-                      onClick={() => {
-                        this.setCurrency(currency);
-                      }}
-                      title={currency.country}
-                    >
-                      <div className="currency_item">
-                        <div className="currency_flag">
-                          <img src={currency.flag} alt="" />
-                        </div>
-                        <div className="currency_name">
-                          <span>{currency.name}</span>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </div>
-              )}
-            </ul>
-          </div>
         </div>
-      </>
+        <div className="all_currrency">
+          <ul className="currency_list">
+            {!this.state.showFullList ? null : (
+              <div>
+                {this.props.currencies.map((currency, i) => (
+                  <li
+                    key={i}
+                    onClick={() => {
+                      this.setCurrency(currency);
+                    }}
+                    title={currency.country}
+                  >
+                    <div className="currency_item">
+                      <div className="currency_flag">
+                        <img src={currency.flag} alt="" />
+                      </div>
+                      <div className="currency_name">
+                        <span>{currency.name}</span>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </div>
+            )}
+
+            {this.state.showFullList ? null : (
+              <div>
+                {this.state.currencies.map((currency, i) => (
+                  <li
+                    key={i}
+                    onClick={() => {
+                      this.setCurrency(currency);
+                    }}
+                    title={currency.country}
+                  >
+                    <div className="currency_item">
+                      <div className="currency_flag">
+                        <img src={currency.flag} alt="" />
+                      </div>
+                      <div className="currency_name">
+                        <span>{currency.name}</span>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+              </div>
+            )}
+          </ul>
+        </div>
+      </div>
     );
   }
 }

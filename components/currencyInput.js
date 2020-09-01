@@ -190,105 +190,95 @@ export class currencyInput extends Component {
 
   render() {
     return (
-      <>
-        <Head>
-          <link
-            rel="stylesheet"
-            href="../static\styles\currencyInput\currencyInput.css"
-          />
-        </Head>
-        <div className="panel">
-          <div className="panel_body">
-            <div className="panel_input_wrapper">
-              <div className="label_convert">
-                <label>Amount</label>
-              </div>
-              <div className="panel_input">
-                <input
-                  onMouseEnter={(e) => this.handleHover(e, "panel_input")}
-                  onMouseLeave={(e) => this.handleLeave(e, "panel_input")}
-                  onClick={(e) => this.handleDown(e, "panel_input")}
-                  type="text"
-                  value={this.state.fromCurrencyValue}
-                  onChange={(e) => {
-                    this.calculateCurrency(e);
-                  }}
-                />
-                <div className="panel_currency">
-                  <span>{this.state.selectedFrom}</span>
-                </div>
+      <div className="panel">
+        <div className="panel_body">
+          <div className="panel_input_wrapper">
+            <div className="label_convert">
+              <label>Amount</label>
+            </div>
+            <div className="panel_input">
+              <input
+                onMouseEnter={(e) => this.handleHover(e, "panel_input")}
+                onMouseLeave={(e) => this.handleLeave(e, "panel_input")}
+                onClick={(e) => this.handleDown(e, "panel_input")}
+                type="text"
+                value={this.state.fromCurrencyValue}
+                onChange={(e) => {
+                  this.calculateCurrency(e);
+                }}
+              />
+              <div className="panel_currency">
+                <span>{this.state.selectedFrom}</span>
               </div>
             </div>
-            <div className="panel_input_wrapper">
-              <div className="label_convert">
-                <label>Converted To</label>
-              </div>
-              <div className="panel_input">
-                <input
-                  onMouseEnter={(e) => this.handleHover(e, "panel_input")}
-                  onMouseLeave={(e) => this.handleLeave(e, "panel_input")}
-                  onClick={(e) => this.handleDown(e, "panel_input")}
-                  type="text"
-                  value={
-                    Math.floor(this.state.toCurrencyValue * 100000) / 100000
-                  }
-                  onChange={() => {}}
-                />
-                <div className="panel_currency">
-                  <span>{this.state.selectedTo}</span>
-                </div>
+          </div>
+          <div className="panel_input_wrapper">
+            <div className="label_convert">
+              <label>Converted To</label>
+            </div>
+            <div className="panel_input">
+              <input
+                onMouseEnter={(e) => this.handleHover(e, "panel_input")}
+                onMouseLeave={(e) => this.handleLeave(e, "panel_input")}
+                onClick={(e) => this.handleDown(e, "panel_input")}
+                type="text"
+                value={Math.floor(this.state.toCurrencyValue * 100000) / 100000}
+                onChange={() => {}}
+              />
+              <div className="panel_currency">
+                <span>{this.state.selectedTo}</span>
               </div>
             </div>
-            <div className="panel_select_wrapper">
-              <div className="panel_input_wrapper panel_select_item_wrapper">
-                <div className="panel_select">
-                  <Dropdown
-                    showDrop={this.state.showDrop1}
-                    showDropDown={this.showDropDown1}
-                    hideDropDown={this.hideDropDown}
-                    selected={this.selectedFrom}
-                    convert={"From"}
-                    allCurrencies={this.state.allCurrencies}
-                    currency={this.state.selectedFrom}
-                    filterCurrency={this.state.selectedTo}
-                    flag={this.state.selectedFromFlag}
-                  />
-                  <SwapIcon
-                    swapCurrency={this.swapCurrency}
-                    from={this.state.selectedFrom}
-                    to={this.state.selectedTo}
-                  />
-                  <Dropdown
-                    showDrop={this.state.showDrop2}
-                    showDropDown={this.showDropDown2}
-                    hideDropDown={this.hideDropDown}
-                    selected={this.selectedTo}
-                    convert={"To"}
-                    allCurrencies={this.state.allCurrencies}
-                    currency={this.state.selectedTo}
-                    filterCurrency={this.state.selectedFrom}
-                    flag={this.state.selectedToFlag}
-                  />
-                </div>
+          </div>
+          <div className="panel_select_wrapper">
+            <div className="panel_input_wrapper panel_select_item_wrapper">
+              <div className="panel_select">
+                <Dropdown
+                  showDrop={this.state.showDrop1}
+                  showDropDown={this.showDropDown1}
+                  hideDropDown={this.hideDropDown}
+                  selected={this.selectedFrom}
+                  convert={"From"}
+                  allCurrencies={this.state.allCurrencies}
+                  currency={this.state.selectedFrom}
+                  filterCurrency={this.state.selectedTo}
+                  flag={this.state.selectedFromFlag}
+                />
+                <SwapIcon
+                  swapCurrency={this.swapCurrency}
+                  from={this.state.selectedFrom}
+                  to={this.state.selectedTo}
+                />
+                <Dropdown
+                  showDrop={this.state.showDrop2}
+                  showDropDown={this.showDropDown2}
+                  hideDropDown={this.hideDropDown}
+                  selected={this.selectedTo}
+                  convert={"To"}
+                  allCurrencies={this.state.allCurrencies}
+                  currency={this.state.selectedTo}
+                  filterCurrency={this.state.selectedFrom}
+                  flag={this.state.selectedToFlag}
+                />
               </div>
-              <div className="panel_input_wrapper panel_select_item_wrapper">
-                <div className="exchange_rate">
-                  <h3>
-                    <span>1 {this.state.selectedFrom} ➡ </span>
-                    <span>
-                      {`${
-                        Math.floor(
-                          this.state.mainConvertedCurrencyValue * 100000
-                        ) / 100000
-                      } ${this.state.selectedTo}`}
-                    </span>
-                  </h3>
-                </div>
+            </div>
+            <div className="panel_input_wrapper panel_select_item_wrapper">
+              <div className="exchange_rate">
+                <h3>
+                  <span>1 {this.state.selectedFrom} ➡ </span>
+                  <span>
+                    {`${
+                      Math.floor(
+                        this.state.mainConvertedCurrencyValue * 100000
+                      ) / 100000
+                    } ${this.state.selectedTo}`}
+                  </span>
+                </h3>
               </div>
             </div>
           </div>
         </div>
-      </>
+      </div>
     );
   }
 }

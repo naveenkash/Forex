@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import CryptoCoin from "./crypto_coin_info";
-import Head from "next/head";
 export class CryptoListRates extends Component {
   constructor(props) {
     super(props);
@@ -72,12 +71,6 @@ export class CryptoListRates extends Component {
   render() {
     return (
       <>
-        <Head>
-          <link
-            rel="stylesheet"
-            href="../static/styles/cryptoListRates/cryptoListRates.css"
-          />
-        </Head>
         <div className="title_head">
           <div className="container">
             <h1>Rates</h1>

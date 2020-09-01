@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Line } from "react-chartjs-2";
-import Head from "next/head";
 export class currencyChart extends Component {
   constructor(props) {
     super(props);
@@ -177,9 +176,6 @@ export class currencyChart extends Component {
     };
     return (
       <>
-        <Head>
-          <link rel="stylesheet" href="../static/styles/chartStyle/chart.css" />
-        </Head>
         {this.state.show ? (
           <p className="loadingError chart_error row">
             Can't Load Chart! Try Refreshing The Page Again In a Moment

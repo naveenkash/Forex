@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Head from "next/head";
 export class CryptoNews extends Component {
   constructor(props) {
     super(props);
@@ -76,12 +75,6 @@ export class CryptoNews extends Component {
   render() {
     return (
       <>
-        <Head>
-          <link
-            rel="stylesheet"
-            href="../static\styles\cryptoNews\cryptoNews.css"
-          />
-        </Head>
         <div className="title_head">
           <div className="container">
             <h1>Latest News</h1>
