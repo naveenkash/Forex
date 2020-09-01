@@ -17,29 +17,19 @@ export class currencydropdown extends Component {
     this.props.dropCurrency(currency);
     this.props.hideCurrency(false);
   };
-
-  UNSAFE_componentWillReceiveProps() {
-    var res = [...this.props.currencies];
-    var copyArr = [...this.state.currencies];
-    res.filter((f) => {
-      copyArr.filter((t) => {
-        return t.name === f.name;
-      });
-    });
-  }
+  
   findCurrency = (e) => {
     e.stopPropagation();
-
     if (e.target.value === "") {
       this.setState({ showFullList: true });
     } else {
       this.setState({ showFullList: false });
     }
-    var newCuurencyArray = [...this.props.currencies].filter((item) => {
+    var newCurrencyArray = [...this.props.currencies].filter((item) => {
       return item.name.indexOf(e.target.value.toUpperCase()) !== -1;
     });
 
-    this.setState({ currencies: newCuurencyArray });
+    this.setState({ currencies: newCurrencyArray });
   };
   render() {
     return (
