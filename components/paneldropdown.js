@@ -42,11 +42,17 @@ class paneldropdown extends React.Component {
   };
 
   setCurrency = (currency) => {
-    this.props.removeEl(currency);
     this.props.selected(currency);
   };
   hideCurrency = (e) => {
     this.props.hideDropDown(false);
+  };
+
+  removeCurrencyFromDropdown = () => {
+    var res = this.props.allCurrencies.filter((item) => {
+      return item.name !== this.props.filterCurrency;
+    });
+    return res;
   };
   render() {
     return (
@@ -68,7 +74,7 @@ class paneldropdown extends React.Component {
                 hideCurrency={(e) => {
                   this.hideCurrency(e);
                 }}
-                currencies={this.props.all_currencies}
+                currencies={this.removeCurrencyFromDropdown()}
               />
             )}
             <div

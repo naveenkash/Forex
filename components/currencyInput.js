@@ -1,16 +1,15 @@
 import React, { Component } from "react";
-import DropdownHead from "./paneldropdown";
+import Dropdown from "./paneldropdown";
 import SwapIcon from "./swapcurrency";
 import Head from "next/head";
 export class currencyInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      all_currencies: [],
+      allCurrencies: [],
       fromCurrencyValue: 1,
       toCurrencyValue: 0,
       mainConvertedCurrencyValue: 0,
-      all_currencies2: [],
       selectedFrom: "USD",
       selectedFromFlag:
         "https://cdn.pixabay.com/photo/2017/03/14/21/00/american-flag-2144392__340.png",
@@ -48,29 +47,16 @@ export class currencyInput extends Component {
             country: currencyData.name,
             currency_full_name: currencyData.currencies[0].name,
           };
-          copyCurrencyArray = [...copyCurrencyArray, obj];
+          copyCurrencyArray.push(obj);
         });
-        var currency2 = [...copyCurrencyArray].filter((item) => {
-          return item.name !== "USD";
-        });
-        this.setState({
-          all_currencies: copyCurrencyArray,
-          all_currencies2: currency2,
-        });
-      })
-      .catch((err) => {
-        alert(err);
-      });
-
-    fetch(
-      `https://www1.oanda.com/rates/api/v2/rates/spot.json?api_key=${process.env.REACT_APP_API_KEY_1}&base=${this.state.selectedFrom}&quote=${this.state.selectedTo}`
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        this.setDataToState(data);
-        this.props.currencyRate(data);
+        this.setState(
+          {
+            allCurrencies: copyCurrencyArray,
+          },
+          () => {
+            this.fetchDataFromSelecting();
+          }
+        );
       })
       .catch((err) => {
         alert(err);
@@ -100,7 +86,7 @@ export class currencyInput extends Component {
     }
     e.currentTarget.parentNode.classList.add("activeHover");
   };
-  handleLeave = (e, node) => {
+  handleLeave = (e) => {
     e.currentTarget.parentNode.classList.remove("activeHover");
     e.currentTarget.parentNode.classList.add("normalBorder");
   };
@@ -115,17 +101,11 @@ export class currencyInput extends Component {
     e.currentTarget.parentNode.classList.remove("normalBorder");
     e.currentTarget.parentNode.classList.add("activeFocus");
   };
-  removeEl = (currency) => {
-    var res = this.state.all_currencies.filter((item) => {
-      return item.name !== currency.name;
-    });
-    this.setState({ all_currencies2: res });
-  };
   selectedFrom = (currency) => {
     if (currency.name === this.state.selectedTo) {
       this.setState({
-        selectedTo: this.state.all_currencies[0].name,
-        selectedToFlag: this.state.all_currencies[0].flag,
+        selectedTo: this.state.allCurrencies[0].name,
+        selectedToFlag: this.state.allCurrencies[0].flag,
       });
     }
     this.setState(
@@ -163,6 +143,9 @@ export class currencyInput extends Component {
       .then((data) => {
         this.setDataToState(data);
         this.props.currencyRate(data);
+      })
+      .catch((err) => {
+        alert(err);
       });
   };
   swapCurrency = (data) => {
@@ -259,15 +242,15 @@ export class currencyInput extends Component {
             <div className="panel_select_wrapper">
               <div className="panel_input_wrapper panel_select_item_wrapper">
                 <div className="panel_select">
-                  <DropdownHead
+                  <Dropdown
                     showDrop={this.state.showDrop1}
                     showDropDown={this.showDropDown1}
                     hideDropDown={this.hideDropDown}
                     selected={this.selectedFrom}
                     convert={"From"}
-                    all_currencies={this.state.all_currencies}
-                    removeEl={this.removeEl}
+                    allCurrencies={this.state.allCurrencies}
                     currency={this.state.selectedFrom}
+                    filterCurrency={this.state.selectedTo}
                     flag={this.state.selectedFromFlag}
                   />
                   <SwapIcon
@@ -275,15 +258,15 @@ export class currencyInput extends Component {
                     from={this.state.selectedFrom}
                     to={this.state.selectedTo}
                   />
-                  <DropdownHead
+                  <Dropdown
                     showDrop={this.state.showDrop2}
                     showDropDown={this.showDropDown2}
                     hideDropDown={this.hideDropDown}
                     selected={this.selectedTo}
                     convert={"To"}
-                    all_currencies={this.state.all_currencies2}
+                    allCurrencies={this.state.allCurrencies}
                     currency={this.state.selectedTo}
-                    removeEl={() => {}}
+                    filterCurrency={this.state.selectedFrom}
                     flag={this.state.selectedToFlag}
                   />
                 </div>
