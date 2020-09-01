@@ -62,7 +62,7 @@ export class Home extends React.Component {
   setConversionCurrency = (currencyName) => {
     this.setState({ conversionFrom: currencyName });
   };
-  setConversionCurrency2 = (currencyName) => {
+  setConversionCurrencyTo = (currencyName) => {
     this.setState({ conversionTo: currencyName });
   };
   render() {
@@ -83,7 +83,7 @@ export class Home extends React.Component {
               </div>
               <CurrencyInput
                 ConversionCurr={this.setConversionCurrency}
-                ConversionCurrTo={this.setConversionCurrency2}
+                ConversionCurrTo={this.setConversionCurrencyTo}
                 hideDropFromClickOnWindow={this.state.hideDropDown}
                 currencyRate={this.setCurrencyRate}
               />
